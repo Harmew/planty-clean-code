@@ -1,0 +1,35 @@
+module.exports = {
+  preset: "jest-expo",
+  forceExit: true,
+  transformIgnorePatterns: [
+    "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg)",
+  ],
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "<rootDir>/src/__tests__/__mocks__/",
+    "<rootDir>/src/__tests__/setup/",
+    "<rootDir>/src/__tests__/e2e/",
+  ],
+  // lcov gera tanto o lcov.info quanto o relatório HTML em coverage/lcov-report, que o CI publica no GitHub Pages; json-summary gera o coverage-summary.json, de onde saem os números do resumo do run e do comentário no PR. 'text' continua aí só pela tabela no terminal, no uso local.
+  coverageReporters: ["lcov", "text", "json-summary"],
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/__tests__/**",
+    // arquivos só de tipos/interfaces ou barris de re-export puro: sem lógica de runtime para cobrir.
+    "!src/domain/repositories/**",
+    "!src/domain/entities/**",
+    "!src/domain/models/**",
+    "!src/domain/services/**",
+    "!src/data/dto/**",
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
+    },
+  },
+};
