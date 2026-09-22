@@ -155,7 +155,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     APP_VARIANT: process.env.APP_VARIANT,
     eas: {
-      projectId: "...",
+      projectId: "ed1bea6b-2577-4e0d-b1b6-751fd712514c",
     },
   },
 });
