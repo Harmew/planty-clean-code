@@ -1,2 +1,2 @@
 export type { UndrawWelcomingProps } from "./types";
-export { UndrawWelcoming } from "./UndrawWelcoming";
+export { UndrawWelcoming } from "./undraw-welcoming.component";

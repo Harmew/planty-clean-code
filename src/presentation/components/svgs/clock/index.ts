@@ -1,2 +1,2 @@
-export { Clock } from "./Clock";
+export { Clock } from "./clock.component";
 export type { ClockProps } from "./types";

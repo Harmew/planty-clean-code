@@ -2,14 +2,14 @@
 import { Stack } from "expo-router";
 
 // Hooks
-import { useAppTheme } from "@presentation/hooks/useAppTheme";
+import { useTheme } from "@presentation/hooks/use-theme";
 
 export default function OnboardingLayout() {
-  const { theme } = useAppTheme();
+  const { theme } = useTheme();
 
   return (
     <Stack
-      initialRouteName="bem-vindo"
+      initialRouteName="welcome"
       screenOptions={{
         headerShown: false,
         /** Desabilita o gesto de voltar ao arrastar */
@@ -19,9 +19,9 @@ export default function OnboardingLayout() {
         },
       }}
     >
-      <Stack.Screen name="bem-vindo" />
-      <Stack.Screen name="permissoes" />
-      <Stack.Screen name="tudo-certo" />
+      <Stack.Screen name="welcome" />
+      <Stack.Screen name="permissions" />
+      <Stack.Screen name="all-right" />
     </Stack>
   );
 }

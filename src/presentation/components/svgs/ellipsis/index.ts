@@ -1,2 +1,2 @@
-export { Ellipsis } from "./Ellipsis";
+export { Ellipsis } from "./ellipsis.component";
 export type { EllipsisProps } from "./types";

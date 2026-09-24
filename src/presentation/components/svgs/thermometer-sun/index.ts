@@ -1,2 +1,2 @@
-export { ThermometerSun } from "./ThermometerSun";
+export { ThermometerSun } from "./thermometer-sun.component";
 export type { ThermometerSunProps } from "./types";

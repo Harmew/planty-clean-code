@@ -1,4 +1,4 @@
-import type { CareType } from "@domain/entities/care";
+import type { CareType } from "@domain/entities/care.entity";
 
 export const getNotificationTitle = (type: CareType): string => {
   switch (type) {

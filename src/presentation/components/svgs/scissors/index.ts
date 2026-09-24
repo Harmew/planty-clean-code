@@ -1,2 +1,2 @@
-export { Scissors } from "./Scissors";
+export { Scissors } from "./scissors.component";
 export type { ScissorsProps } from "./types";

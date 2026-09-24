@@ -1,2 +1,2 @@
-export { Settings } from "./Settings";
+export { Settings } from "./settings.component";
 export type { SettingsProps } from "./types";

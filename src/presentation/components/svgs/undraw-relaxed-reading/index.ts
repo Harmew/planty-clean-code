@@ -1,2 +1,2 @@
 export type { UndrawRelaxedReadingProps } from "./types";
-export { UndrawRelaxedReading } from "./UndrawRelaxedReading";
+export { UndrawRelaxedReading } from "./undraw-relaxed-reading.component";

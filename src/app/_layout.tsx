@@ -1,5 +1,8 @@
 import React from "react";
 
+// React Native
+import { Platform } from "react-native";
+
 // React Native Reanimated
 import "react-native-reanimated";
 
@@ -25,13 +28,13 @@ import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // Services
-import { initializeApp } from "@bootstrap/initializeApp";
+import { initializeApp } from "@bootstrap/initialize-app";
 
 // Hooks
-import { useAppTheme } from "@presentation/hooks/useAppTheme";
+import { useTheme } from "@presentation/hooks/use-theme";
 
 // Screens
-import { BootErrorScreen } from "@presentation/screens/BootError";
+import { BootErrorScreen } from "@presentation/features/startup/boot-error/boot-error.component";
 
 /**
  * Previne o auto-hide da SplashScreen até que a aplicação esteja pronta
@@ -44,7 +47,7 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 enableScreens(true);
 
 function Layout() {
-  const { theme, dark } = useAppTheme();
+  const { theme, dark } = useTheme();
 
   const [isReady, setIsReady] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
@@ -86,9 +89,10 @@ function Layout() {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="notificacoes" />
-        <Stack.Screen name="minha-planta" />
-        <Stack.Screen name="historico-planta" />
+        <Stack.Screen name="notifications" />
+        <Stack.Screen name="my-plant" />
+        <Stack.Screen name="plant-history" />
+        <Stack.Screen name="(modals)" options={{ presentation: Platform.OS === "ios" ? "modal" : undefined }} />
       </Stack>
     </>
   );

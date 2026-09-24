@@ -1,14 +1,12 @@
-import React from "react";
-
-// Expo Router
 import { Redirect } from "expo-router";
+import React from "react";
 
 // DI
 import { container } from "@di/container";
 
 // Presentation
-import { useMinimumDelay } from "@presentation/hooks/useMinimumDelay";
-import { LaunchScreen } from "@presentation/screens/Launch";
+import { LaunchScreen } from "@presentation/features/startup/launch/launch.component";
+import { useMinimumDelay } from "@presentation/hooks/use-minimum-delay";
 
 export default function Index() {
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
@@ -35,8 +33,8 @@ export default function Index() {
 
   // 2. Onboarding
   if (!isOnboardingCompleted) {
-    return <Redirect href="/(onboarding)/bem-vindo" />;
+    return <Redirect href="/(onboarding)/welcome" />;
   }
 
-  return <Redirect href="/minha-planta" />;
+  return <Redirect href="/(tabs)/my-plants" />;
 }

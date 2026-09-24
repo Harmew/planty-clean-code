@@ -1,2 +1,2 @@
-export { ChevronDown } from "./ChevronDown";
+export { ChevronDown } from "./chevron-down.component";
 export type { ChevronDownProps } from "./types";

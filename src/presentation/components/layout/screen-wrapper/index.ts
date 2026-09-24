@@ -1,3 +1,2 @@
-export { ScreenWrapper } from "./ScreenWrapper";
-
+export { ScreenWrapper } from "./screen-wrapper.component";
 export type { ScreenWrapperProps } from "./types";

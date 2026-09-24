@@ -1,2 +1,2 @@
-export { ArrowUp } from "./ArrowUp";
+export { ArrowUp } from "./arrow-up.component";
 export type { ArrowUpProps } from "./types";

@@ -4,60 +4,60 @@
 // ──► data ──► infra.
 
 // Plant Use Cases
-import { CreatePlant } from "@domain/usecases/plant/createPlant";
-import { DeletePlant } from "@domain/usecases/plant/deletePlant";
-import { GetPlantById } from "@domain/usecases/plant/getPlantById";
-import { GetPlants } from "@domain/usecases/plant/getPlants";
-import { UpdatePlant } from "@domain/usecases/plant/updatePlant";
+import { CreatePlant } from "@domain/usecases/plant/create-plant.usecase";
+import { DeletePlant } from "@domain/usecases/plant/delete-plant.usecase";
+import { GetPlantById } from "@domain/usecases/plant/get-plant-by-id.usecase";
+import { GetPlants } from "@domain/usecases/plant/get-plants.usecase";
+import { UpdatePlant } from "@domain/usecases/plant/update-plant.usecase";
 
 // Care Use Cases
-import { CreateOrUpdateCares } from "@domain/usecases/care/createOrUpdateCares";
-import { DeleteCaresByPlant } from "@domain/usecases/care/deleteCaresByPlant";
-import { GetCaresByPlant } from "@domain/usecases/care/getCaresByPlant";
-import { MarkCareAsDone } from "@domain/usecases/care/markCareAsDone";
+import { CreateOrUpdateCares } from "@domain/usecases/care/create-or-update-cares.usecase";
+import { DeleteCaresByPlant } from "@domain/usecases/care/delete-cares-by-plant.usecase";
+import { GetCaresByPlant } from "@domain/usecases/care/get-cares-by-plant.usecase";
+import { MarkCareAsDone } from "@domain/usecases/care/mark-care-as-done.usecase";
 
 // Care History Use Cases
-import { GetCareHistoryByPlant } from "@domain/usecases/careHistory/getCareHistoryByPlant";
+import { GetCareHistoryByPlant } from "@domain/usecases/care-history/get-care-history-by-plant.usecase";
 
 // Notification Use Cases
-import { CancelNotificationsByCare } from "@domain/usecases/notification/cancelNotificationsByCare";
-import { CancelNotificationsByPlant } from "@domain/usecases/notification/cancelNotificationsByPlant";
-import { CleanOldNotifications } from "@domain/usecases/notification/cleanOldNotifications";
-import { ClearNotifications } from "@domain/usecases/notification/clearNotifications";
-import { GetNotifications } from "@domain/usecases/notification/getNotifications";
-import { MarkNotificationAsRead } from "@domain/usecases/notification/markNotificationAsRead";
-import { ScheduleNotification } from "@domain/usecases/notification/scheduleNotification";
-import { GeneratePlantData } from "@domain/usecases/plant/generatePlantData";
+import { CancelNotificationsByCare } from "@domain/usecases/notification/cancel-notifications-by-care.usecase";
+import { CancelNotificationsByPlant } from "@domain/usecases/notification/cancel-notifications-by-plant.usecase";
+import { CleanOldNotifications } from "@domain/usecases/notification/clean-old-notifications.usecase";
+import { ClearNotifications } from "@domain/usecases/notification/clear-notifications.usecase";
+import { GetNotifications } from "@domain/usecases/notification/get-notifications.usecase";
+import { MarkNotificationAsRead } from "@domain/usecases/notification/mark-notification-as-read.usecase";
+import { ScheduleNotification } from "@domain/usecases/notification/schedule-notification.usecase";
+import { GeneratePlantData } from "@domain/usecases/plant/generate-plant-data.usecase";
 
 // Backup Use Cases
-import { ExportBackup } from "@domain/usecases/backup/exportBackup";
-import { ImportBackup } from "@domain/usecases/backup/importBackup";
+import { ExportBackup } from "@domain/usecases/backup/export-backup.usecase";
+import { ImportBackup } from "@domain/usecases/backup/import-backup.usecase";
 
 // Permissions Use Cases
-import { GetPermissions } from "@domain/usecases/permission/getPermissions";
-import { OpenAppSettings } from "@domain/usecases/permission/openAppSettings";
-import { RequestCameraPermission } from "@domain/usecases/permission/requestCameraPermission";
-import { RequestGalleryPermission } from "@domain/usecases/permission/requestGalleryPermission";
-import { RequestNotificationPermission } from "@domain/usecases/permission/requestNotificationPermission";
+import { GetPermissions } from "@domain/usecases/permissions/get-permissions.usecase";
+import { OpenAppSettings } from "@domain/usecases/permissions/open-app-settings.usecase";
+import { RequestCameraPermission } from "@domain/usecases/permissions/request-camera-permission.usecase";
+import { RequestGalleryPermission } from "@domain/usecases/permissions/request-gallery-permission.usecase";
+import { RequestNotificationPermission } from "@domain/usecases/permissions/request-notification-permission.usecase";
 
 // Onboarding Use Cases
-import { CompleteOnboarding } from "@domain/usecases/onboarding/completeOnboarding";
-import { IsOnboardingCompleted } from "@domain/usecases/onboarding/isOnboardingCompleted";
+import { CompleteOnboarding } from "@domain/usecases/onboarding/complete-onboarding.usecase";
+import { IsOnboardingCompleted } from "@domain/usecases/onboarding/is-onboarding-completed.usecase";
 
 // Repositories
-import { careHistoryRepository } from "@data/repositories/careHistoryRepositoryImpl";
-import { careRepository } from "@data/repositories/careRepositoryImpl";
-import { notificationRepository } from "@data/repositories/notificationRepositoryImpl";
-import { plantRepository } from "@data/repositories/plantRepositoryImpl";
+import { careHistoryRepository } from "@data/repositories/care-history.repository.impl";
+import { careRepository } from "@data/repositories/care.repository.impl";
+import { notificationRepository } from "@data/repositories/notification.repository.impl";
+import { plantRepository } from "@data/repositories/plant.repository.impl";
 
 // Infra
-import { aiService } from "@infra/ai/aiServiceImpl";
-import { hapticsService } from "@infra/haptics/expoHapticsServiceImpl";
-import { notificationService } from "@infra/notification/notificationServiceImpl";
-import { permissionService } from "@infra/permissions/permissionServiceImpl";
-import { backupStorage } from "@infra/storage/backupStorageImpl";
-import { imageStorage } from "@infra/storage/imageStorageImpl";
-import { onboardingStorage } from "@infra/storage/onboardingStorageImpl";
+import { aiService } from "@infra/ai/ai.service.impl";
+import { hapticsService } from "@infra/haptics/haptics.service.impl";
+import { notificationService } from "@infra/notification/notification.service.impl";
+import { permissionsService } from "@infra/permissions/permissions.service.impl";
+import { backupStorage } from "@infra/storage/backup.storage.impl";
+import { imageStorage } from "@infra/storage/image.storage.impl";
+import { onboardingStorage } from "@infra/storage/onboarding.storage.impl";
 
 export const container = {
   getPlants: GetPlants(plantRepository),
@@ -117,11 +117,11 @@ export const container = {
     imageStorage,
   ),
 
-  getPermissions: GetPermissions(permissionService),
-  requestCameraPermission: RequestCameraPermission(permissionService),
-  requestGalleryPermission: RequestGalleryPermission(permissionService),
-  requestNotificationPermission: RequestNotificationPermission(permissionService),
-  openAppSettings: OpenAppSettings(permissionService),
+  getPermissions: GetPermissions(permissionsService),
+  requestCameraPermission: RequestCameraPermission(permissionsService),
+  requestGalleryPermission: RequestGalleryPermission(permissionsService),
+  requestNotificationPermission: RequestNotificationPermission(permissionsService),
+  openAppSettings: OpenAppSettings(permissionsService),
 
   isOnboardingCompleted: IsOnboardingCompleted(onboardingStorage),
   completeOnboarding: CompleteOnboarding(onboardingStorage),

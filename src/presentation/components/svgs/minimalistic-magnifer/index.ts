@@ -1,2 +1,2 @@
-export { MinimalisticMagnifer } from "./MinimalisticMagnifer";
+export { MinimalisticMagnifer } from "./minimalistic-magnifer.component";
 export type { MinimalisticMagniferProps } from "./types";

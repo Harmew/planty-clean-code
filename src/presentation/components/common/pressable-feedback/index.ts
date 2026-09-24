@@ -1,2 +1,2 @@
-export { PressableFeedback } from "./PressableFeedback";
+export { PressableFeedback } from "./pressable-feedback.component";
 export type { PressableFeedbackProps } from "./types";

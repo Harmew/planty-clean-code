@@ -1,2 +1,2 @@
-export { ArrowDown } from "./ArrowDown";
+export { ArrowDown } from "./arrow-down.component";
 export type { ArrowDownProps } from "./types";
