@@ -4,13 +4,14 @@
     "types": ["jest"],
     "moduleSuffixes": [".ios", ".android", ".native", ""],
     "strict": true,
-     "paths": {
+    "paths": {
       "@domain/*": ["./src/domain/*"],
       "@data/*": ["./src/data/*"],
       "@infra/*": ["./src/infra/*"],
       "@repository/*": ["./src/repository/*"],
       "@di/*": ["./src/di/*"],
       "@presentation/*": ["./src/presentation/*"],
+      "@bootstrap/*": ["./src/bootstrap/*"],
       "@shared/*": ["./src/shared/*"],
       "@store/*": ["./src/store/*"],
       "@utils/*": ["./src/utils/*"],

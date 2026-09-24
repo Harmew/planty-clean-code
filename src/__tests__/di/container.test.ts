@@ -6,15 +6,6 @@ jest.mock("@infra/permissions/permissionServiceImpl", () => ({
   permissionService: {},
 }));
 
-jest.mock("@react-native-async-storage/async-storage", () => {
-  const { asyncStorageMock } = require("@mocks/libs/asyncStorageMock");
-
-  return {
-    __esModule: true,
-    default: asyncStorageMock,
-  };
-});
-
 import { container } from "@di/container";
 
 describe("container (DI)", () => {
