@@ -2,7 +2,8 @@ import { render } from "@testing-library/react-native";
 
 import { Typography } from "@presentation/components/common/typography";
 
-import { themes } from "@shared/theme";
+import { theme } from "@shared/theme";
+import { getThemeColors } from "@shared/utils/theme";
 
 describe("typography-component", () => {
   it("deve renderizar o texto com os valores padrão", async () => {
@@ -25,9 +26,9 @@ describe("typography-component", () => {
     expect(text.props.style).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          fontSize: themes.light.fontSizes[24],
-          lineHeight: themes.light.fontLineHeights[24],
-          fontWeight: themes.light.fontWeights[700],
+          fontSize: theme.fontSizes[24],
+          lineHeight: theme.fontLineHeights[24],
+          fontWeight: theme.fontWeights[700],
           textAlign: "center",
         }),
       ]),
@@ -42,7 +43,7 @@ describe("typography-component", () => {
     expect(text.props.style).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          color: themes.light.tokens.text,
+          color: getThemeColors(false).text,
         }),
       ]),
     );
@@ -56,7 +57,7 @@ describe("typography-component", () => {
     expect(text.props.style).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          color: themes.light.colors.green500,
+          color: theme.colors.green500,
         }),
       ]),
     );

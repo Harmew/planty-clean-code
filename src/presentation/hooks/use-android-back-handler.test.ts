@@ -11,7 +11,7 @@ jest.mock("expo-router", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("use-android-back-handler", () => {
+describe("use-android-back-handler-hook", () => {
   const back = jest.fn();
   const canGoBack = jest.fn();
   const remove = jest.fn();

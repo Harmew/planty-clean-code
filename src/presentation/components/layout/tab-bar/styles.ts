@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet } from "react-native";
 
 const { width } = Dimensions.get("window");
 
-export const createStyles = ({ spacings, tokens, radius }: Theme) =>
+export const createStyles = ({ spacings, radius }: Theme) =>
   StyleSheet.create({
     container: {
       width: width - spacings[18] * 2,
@@ -16,7 +16,6 @@ export const createStyles = ({ spacings, tokens, radius }: Theme) =>
     },
     content: {
       gap: 0,
-      backgroundColor: tokens.tabBackground,
       borderRadius: radius[999],
       borderCurve: "continuous",
       flexDirection: "row",

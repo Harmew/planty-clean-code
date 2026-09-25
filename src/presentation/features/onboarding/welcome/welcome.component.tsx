@@ -19,7 +19,7 @@ export function WelcomeScreen() {
 
   return (
     <ScreenWrapper
-      style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18]) }]}
+      style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18], false) }]}
     >
       <ProgressLine maxWidth={150} percentage={33} />
 

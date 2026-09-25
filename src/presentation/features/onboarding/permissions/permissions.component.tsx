@@ -3,8 +3,7 @@ import Animated, { FadeInDown, FadeInRight } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // Presentation
-import { Button, ProgressLine, Row, Surface, Typography } from "@presentation/components/common";
-import { Switch } from "@presentation/components/form";
+import { Button, ProgressLine, Row, Surface, Switch, Typography } from "@presentation/components/common";
 import { ScreenWrapper } from "@presentation/components/layout";
 import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
@@ -25,7 +24,7 @@ export function PermissionsScreen() {
 
   return (
     <ScreenWrapper
-      style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18]) }]}
+      style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18], false) }]}
     >
       <ProgressLine maxWidth={150} percentage={66} />
 

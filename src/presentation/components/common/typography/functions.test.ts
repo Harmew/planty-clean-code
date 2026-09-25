@@ -1,11 +1,4 @@
-import {
-  capitalize,
-  getTextColor,
-  transformChildren,
-  transformText,
-} from "@presentation/components/common/typography/functions";
-
-import { themes } from "@shared/theme";
+import { capitalize, transformChildren, transformText } from "@presentation/components/common/typography/functions";
 
 describe("typography-component-functions", () => {
   describe("capitalize", () => {
@@ -63,16 +56,6 @@ describe("typography-component-functions", () => {
       const child = { type: "element" };
 
       expect(transformChildren(child as never, "uppercase")).toBe(child);
-    });
-  });
-
-  describe("getTextColor", () => {
-    it('deve retornar o token de texto quando a cor for "text"', () => {
-      expect(getTextColor(themes.light, "text")).toBe(themes.light.tokens.text);
-    });
-
-    it("deve retornar a cor do tema quando receber uma cor específica", () => {
-      expect(getTextColor(themes.light, "green500")).toBe(themes.light.colors.green500);
     });
   });
 });

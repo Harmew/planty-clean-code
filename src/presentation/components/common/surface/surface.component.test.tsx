@@ -1,25 +1,31 @@
 import { render } from "@testing-library/react-native";
+import { Text } from "react-native";
 
 import { Surface } from "@presentation/components/common/surface";
 import { useTheme } from "@presentation/hooks/use-theme";
-import { Text } from "react-native";
+import { getThemeColors } from "@shared/utils/theme";
 
 describe("surface-component", () => {
   it("deve aplicar os estilos padrão do tema", async () => {
-    const { theme } = useTheme();
+    const { theme, dark } = useTheme();
+    const { surface: surfaceColor } = getThemeColors(dark);
 
     const { getByTestId } = await render(<Surface testID="surface" />);
 
     const surface = getByTestId("surface");
 
     expect(surface.props.style).toEqual(
-      expect.objectContaining({
-        padding: theme.spacings[16],
-        borderRadius: theme.radius[26],
-        backgroundColor: theme.tokens.surface,
-        gap: theme.spacings[12],
-        overflow: "hidden",
-      }),
+      expect.arrayContaining([
+        expect.objectContaining({
+          padding: theme.spacings[16],
+          borderRadius: theme.radius[26],
+          gap: theme.spacings[12],
+          overflow: "hidden",
+        }),
+        expect.objectContaining({
+          backgroundColor: surfaceColor,
+        }),
+      ]),
     );
   });
 

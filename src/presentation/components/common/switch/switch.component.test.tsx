@@ -1,6 +1,6 @@
 import { act, fireEvent, render } from "@testing-library/react-native";
 
-import { Switch } from "@presentation/components/form/switch";
+import { Switch } from "./switch.component";
 
 describe("switch-component", () => {
   beforeEach(() => {

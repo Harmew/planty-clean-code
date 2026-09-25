@@ -6,7 +6,7 @@ import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTimin
 import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
 
-// Theme
+// Shared
 import { getIconTextColor } from "@shared/utils/theme";
 
 import { createStyles } from "./styles";

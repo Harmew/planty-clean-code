@@ -5,16 +5,6 @@ import { spacings } from "./spacings";
 import { fontLineHeights, fonts, fontSizes, fontWeights } from "./typography";
 
 export interface Theme {
-  tokens: {
-    background: string;
-    backgroundSecondary: string;
-    surface: string;
-    surfaceDisabled: string;
-    text: string;
-    overlay: string;
-    tabBackground: string;
-    tabIcon: string;
-  };
   colors: typeof colors;
   fontSizes: typeof fontSizes;
   fontLineHeights: typeof fontLineHeights;

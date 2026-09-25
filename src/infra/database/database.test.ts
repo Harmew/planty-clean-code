@@ -37,7 +37,7 @@ describe("database", () => {
     it("abre o banco plants.db", async () => {
       await initDatabase();
 
-      expect(SQLite.openDatabaseAsync).toHaveBeenCalledWith("plants.db");
+      expect(SQLite.openDatabaseAsync).toHaveBeenCalledWith("plants.db", { enableChangeListener: true });
     });
 
     it("executa a criação das tabelas", async () => {

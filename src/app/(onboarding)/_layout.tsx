@@ -1,23 +1,20 @@
 // Expo Router
 import { Stack } from "expo-router";
 
-// Hooks
+// Presentation
 import { useTheme } from "@presentation/hooks/use-theme";
 
+// Shared
+import { getThemeColors } from "@shared/utils/theme";
+
 export default function OnboardingLayout() {
-  const { theme } = useTheme();
+  const { dark } = useTheme();
+  const { background } = getThemeColors(dark);
 
   return (
     <Stack
       initialRouteName="welcome"
-      screenOptions={{
-        headerShown: false,
-        /** Desabilita o gesto de voltar ao arrastar */
-        gestureEnabled: false,
-        contentStyle: {
-          backgroundColor: theme.tokens.background,
-        },
-      }}
+      screenOptions={{ headerShown: false, gestureEnabled: false, contentStyle: { backgroundColor: background } }}
     >
       <Stack.Screen name="welcome" />
       <Stack.Screen name="permissions" />

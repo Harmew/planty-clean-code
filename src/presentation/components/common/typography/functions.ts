@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 
-import type { Theme } from "@shared/theme";
-
-import type { TextTransform, TypographyColor } from "./types";
+import type { TextTransform } from "./types";
 
 export function capitalize(value: string): string {
   return value.replace(/(^|\s)(\S)/gu, (_, separator, character) => `${separator}${character.toUpperCase()}`);
@@ -45,15 +43,4 @@ function transformChild(child: ReactNode, transform: TextTransform): ReactNode {
   }
 
   return child;
-}
-
-export function getTextColor(theme: Theme, color: TypographyColor): string {
-  /**
-   * Caso especifiquei a cor "text", então vamos retornar a cor do token de texto do tema, caso contrário, vamos retornar a cor especificada no tema.
-   */
-  if (color === "text") {
-    return theme.tokens.text;
-  }
-
-  return theme.colors[color];
 }

@@ -4,7 +4,9 @@ import { render } from "@testing-library/react-native";
 
 import { ScreenWrapper } from "@presentation/components/layout/screen-wrapper";
 
-import { themes } from "@shared/theme";
+import { useTheme } from "@presentation/hooks/use-theme";
+
+import { getThemeColors } from "@shared/utils/theme";
 
 describe("screen-wrapper-component", () => {
   it("deve renderizar os children", async () => {
@@ -18,6 +20,9 @@ describe("screen-wrapper-component", () => {
   });
 
   it("deve aplicar os valores padrão", async () => {
+    const { dark } = useTheme();
+    const { background } = getThemeColors(dark);
+
     const { getByTestId } = await render(
       <ScreenWrapper>
         <Text>Conteúdo da tela</Text>
@@ -27,15 +32,11 @@ describe("screen-wrapper-component", () => {
     const container = getByTestId("screen-wrapper");
 
     expect(container.props.style).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          flex: 1,
-          paddingTop: 0,
-        }),
-        expect.objectContaining({
-          backgroundColor: themes.light.tokens.background,
-        }),
-      ]),
+      expect.objectContaining({
+        flex: 1,
+        paddingTop: 0,
+        backgroundColor: background,
+      }),
     );
   });
 
@@ -49,11 +50,9 @@ describe("screen-wrapper-component", () => {
     const container = getByTestId("screen-wrapper");
 
     expect(container.props.style).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          flex: 2,
-        }),
-      ]),
+      expect.objectContaining({
+        flex: 2,
+      }),
     );
   });
 

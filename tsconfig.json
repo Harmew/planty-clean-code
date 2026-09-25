@@ -5,6 +5,7 @@
     "moduleSuffixes": [".ios", ".android", ".native", ""],
     "strict": true,
     "paths": {
+      "@assets/*": ["./assets/*"],
       "@domain/*": ["./src/domain/*"],
       "@data/*": ["./src/data/*"],
       "@infra/*": ["./src/infra/*"],

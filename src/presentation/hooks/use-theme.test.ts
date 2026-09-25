@@ -2,7 +2,7 @@ import { renderHook } from "@testing-library/react-native";
 
 import { useTheme } from "@presentation/hooks/use-theme";
 
-import { themes } from "@shared/theme";
+import { theme } from "@shared/theme";
 
 import { useColorScheme } from "react-native";
 
@@ -24,7 +24,7 @@ describe("use-theme-hook", () => {
     const { result } = await renderHook(() => useTheme());
 
     expect(result.current.dark).toBe(false);
-    expect(result.current.theme).toBe(themes.light);
+    expect(result.current.theme).toBe(theme);
   });
 
   it("deve usar o tema escuro quando o sistema estiver no modo escuro", async () => {
@@ -33,6 +33,6 @@ describe("use-theme-hook", () => {
     const { result } = await renderHook(() => useTheme());
 
     expect(result.current.dark).toBe(true);
-    expect(result.current.theme).toBe(themes.dark);
+    expect(result.current.theme).toBe(theme);
   });
 });

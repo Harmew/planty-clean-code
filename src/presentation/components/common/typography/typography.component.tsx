@@ -1,8 +1,9 @@
 import { Text } from "react-native";
 
 import { useTheme } from "@presentation/hooks/use-theme";
+import { getThemeColors } from "@shared/utils/theme";
 
-import { getTextColor, transformChildren } from "./functions";
+import { transformChildren } from "./functions";
 import { createStyles } from "./styles";
 import type { TypographyProps } from "./types";
 
@@ -16,12 +17,15 @@ export function Typography({
   children,
   ...props
 }: Readonly<TypographyProps>) {
-  const { theme } = useTheme();
+  const { theme, dark } = useTheme();
 
   const styles = createStyles(theme, size, weight, align);
+  const { text } = getThemeColors(dark);
+
+  const textColor = color === "text" ? text : theme.colors[color];
 
   return (
-    <Text {...props} style={[styles.text, { color: getTextColor(theme, color) }, style]}>
+    <Text {...props} style={[styles.text, { color: textColor }, style]}>
       {transformChildren(children, transform)}
     </Text>
   );

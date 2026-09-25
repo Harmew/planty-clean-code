@@ -1,19 +1,25 @@
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+// Presentation
 import { useTheme } from "@presentation/hooks/use-theme";
 
-import { createStyles } from "./styles";
+// Shared
+import { getThemeColors } from "@shared/utils/theme";
+
 import type { ScreenWrapperProps } from "./types";
 
 export function ScreenWrapper({ children, style, flex = 1 }: Readonly<ScreenWrapperProps>) {
   const { top } = useSafeAreaInsets();
-  const { theme } = useTheme();
+  const { dark } = useTheme();
 
-  const styles = createStyles(theme);
+  const { background } = getThemeColors(dark);
 
   return (
-    <View style={[styles.container, { flex, paddingTop: top }, style]} testID="screen-wrapper">
+    <View
+      style={StyleSheet.compose({ flex, backgroundColor: background, paddingTop: top }, style)}
+      testID="screen-wrapper"
+    >
       {children}
     </View>
   );

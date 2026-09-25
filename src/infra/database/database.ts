@@ -5,7 +5,9 @@ const DATABASE_NAME = "plants.db" as const;
 let database: SQLite.SQLiteDatabase | null = null;
 
 export const initDatabase = async () => {
-  database = await SQLite.openDatabaseAsync(DATABASE_NAME);
+  database = await SQLite.openDatabaseAsync(DATABASE_NAME, {
+    enableChangeListener: true,
+  });
 
   await database.execAsync(`
     PRAGMA journal_mode = WAL;

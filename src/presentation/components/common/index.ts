@@ -4,4 +4,5 @@ export { ProgressLine } from "./progress-line";
 export { Row } from "./row";
 export { Spinner } from "./spinner";
 export { Surface } from "./surface";
+export { Switch } from "./switch";
 export { Typography } from "./typography";

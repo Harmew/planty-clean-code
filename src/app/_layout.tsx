@@ -33,6 +33,9 @@ import { initializeApp } from "@bootstrap/initialize-app";
 // Hooks
 import { useTheme } from "@presentation/hooks/use-theme";
 
+// Shared
+import { getThemeColors } from "@shared/utils/theme";
+
 // Screens
 import { BootErrorScreen } from "@presentation/features/startup/boot-error/boot-error.component";
 import { useAndroidBackHandler } from "@presentation/hooks/use-android-back-handler";
@@ -48,7 +51,8 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 enableScreens(true);
 
 function Layout() {
-  const { theme, dark } = useTheme();
+  const { dark } = useTheme();
+  const { background } = getThemeColors(dark);
   useAndroidBackHandler();
 
   const [isReady, setIsReady] = React.useState(false);
@@ -86,7 +90,7 @@ function Layout() {
         initialRouteName="index"
         screenOptions={{
           headerShown: false,
-          contentStyle: { backgroundColor: theme.tokens.background },
+          contentStyle: { backgroundColor: background },
         }}
       >
         <Stack.Screen name="index" />

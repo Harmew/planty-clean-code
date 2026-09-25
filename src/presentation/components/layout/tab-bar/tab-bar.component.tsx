@@ -9,12 +9,18 @@ import { container } from "@di/container";
 import { Surface } from "@presentation/components/common";
 import { useTheme } from "@presentation/hooks/use-theme";
 
+// Shared
+import { getThemeColors } from "@shared/utils/theme";
+
 import { createStyles } from "./styles";
 import { TabBarButton } from "./tab-bar-button.component";
 
+export const TAB_BAR_HEIGHT = 56;
+
 export function TabBar({ state, navigation, insets }: Readonly<BottomTabBarProps>) {
-  const { theme } = useTheme();
+  const { theme, dark } = useTheme();
   const styles = createStyles(theme);
+  const { tabBackground } = getThemeColors(dark);
 
   const leftRoutes = state.routes.slice(0, 2); // plants and cares
   const rightRoutes = state.routes.slice(2); // settings
@@ -59,12 +65,14 @@ export function TabBar({ state, navigation, insets }: Readonly<BottomTabBarProps
     <View style={StyleSheet.compose(styles.container, { bottom: insets.bottom })} testID="tab-bar-container">
       {/* Esquerda */}
       <Animated.View entering={FadeInLeft.delay(40)}>
-        <Surface style={styles.content}>{leftRoutes.map((route, i) => renderTab(route, i, "left"))}</Surface>
+        <Surface style={StyleSheet.compose(styles.content, { backgroundColor: tabBackground })}>
+          {leftRoutes.map((route, i) => renderTab(route, i, "left"))}
+        </Surface>
       </Animated.View>
 
       {/* Direita */}
       <Animated.View entering={FadeInRight.delay(40)}>
-        <Surface style={styles.content}>
+        <Surface style={StyleSheet.compose(styles.content, { backgroundColor: tabBackground })}>
           {rightRoutes.map((route, i) => renderTab(route, i + leftRoutes.length, "right"))}
         </Surface>
       </Animated.View>
