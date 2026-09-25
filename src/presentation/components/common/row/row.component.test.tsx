@@ -17,15 +17,13 @@ describe("row-component", () => {
     const row = getByTestId("row");
 
     expect(row.props.style).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          flex: 0,
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "flex-start",
-          gap: theme.spacings[12],
-        }),
-      ]),
+      expect.objectContaining({
+        flex: 0,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        gap: theme.spacings[12],
+      }),
     );
   });
 
@@ -49,15 +47,13 @@ describe("row-component", () => {
     const row = getByTestId("row");
 
     expect(row.props.style).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          flex: 1,
-          flexDirection: "row",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          gap: theme.spacings[16],
-        }),
-      ]),
+      expect.objectContaining({
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "flex-end",
+        justifyContent: "space-between",
+        gap: theme.spacings[16],
+      }),
     );
   });
 

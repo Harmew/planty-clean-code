@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Pressable, type GestureResponderEvent } from "react-native";
+import { Pressable, StyleSheet, type GestureResponderEvent } from "react-native";
 
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
@@ -52,7 +52,7 @@ export function PressableFeedback({
       accessibilityState={{ disabled }}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
-      style={[scaleStyle, style]}
+      style={StyleSheet.compose(scaleStyle, style)}
     >
       {typeof children === "function" ? children({ pressed, hovered: false }) : children}
     </AnimatedPressable>

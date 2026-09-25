@@ -35,6 +35,7 @@ import { useTheme } from "@presentation/hooks/use-theme";
 
 // Screens
 import { BootErrorScreen } from "@presentation/features/startup/boot-error/boot-error.component";
+import { useAndroidBackHandler } from "@presentation/hooks/use-android-back-handler";
 
 /**
  * Previne o auto-hide da SplashScreen até que a aplicação esteja pronta
@@ -48,6 +49,7 @@ enableScreens(true);
 
 function Layout() {
   const { theme, dark } = useTheme();
+  useAndroidBackHandler();
 
   const [isReady, setIsReady] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);

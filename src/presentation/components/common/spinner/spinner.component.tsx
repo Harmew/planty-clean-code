@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from "react-native-reanimated";
 
 // Presentation
@@ -27,7 +27,7 @@ export function Spinner({ size = 24, color = "green500", duration = 900, style }
   }));
 
   return (
-    <View style={[styles.container, style]} testID="spinner-container">
+    <View style={StyleSheet.compose(styles.container, style)} testID="spinner-container">
       <Animated.View style={animatedStyle} testID="spinner-animated">
         <Icons.Spinner size={size} color={color} />
       </Animated.View>

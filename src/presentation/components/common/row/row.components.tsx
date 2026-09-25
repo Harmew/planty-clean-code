@@ -1,4 +1,4 @@
-import { View, ViewStyle } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { useTheme } from "@presentation/hooks/use-theme";
 
@@ -24,7 +24,7 @@ export function Row({
   };
 
   return (
-    <View {...props} style={[rowStyle, style]}>
+    <View {...props} style={StyleSheet.compose(rowStyle, style)}>
       {children}
     </View>
   );
