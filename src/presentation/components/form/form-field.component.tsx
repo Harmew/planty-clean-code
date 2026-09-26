@@ -2,15 +2,16 @@ import React from "react";
 
 import { View } from "react-native";
 
+// Presentation
 import { useTheme } from "@presentation/hooks/use-theme";
 
-import type { FormFieldContextValue, FormFieldProps } from "./types";
-
 // Components
-import { DescriptionComponent } from "./description.component";
-import { ErrorComponent } from "./error.component";
-import { InputComponent } from "./input.component";
-import { LabelComponent } from "./label.component";
+import { DescriptionComponent } from "./components/description.component";
+import { ErrorComponent } from "./components/error.component";
+import { InputComponent } from "./components/input.component";
+import { LabelComponent } from "./components/label.component";
+import { SelectComponent } from "./components/select.component";
+import type { FormFieldContextValue, FormFieldProps } from "./types";
 
 const FormFieldContext = React.createContext<FormFieldContextValue | null>(null);
 
@@ -50,4 +51,5 @@ export const FormField = Object.assign(FormFieldRoot, {
   Description: DescriptionComponent,
   Error: ErrorComponent,
   Input: InputComponent,
+  Select: SelectComponent, // Assuming SelectComponent is similar to InputComponent for this example
 });

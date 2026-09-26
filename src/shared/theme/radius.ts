@@ -1,17 +1,14 @@
 export const radius = {
-  /** NONE */
   0: 0,
-
-  /** SM */
   12: 12,
-
-  /** MD */
+  14: 14,
+  16: 16,
   18: 18,
 
-  /** LG */
+  // Button Only
   26: 26,
 
-  /** FULL */
+  // Full
   999: 999,
 } as const;
 

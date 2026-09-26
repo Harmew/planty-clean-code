@@ -1,4 +1,5 @@
 export { Button } from "./button";
+export { FullWindowOverlay } from "./full-window-overlay";
 export { PressableFeedback } from "./pressable-feedback";
 export { ProgressLine } from "./progress-line";
 export { Row } from "./row";
