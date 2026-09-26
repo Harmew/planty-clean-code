@@ -51,5 +51,5 @@ export const FormField = Object.assign(FormFieldRoot, {
   Description: DescriptionComponent,
   Error: ErrorComponent,
   Input: InputComponent,
-  Select: SelectComponent, // Assuming SelectComponent is similar to InputComponent for this example
+  Select: SelectComponent,
 });

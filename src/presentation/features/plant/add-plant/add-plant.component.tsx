@@ -7,7 +7,7 @@ import React from "react";
 export function AddPlantScreen() {
   const [value, setValue] = React.useState<string | undefined>(undefined);
   const fieldState = {
-    invalid: false,
+    invalid: true,
     error: {
       message: "Campo obrigatório",
     },
@@ -23,19 +23,19 @@ export function AddPlantScreen() {
   return (
     <ScreenWrapper style={{ padding: 16, gap: 16 }}>
       <Surface>
-        <FormField isInvalid={selectfieldState.invalid}>
+        <FormField isInvalid={selectfieldState.invalid} isRequired>
           <FormField.Label>Temperatura máxima</FormField.Label>
 
           <FormField.Select
             value={value}
             onChange={setValue}
             options={[
-              { label: "Sol pleno", value: "full-sun" },
+              { label: "Sol plenoSol pleno Sol pleno Sol pleno Sol pleno Sol pleno Sol pleno", value: "full-sun" },
               { label: "Meio-sombra", value: "partial-shade" },
-              { label: "Sombra", value: "shade" },
+              { label: "SombraSol plenoSol plenoSol plenoSol pleno", value: "shade" },
             ]}
             placeholder="Selecione uma opção"
-            icon={<Icons.Sun tone="textSecondary" size={20} />}
+            icon={<Icons.Sun size={20} />}
           />
 
           <FormField.Description>Temperatura máxima recomendada</FormField.Description>
@@ -44,15 +44,10 @@ export function AddPlantScreen() {
       </Surface>
 
       <Surface>
-        <FormField isInvalid={fieldState.invalid}>
+        <FormField isInvalid={fieldState.invalid} isDisabled isRequired>
           <FormField.Label>Temperatura máxima</FormField.Label>
 
-          <FormField.Input
-            prefix={<Icons.ThermometerSun size={20} />}
-            keyboardType="numeric"
-            placeholder="Ex: 30°"
-            suffix={<Icons.ThermometerSun size={20} />}
-          />
+          <FormField.Input prefix={<Icons.ThermometerSun size={20} />} keyboardType="numeric" placeholder="Ex: 30°" />
 
           <FormField.Description>Temperatura máxima recomendada</FormField.Description>
           <FormField.Error> {fieldState.error?.message} </FormField.Error>
