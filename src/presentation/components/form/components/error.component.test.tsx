@@ -6,7 +6,7 @@ import { ErrorComponent } from "./error.component";
 
 const mockUseFormField = jest.fn();
 
-jest.mock("../form-field.component", () => ({
+jest.mock("../form-field.context", () => ({
   useFormField: () => mockUseFormField(),
 }));
 

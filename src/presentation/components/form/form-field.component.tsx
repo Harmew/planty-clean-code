@@ -11,19 +11,8 @@ import { ErrorComponent } from "./components/error.component";
 import { InputComponent } from "./components/input.component";
 import { LabelComponent } from "./components/label.component";
 import { SelectComponent } from "./components/select.component";
-import type { FormFieldContextValue, FormFieldProps } from "./types";
-
-const FormFieldContext = React.createContext<FormFieldContextValue | null>(null);
-
-export function useFormField() {
-  const context = React.useContext(FormFieldContext);
-
-  if (!context) {
-    throw new Error("useFormField must be used inside FormField");
-  }
-
-  return context;
-}
+import { FormFieldContext } from "./form-field.context";
+import type { FormFieldProps } from "./types";
 
 export const FormFieldRoot = React.forwardRef<View, FormFieldProps>(
   ({ children, isDisabled = false, isInvalid = false, isRequired = false, style, ...props }, ref) => {

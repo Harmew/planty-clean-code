@@ -31,7 +31,7 @@ describe("get-theme-colors", () => {
       surface: colors.white,
       surfaceDisabled: colors.gray300,
       text: colors.gray900,
-      overlay: withAlpha(colors.black, 0.5),
+      overlay: withAlpha(colors.black, 0.6),
       tabBackground: colors.white,
       tabIcon: colors.gray500,
     });
@@ -43,7 +43,7 @@ describe("get-theme-colors", () => {
       surface: colors.gray800,
       surfaceDisabled: colors.gray700,
       text: colors.gray100,
-      overlay: withAlpha(colors.black, 0.56),
+      overlay: withAlpha(colors.black, 0.7),
       tabBackground: colors.gray800,
       tabIcon: colors.gray100,
     });

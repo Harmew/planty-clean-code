@@ -21,7 +21,7 @@ export const getThemeColors = (dark: boolean) => ({
   /** Text color */
   text: dark ? colors.gray100 : colors.gray900,
   /** Overlay color */
-  overlay: dark ? withAlpha(colors.black, 0.56) : withAlpha(colors.black, 0.5),
+  overlay: dark ? withAlpha(colors.black, 0.7) : withAlpha(colors.black, 0.6),
   /** Tab background color */
   tabBackground: dark ? colors.gray800 : colors.white,
   /** Tab icon color */

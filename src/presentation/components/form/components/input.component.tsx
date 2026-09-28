@@ -7,7 +7,7 @@ import { useTheme } from "@presentation/hooks/use-theme";
 // Shared
 import { getThemeColors } from "@shared/utils/theme";
 
-import { useFormField } from "../form-field.component";
+import { useFormField } from "../form-field.context";
 import type { InputProps } from "../types";
 
 const INPUT_ICON_SIZE = 20;
@@ -18,10 +18,10 @@ export const InputComponent = React.forwardRef<TextInput, InputProps>(
     const [isFocused, setIsFocused] = React.useState<boolean>(false);
 
     const { theme, dark } = useTheme();
-    const { background, text } = getThemeColors(dark);
+    const { surface, text } = getThemeColors(dark);
     const { isDisabled, isInvalid } = useFormField();
 
-    let borderColor: string = background;
+    let borderColor: string = surface;
 
     if (isInvalid) {
       borderColor = theme.colors.red500;
@@ -70,7 +70,7 @@ export const InputComponent = React.forwardRef<TextInput, InputProps>(
               borderWidth: 1,
               borderRadius: theme.radius[16],
               borderCurve: "continuous",
-              backgroundColor: background,
+              backgroundColor: surface,
               paddingHorizontal: theme.spacings[12],
               fontSize: theme.fontSizes[16],
               color: text,

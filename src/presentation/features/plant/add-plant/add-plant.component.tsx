@@ -1,58 +1,57 @@
-import { Surface } from "@presentation/components/common";
-import { FormField } from "@presentation/components/form";
-import { ScreenWrapper } from "@presentation/components/layout";
-import { Icons } from "@presentation/components/svgs";
-import React from "react";
+import { FormProvider } from "react-hook-form";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { ModalWrapper } from "@presentation/components/layout";
+import { Header } from "@presentation/components/layout/header/header.component";
+import { useTheme } from "@presentation/hooks/use-theme";
+
+import { getPlatformBottomSpacing } from "@shared/utils/platform";
+import { HumidityField } from "./components/form/humidity-field.component";
+import { ImageUriField } from "./components/form/image-uri-field.component";
+import { LocationField } from "./components/form/location-field.component";
+import { NameField } from "./components/form/name-field.component";
+import { SubmitButton } from "./components/form/submit-button.component";
+import { SunlightField } from "./components/form/sunlight-field.component";
+import { TemperatureMaxField } from "./components/form/temperature-max-field.component";
+import { TemperatureMinField } from "./components/form/temperature-min-field.component";
+import { useAddPlant } from "./hooks/use-add-plant";
+import { createStyles } from "./styles";
+
+const options = [
+  { label: "Baixa", value: "low" },
+  { label: "Média", value: "medium" },
+  { label: "Alta", value: "high" },
+];
 
 export function AddPlantScreen() {
-  const [value, setValue] = React.useState<string | undefined>(undefined);
-  const fieldState = {
-    invalid: true,
-    error: {
-      message: "Campo obrigatório",
-    },
-  };
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
+  const { bottom: paddingBottom } = useSafeAreaInsets();
 
-  const selectfieldState = {
-    invalid: false,
-    error: {
-      message: "Campo obrigatório",
-    },
-  };
+  const { form, onSubmit, refs } = useAddPlant();
 
   return (
-    <ScreenWrapper style={{ padding: 16, gap: 16 }}>
-      <Surface>
-        <FormField isInvalid={selectfieldState.invalid} isRequired>
-          <FormField.Label>Temperatura máxima</FormField.Label>
-
-          <FormField.Select
-            value={value}
-            onChange={setValue}
-            options={[
-              { label: "Sol plenoSol pleno Sol pleno Sol pleno Sol pleno Sol pleno Sol pleno", value: "full-sun" },
-              { label: "Meio-sombra", value: "partial-shade" },
-              { label: "SombraSol plenoSol plenoSol plenoSol pleno", value: "shade" },
-            ]}
-            placeholder="Selecione uma opção"
-            icon={<Icons.Sun size={20} />}
-          />
-
-          <FormField.Description>Temperatura máxima recomendada</FormField.Description>
-          <FormField.Error> {selectfieldState.error?.message} </FormField.Error>
-        </FormField>
-      </Surface>
-
-      <Surface>
-        <FormField isInvalid={fieldState.invalid} isDisabled isRequired>
-          <FormField.Label>Temperatura máxima</FormField.Label>
-
-          <FormField.Input prefix={<Icons.ThermometerSun size={20} />} keyboardType="numeric" placeholder="Ex: 30°" />
-
-          <FormField.Description>Temperatura máxima recomendada</FormField.Description>
-          <FormField.Error> {fieldState.error?.message} </FormField.Error>
-        </FormField>
-      </Surface>
-    </ScreenWrapper>
+    <ModalWrapper>
+      <FormProvider {...form}>
+        <KeyboardAwareScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            styles.container,
+            { paddingBottom: getPlatformBottomSpacing(paddingBottom, theme.spacings[18], false) },
+          ]}
+        >
+          <Header isModal title={false ? "Editar Planta" : "Adicionar Planta"} />
+          <ImageUriField />
+          <NameField inputRef={refs.nameRef} nextRef={refs.locationRef} />
+          <LocationField inputRef={refs.locationRef} />
+          <SunlightField options={options} />
+          <TemperatureMinField inputRef={refs.temperatureMinRef} nextRef={refs.temperatureMaxRef} />
+          <TemperatureMaxField inputRef={refs.temperatureMaxRef} nextRef={refs.humidityRef} />
+          <HumidityField inputRef={refs.humidityRef} />
+          <SubmitButton onPress={onSubmit} label="Adicionar planta" />
+        </KeyboardAwareScrollView>
+      </FormProvider>
+    </ModalWrapper>
   );
 }

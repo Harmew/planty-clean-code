@@ -19,7 +19,7 @@ jest.mock("@shared/utils/theme", () => ({
   getThemeColors: (...args: unknown[]) => mockGetThemeColors(...args),
 }));
 
-jest.mock("../form-field.component", () => ({
+jest.mock("../form-field.context", () => ({
   useFormField: () => mockUseFormField(),
 }));
 
@@ -49,7 +49,7 @@ describe("form-field-input-component", () => {
     });
 
     mockGetThemeColors.mockReturnValue({
-      background: "#FFFFFF",
+      surface: "#FFFFFF",
       text: "#000000",
     });
 
@@ -211,7 +211,7 @@ describe("form-field-input-component", () => {
     });
 
     mockGetThemeColors.mockReturnValue({
-      background: "#111111",
+      surface: "#111111",
       text: "#FFFFFF",
     });
 

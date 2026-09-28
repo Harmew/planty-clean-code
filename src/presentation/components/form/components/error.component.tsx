@@ -6,7 +6,7 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 import { Typography } from "@presentation/components/common";
 
 import { ANIMATION_DURATION, ANIMATION_EASING } from "../constants";
-import { useFormField } from "../form-field.component";
+import { useFormField } from "../form-field.context";
 
 export const ErrorComponent = React.forwardRef<View, React.PropsWithChildren>(({ children }, ref) => {
   const { isInvalid } = useFormField();

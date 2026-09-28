@@ -4,7 +4,7 @@ import { View } from "react-native";
 // Presentation
 import { Typography } from "@presentation/components/common";
 
-import { useFormField } from "../form-field.component";
+import { useFormField } from "../form-field.context";
 
 export const LabelComponent = React.forwardRef<View, React.PropsWithChildren>(({ children }, ref) => {
   const { isRequired } = useFormField();

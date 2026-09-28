@@ -10,7 +10,7 @@ import { useTheme } from "@presentation/hooks/use-theme";
 // Shared
 import { getThemeColors } from "@shared/utils/theme";
 
-import { useFormField } from "../form-field.component";
+import { useFormField } from "../form-field.context";
 
 import type { SelectProps } from "../types";
 
@@ -26,7 +26,7 @@ export function SelectComponent<T>({
   const [isOpen, setOpen] = React.useState(false);
 
   const { theme, dark } = useTheme();
-  const { background, overlay } = getThemeColors(dark);
+  const { surface, background, overlay } = getThemeColors(dark);
   const { isDisabled, isInvalid } = useFormField();
 
   const progress = useSharedValue<number>(0);
@@ -37,7 +37,7 @@ export function SelectComponent<T>({
     });
   }, [isOpen, progress]);
 
-  const borderColor = isInvalid ? theme.colors.red500 : background;
+  const borderColor = isInvalid ? theme.colors.red500 : surface;
 
   const selectedOption = options.find((option) => option.value === value);
   const selectedLabel = selectedOption?.label;
@@ -65,7 +65,7 @@ export function SelectComponent<T>({
         style={StyleSheet.compose(styles.container, {
           borderColor,
           borderRadius: theme.radius[16],
-          backgroundColor: background,
+          backgroundColor: surface,
           paddingHorizontal: theme.spacings[12],
         })}
       >

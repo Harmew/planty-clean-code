@@ -13,7 +13,7 @@ export type InputProps = TextInputProps & {
   suffix?: React.ReactNode;
 };
 
-type SelectOption<T> = {
+export type SelectOption<T> = {
   label: string;
   value: T;
 };

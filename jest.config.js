@@ -27,8 +27,6 @@ module.exports = {
     "!src/**/index.ts",
 
     "!src/__tests__/**/*",
-    "!src/__tests__/setup/**/*",
-    "!src/__tests__/e2e/**/*",
 
     // arquivos só de tipos/interfaces ou barris de re-export puro: sem lógica de runtime para cobrir.
     "!src/domain/repositories/**",

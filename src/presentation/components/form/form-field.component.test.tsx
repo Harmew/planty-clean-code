@@ -3,7 +3,8 @@ import { Text } from "react-native";
 import { render } from "@testing-library/react-native";
 
 import React from "react";
-import { FormField, FormFieldRoot, useFormField } from "./form-field.component";
+import { FormField, FormFieldRoot } from "./form-field.component";
+import { useFormField } from "./form-field.context";
 
 const mockUseTheme = jest.fn();
 

@@ -12,7 +12,7 @@ const mockUseTheme = jest.fn();
 
 const mockGetThemeColors = jest.fn();
 
-jest.mock("../form-field.component", () => ({
+jest.mock("../form-field.context", () => ({
   useFormField: () => mockUseFormField(),
 }));
 
@@ -123,6 +123,7 @@ describe("form-field-select-component", () => {
     mockGetThemeColors.mockReturnValue({
       background: "#FFFFFF",
       overlay: "rgba(0, 0, 0, 0.5)",
+      surface: "#F0F0F0",
     });
 
     mockOnChange.mockClear();
