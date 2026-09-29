@@ -3,6 +3,7 @@ import { ArrowLeft } from "./arrow-left.component";
 import { ArrowRight } from "./arrow-right.component";
 import { ArrowUp } from "./arrow-up.component";
 import { Bell } from "./bell.component";
+import { Bot } from "./bot.component";
 import { CalendarDays } from "./calendar-days.component";
 import { CameraMinimalistic } from "./camera-minimalistic.component";
 import { Check } from "./check.component";
@@ -30,6 +31,7 @@ import { MinimalisticMagnifer } from "./minimalistic-magnifer.component";
 import { Pencil } from "./pencil.component";
 import { PlantIntro } from "./plant-intro.component";
 import { Plus } from "./plus.component";
+import { RotateCCW } from "./rotate-ccw.component";
 import { Scissors } from "./scissors.component";
 import { Settings } from "./settings.component";
 import { Shovel } from "./shovel.component";
@@ -56,6 +58,7 @@ export const Icons = {
   ChevronDown,
   ChevronUp,
   Bell,
+  Bot,
   CameraMinimalistic,
   ClipboardCheck,
   CPU,
@@ -75,6 +78,7 @@ export const Icons = {
   HeartPlus,
   HeartOff,
   Plus,
+  RotateCCW,
   CloudUpload,
   Trash,
   CloudDrizzle,
@@ -101,6 +105,7 @@ export type { ArrowLeftProps } from "./arrow-left.component";
 export type { ArrowRightProps } from "./arrow-right.component";
 export type { ArrowUpProps } from "./arrow-up.component";
 export type { BellProps } from "./bell.component";
+export type { BotProps } from "./bot.component";
 export type { CalendarDaysProps } from "./calendar-days.component";
 export type { CameraMinimalisticProps } from "./camera-minimalistic.component";
 export type { CheckProps } from "./check.component";
@@ -128,6 +133,7 @@ export type { MinimalisticMagniferProps } from "./minimalistic-magnifer.componen
 export type { PencilProps } from "./pencil.component";
 export type { PlantIntroProps } from "./plant-intro.component";
 export type { PlusProps } from "./plus.component";
+export type { RotateCCWProps } from "./rotate-ccw.component";
 export type { ScissorsProps } from "./scissors.component";
 export type { SettingsProps } from "./settings.component";
 export type { ShovelProps } from "./shovel.component";

@@ -122,6 +122,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-sqlite",
     "expo-sharing",
     "expo-image",
+    "react-native-blob-util",
     [
       "expo-splash-screen",
       {
@@ -144,10 +145,16 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-build-properties",
       {
+        ios: {
+          deploymentTarget: "17.0",
+        },
         android: {
-          enableProguardInReleaseBuilds: true,
-          enableMinifyInReleaseBuilds: true,
-          enableShrinkResourcesInReleaseBuilds: true,
+          minSdkVersion: 26,
+          android: {
+            enableProguardInReleaseBuilds: true,
+            enableMinifyInReleaseBuilds: true,
+            enableShrinkResourcesInReleaseBuilds: true,
+          },
         },
       },
     ],

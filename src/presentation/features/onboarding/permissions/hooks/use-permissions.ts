@@ -62,7 +62,7 @@ export function usePermissions() {
       permissions.notifications === "granted" &&
       permissions.gallery === "granted"
     ) {
-      router.replace("/(onboarding)/all-right");
+      router.replace("/(onboarding)/download-ai");
     } else {
       Alert.alert(
         "Permissões necessárias",

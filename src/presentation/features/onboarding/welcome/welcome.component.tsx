@@ -21,7 +21,7 @@ export function WelcomeScreen() {
     <ScreenWrapper
       style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18], false) }]}
     >
-      <ProgressLine maxWidth={150} percentage={33} />
+      <ProgressLine maxWidth={150} percentage={25} />
 
       <View style={styles.content}>
         <Animated.View entering={FadeInDown.delay(40)}>

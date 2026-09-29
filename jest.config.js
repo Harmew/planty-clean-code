@@ -13,6 +13,7 @@ module.exports = {
   setupFilesAfterEnv: [
     "<rootDir>/src/__tests__/setup/reanimated.setup.ts",
     "<rootDir>/src/__tests__/setup/safe-area.setup.ts",
+    "<rootDir>/src/__tests__/setup/react-native-executorch.setup.ts",
     "<rootDir>/src/__tests__/setup/async-storage.setup.ts",
     "<rootDir>/src/__tests__/setup/expo-notifications.setup.ts",
   ],

@@ -26,7 +26,7 @@ export function PermissionsScreen() {
     <ScreenWrapper
       style={[styles.container, { marginBottom: getPlatformBottomSpacing(marginBottom, theme.spacings[18], false) }]}
     >
-      <ProgressLine maxWidth={150} percentage={66} />
+      <ProgressLine maxWidth={150} percentage={50} />
 
       <View style={styles.content}>
         <Animated.View entering={FadeInDown.delay(40)}>

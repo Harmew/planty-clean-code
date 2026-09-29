@@ -46,7 +46,7 @@ describe("welcome-screen-component", () => {
     expect(screen.getByText("Continuar")).toBeTruthy();
   });
 
-  it("deve renderizar o progresso em 33%", async () => {
+  it("deve renderizar o progresso em 25%", async () => {
     await render(<WelcomeScreen />);
 
     expect(screen.getByTestId("progress-line-container")).toBeTruthy();

@@ -18,6 +18,7 @@ export default function OnboardingLayout() {
     >
       <Stack.Screen name="welcome" />
       <Stack.Screen name="permissions" />
+      <Stack.Screen name="download-ai" />
       <Stack.Screen name="all-right" />
     </Stack>
   );

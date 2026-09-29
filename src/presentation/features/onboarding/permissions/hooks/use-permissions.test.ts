@@ -141,7 +141,7 @@ describe("use-permissions", () => {
       result.current.handleContinue();
     });
 
-    expect(replace).toHaveBeenCalledWith("/(onboarding)/all-right");
+    expect(replace).toHaveBeenCalledWith("/(onboarding)/download-ai");
     expect(Alert.alert).not.toHaveBeenCalled();
   });
 

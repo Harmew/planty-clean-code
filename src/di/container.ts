@@ -27,7 +27,6 @@ import { ClearNotifications } from "@domain/usecases/notification/clear-notifica
 import { GetNotifications } from "@domain/usecases/notification/get-notifications.usecase";
 import { MarkNotificationAsRead } from "@domain/usecases/notification/mark-notification-as-read.usecase";
 import { ScheduleNotification } from "@domain/usecases/notification/schedule-notification.usecase";
-import { GeneratePlantData } from "@domain/usecases/plant/generate-plant-data.usecase";
 
 // Backup Use Cases
 import { ExportBackup } from "@domain/usecases/backup/export-backup.usecase";
@@ -44,6 +43,9 @@ import { RequestNotificationPermission } from "@domain/usecases/permissions/requ
 import { CompleteOnboarding } from "@domain/usecases/onboarding/complete-onboarding.usecase";
 import { IsOnboardingCompleted } from "@domain/usecases/onboarding/is-onboarding-completed.usecase";
 
+// AI Use Cases
+import { DownloadAIModel } from "@domain/usecases/ai/download-ai-model.usecase";
+
 // Repositories
 import { careHistoryRepository } from "@data/repositories/care-history.repository.impl";
 import { careRepository } from "@data/repositories/care.repository.impl";
@@ -51,7 +53,7 @@ import { notificationRepository } from "@data/repositories/notification.reposito
 import { plantRepository } from "@data/repositories/plant.repository.impl";
 
 // Infra
-import { aiService } from "@infra/ai/ai.service.impl";
+import { aiService } from "@infra/ai/executorch/ai.service.impl";
 import { hapticsService } from "@infra/haptics/haptics.service.impl";
 import { notificationService } from "@infra/notification/notification.service.impl";
 import { permissionsService } from "@infra/permissions/permissions.service.impl";
@@ -69,7 +71,6 @@ export const container = {
     imageStorage,
     CancelNotificationsByPlant(notificationRepository, notificationService),
   ),
-  generatePlantData: GeneratePlantData(aiService),
 
   getCaresByPlant: GetCaresByPlant(careRepository),
   createOrUpdateCares: CreateOrUpdateCares(
@@ -125,6 +126,8 @@ export const container = {
 
   isOnboardingCompleted: IsOnboardingCompleted(onboardingStorage),
   completeOnboarding: CompleteOnboarding(onboardingStorage),
+
+  downloadAIModel: DownloadAIModel(aiService),
 
   hapticsService,
 };

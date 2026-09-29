@@ -7,7 +7,6 @@ describe("container (DI)", () => {
     expect(typeof container.createPlant).toBe("function");
     expect(typeof container.updatePlant).toBe("function");
     expect(typeof container.deletePlant).toBe("function");
-    expect(typeof container.generatePlantData).toBe("function");
 
     expect(typeof container.getCaresByPlant).toBe("function");
     expect(typeof container.createOrUpdateCares).toBe("function");
@@ -20,7 +19,6 @@ describe("container (DI)", () => {
     expect(typeof container.markNotificationAsRead).toBe("function");
     expect(typeof container.scheduleNotification).toBe("function");
     expect(typeof container.cancelNotificationsByCare).toBe("function");
-    // expect(typeof container.cancelNotificationsByPlant).toBe("function");
     expect(typeof container.clearNotifications).toBe("function");
     expect(typeof container.cleanOldNotifications).toBe("function");
 
@@ -35,5 +33,7 @@ describe("container (DI)", () => {
 
     expect(typeof container.isOnboardingCompleted).toBe("function");
     expect(typeof container.completeOnboarding).toBe("function");
+
+    expect(typeof container.downloadAIModel).toBe("function");
   });
 });
