@@ -1,4 +1,4 @@
-import { getNotificationTitle, getNotificationBody } from "@shared/utils/notification";
+import { getNotificationBody, getNotificationTitle } from "@shared/utils/notification";
 
 describe("notification", () => {
   describe("getNotificationTitle", () => {
@@ -7,7 +7,7 @@ describe("notification", () => {
     });
 
     it("retorna o título para adubação", () => {
-      expect(getNotificationTitle("fertilizer")).toBe("Hora de adubar");
+      expect(getNotificationTitle("fertilize")).toBe("Hora de adubar");
     });
 
     it("retorna o título para poda", () => {
@@ -25,7 +25,7 @@ describe("notification", () => {
     });
 
     it("retorna o corpo para adubação", () => {
-      expect(getNotificationBody("Jiboia", "fertilizer")).toBe("Chegou a hora de adubar a planta Jiboia");
+      expect(getNotificationBody("Jiboia", "fertilize")).toBe("Chegou a hora de adubar a planta Jiboia");
     });
 
     it("retorna o corpo para poda", () => {

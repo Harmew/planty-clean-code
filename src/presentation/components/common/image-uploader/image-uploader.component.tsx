@@ -12,6 +12,7 @@ import { Spinner } from "../spinner";
 import { Typography } from "../typography";
 
 // Shared
+import { getAlertOptions } from "@shared/utils/alert";
 import { getThemeColors } from "@shared/utils/theme";
 
 import { FullWindowOverlay } from "../full-window-overlay";
@@ -46,7 +47,13 @@ export const ImageUploader = ({
       );
     } catch (error) {
       setIsPickingMedia(false);
-      Alert.alert("Não foi possível selecionar a imagem", String(error));
+
+      Alert.alert(
+        "Não foi possível selecionar a imagem",
+        (error as Error).message,
+        [{ text: "Entendi" }],
+        getAlertOptions(dark),
+      );
     }
   };
 

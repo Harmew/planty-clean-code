@@ -18,6 +18,7 @@ import { PlantItem } from "./components/plant-item.component";
 import { PlantsEmpty } from "./components/plants-empty.component";
 import { PlantsFooter } from "./components/plants-footer.component";
 import { PlantsHeader } from "./components/plants-header.component";
+
 import { useMyPlants } from "./hooks/use-my-plants";
 import { createStyles } from "./styles";
 

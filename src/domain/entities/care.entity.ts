@@ -1,7 +1,7 @@
 /**
  * Representa os tipos de cuidados que podem ser realizados em uma planta.
  */
-export type CareType = "water" | "fertilizer" | "prune" | "repot";
+export type CareType = "water" | "fertilize" | "prune" | "repot";
 
 /**
  * Representa um cuidado com suas propriedades e características.

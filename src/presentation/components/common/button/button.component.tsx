@@ -27,6 +27,7 @@ export function Button({
     <PressableFeedback
       disabled={disabled || isLoading}
       accessibilityRole="button"
+      hitSlop={12}
       accessibilityLabel={isIconOnly || isLoading ? "Botão de ação" : undefined}
       {...props}
       style={[

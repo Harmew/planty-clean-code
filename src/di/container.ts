@@ -45,6 +45,7 @@ import { IsOnboardingCompleted } from "@domain/usecases/onboarding/is-onboarding
 
 // AI Use Cases
 import { DownloadAIModel } from "@domain/usecases/ai/download-ai-model.usecase";
+import { GeneratePlantData } from "@domain/usecases/ai/generate-plant-data.usecase";
 
 // Repositories
 import { careHistoryRepository } from "@data/repositories/care-history.repository.impl";
@@ -128,6 +129,7 @@ export const container = {
   completeOnboarding: CompleteOnboarding(onboardingStorage),
 
   downloadAIModel: DownloadAIModel(aiService),
+  generatePlantData: GeneratePlantData(aiService),
 
   hapticsService,
 };

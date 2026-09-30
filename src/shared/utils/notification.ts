@@ -5,7 +5,7 @@ export const getNotificationTitle = (type: CareType): string => {
     case "water":
       return "Hora de regar";
 
-    case "fertilizer":
+    case "fertilize":
       return "Hora de adubar";
 
     case "prune":
@@ -21,7 +21,7 @@ export const getNotificationBody = (plantName: string, type: CareType): string =
     case "water":
       return `A planta ${plantName} precisa de água!`;
 
-    case "fertilizer":
+    case "fertilize":
       return `Chegou a hora de adubar a planta ${plantName}`;
 
     case "prune":

@@ -98,16 +98,11 @@ export function SelectComponent<T>({
             <Pressable testID="form-field-select-overlay" style={StyleSheet.absoluteFill} onPress={handleClose} />
           </Animated.View>
 
-          {/* Box */}
-
           <Animated.View
             pointerEvents="box-none"
             entering={FadeIn.duration(150)}
             exiting={FadeOut.duration(150)}
-            style={{
-              ...StyleSheet.absoluteFill,
-              justifyContent: "center",
-            }}
+            style={{ ...StyleSheet.absoluteFill, justifyContent: "center" }}
           >
             <Surface style={{ margin: theme.spacings[18] }}>
               <FlatList

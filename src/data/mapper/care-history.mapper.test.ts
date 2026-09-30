@@ -26,7 +26,7 @@ describe("care-history-mapper", () => {
       id: 2,
       plant_id: 2,
       care_schedule_id: null,
-      type: "fertilizer",
+      type: "fertilize",
       interval_days: 7,
       done_at: "2023-01-01T00:00:00Z",
     });
@@ -35,7 +35,7 @@ describe("care-history-mapper", () => {
       id: 2,
       plantId: 2,
       careScheduleId: null,
-      type: "fertilizer",
+      type: "fertilize",
       intervalDays: 7,
       doneAt: "2023-01-01T00:00:00Z",
     });

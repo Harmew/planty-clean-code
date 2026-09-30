@@ -19,7 +19,11 @@ export const FormFieldRoot = React.forwardRef<View, FormFieldProps>(
     const { theme } = useTheme();
 
     const contextValue = React.useMemo(
-      () => ({ isDisabled, isInvalid, isRequired }),
+      () => ({
+        isDisabled,
+        isInvalid,
+        isRequired,
+      }),
       [isDisabled, isInvalid, isRequired],
     );
 

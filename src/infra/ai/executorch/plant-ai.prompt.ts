@@ -32,5 +32,4 @@ Example response:
   "maxTemperature": 30,
   "humidity": 70
 }
-
 `;

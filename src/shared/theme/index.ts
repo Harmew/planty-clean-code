@@ -3,7 +3,7 @@ import { radius } from "./radius";
 import { shadows } from "./shadows";
 import { spacings } from "./spacings";
 import type { Theme } from "./types";
-import { fontLineHeights, fonts, fontSizes, fontWeights } from "./typography";
+import { fontLineHeights, fontSizes, fontWeights } from "./typography";
 
 export * from "./colors";
 export * from "./radius";
@@ -17,7 +17,6 @@ export const theme: Theme = {
   fontSizes,
   fontLineHeights,
   fontWeights,
-  fonts,
   spacings,
   radius,
   shadows,

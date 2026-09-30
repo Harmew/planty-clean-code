@@ -3,10 +3,11 @@ import { Pressable, View } from "react-native";
 import { Image } from "expo-image";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
+// Presentation
 import { Row, Surface, Typography } from "@presentation/components/common";
-
 import { useTheme } from "@presentation/hooks/use-theme";
 
+// Domain
 import type { Plant } from "@domain/entities/plant.entity";
 
 type PlantItemProps = {
@@ -38,7 +39,7 @@ export function PlantItem({ item, onPress, index }: Readonly<PlantItemProps>) {
             />
 
             <View style={{ flex: 1 }}>
-              <Typography numberOfLines={1} size={18}>
+              <Typography numberOfLines={1} weight={500}>
                 {item.name}
               </Typography>
 

@@ -4,7 +4,7 @@ export interface NotificationDto {
   care_schedule_id: number | null;
   title: string;
   body: string;
-  type: "water" | "fertilizer" | "prune" | "repot";
+  type: "water" | "fertilize" | "prune" | "repot";
   read: number;
   scheduled_for: string;
   expo_notification_id: string | null;

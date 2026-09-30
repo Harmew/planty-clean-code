@@ -27,7 +27,7 @@ describe("care-mapper", () => {
     const care = careMapper({
       id: 2,
       plant_id: 2,
-      type: "fertilizer",
+      type: "fertilize",
       interval_days: 1,
       last_done: null,
       next_due: "2023-01-08T00:00:00Z",
@@ -37,7 +37,7 @@ describe("care-mapper", () => {
     expect(care).toEqual({
       id: 2,
       plantId: 2,
-      type: "fertilizer",
+      type: "fertilize",
       intervalDays: 1,
       lastDone: null,
       nextDue: "2023-01-08T00:00:00Z",

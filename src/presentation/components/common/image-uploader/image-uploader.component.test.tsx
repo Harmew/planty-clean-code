@@ -120,7 +120,12 @@ describe("image-uploader-component", () => {
       fireEvent.press(getByTestId("image-uploader-pressable"));
     });
 
-    expect(alertSpy).toHaveBeenCalledWith("Não foi possível selecionar a imagem", "Error: Permissão negada");
+    expect(alertSpy).toHaveBeenCalledWith(
+      "Não foi possível selecionar a imagem",
+      "Permissão negada",
+      [{ text: "Entendi" }],
+      { cancelable: false, userInterfaceStyle: "light" },
+    );
 
     alertSpy.mockRestore();
   });

@@ -35,7 +35,7 @@ export function Header({ title, showBackButton = true, isModal = false, rightCon
       </View>
 
       {/* centro REAL */}
-      <Typography style={{ flex: 1 }} size={18} align="center" numberOfLines={1}>
+      <Typography style={{ flex: 1 }} size={18} weight={500} align="center" numberOfLines={1}>
         {title}
       </Typography>
 
