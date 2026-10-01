@@ -7,6 +7,7 @@ import { Header, ModalWrapper } from "@presentation/components/layout";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
+import { CARE_TYPES } from "@shared/constants/care";
 import { getPlatformBottomSpacing } from "@shared/utils/platform";
 
 import { CareField } from "./components/form/care-field.component";
@@ -14,7 +15,6 @@ import { useUpdateCares } from "./hooks/use-update-cares";
 
 import { Surface, Typography } from "@presentation/components/common";
 import { SubmitButton } from "./components/form/submit-button.component";
-import { CARE_TYPES } from "./constants";
 import { createStyles } from "./styles";
 
 export function UpdateCaresScreen() {

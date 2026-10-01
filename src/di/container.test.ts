@@ -3,7 +3,9 @@ import { container } from "@di/container";
 describe("container (DI)", () => {
   it("expõe todos os casos de uso já resolvidos", () => {
     expect(typeof container.getPlants).toBe("function");
+    expect(typeof container.getPlantsWithCares).toBe("function");
     expect(typeof container.getPlantById).toBe("function");
+    expect(typeof container.getPlantByIdWithCares).toBe("function");
     expect(typeof container.createPlant).toBe("function");
     expect(typeof container.updatePlant).toBe("function");
     expect(typeof container.deletePlant).toBe("function");

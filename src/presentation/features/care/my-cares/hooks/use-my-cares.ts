@@ -18,7 +18,7 @@ export function useMyCares() {
   const router = useRouter();
   const { dark } = useTheme();
 
-  const { data: plants, isLoading } = useLiveQuery(["plants", "cares"], container.getPlantsWithCares, []);
+  const { data: plants } = useLiveQuery(["plants", "cares"], container.getPlantsWithCares, []);
 
   const pendingCares = React.useMemo(() => getPendingCares(plants), [plants]);
 
@@ -27,16 +27,20 @@ export function useMyCares() {
       try {
         await container.markCareAsDone(item.plantId, item.type);
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Não foi possível concluir o cuidado";
-        Alert.alert("Algo deu errado", message, [{ text: "Entendi" }], getAlertOptions(dark));
+        Alert.alert(
+          "Algo deu errado",
+          (error as Error).message ?? "Não foi possível concluir o cuidado",
+          [{ text: "Entendi" }],
+          getAlertOptions(dark),
+        );
       }
     },
     [dark],
   );
 
-  const addPlant = React.useCallback(() => {
+  const handleAddPlant = React.useCallback(() => {
     router.push("/(modals)/add-plant");
   }, [router]);
 
-  return { plants, isLoading, pendingCares, markAsDone, addPlant };
+  return { plants, pendingCares, markAsDone, handleAddPlant };
 }

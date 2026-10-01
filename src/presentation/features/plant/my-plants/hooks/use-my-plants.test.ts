@@ -2,10 +2,15 @@ import { renderHook } from "@testing-library/react-native";
 
 import { useRouter } from "expo-router";
 
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 import { useMyPlants } from "./use-my-plants";
 
 jest.mock("expo-router", () => ({
   useRouter: jest.fn(),
+}));
+
+jest.mock("@presentation/hooks/use-live-query", () => ({
+  useLiveQuery: jest.fn(),
 }));
 
 describe("use-my-plants-hook", () => {
@@ -17,6 +22,13 @@ describe("use-my-plants-hook", () => {
     jest.mocked(useRouter).mockReturnValue({
       push,
     } as unknown as ReturnType<typeof useRouter>);
+
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
+    });
   });
 
   it("deve navegar para adicionar planta", async () => {

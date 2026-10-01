@@ -7,9 +7,9 @@ import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
+import { CARE_MAP, type CareType } from "@shared/constants/care";
 import { getIconTextColor, getThemeColors } from "@shared/utils/theme";
 
-import { CARE_MAP, type CareType } from "../../constants";
 import type { Schema } from "../../schema";
 
 const onlyNumbers = (text: string) => text.replace(/\D/g, "");

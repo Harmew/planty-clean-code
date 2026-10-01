@@ -8,11 +8,11 @@ export type PlantWithCaresDto = {
   plant_sunlight: "low" | "medium" | "high";
   plant_location: string;
   plant_created_at: string;
-  care_id: number;
-  care_plant_id: number;
-  care_type: "water" | "fertilize" | "prune" | "repot";
-  care_interval_days: number;
+  care_id: number | null;
+  care_plant_id: number | null;
+  care_type: "water" | "fertilize" | "prune" | "repot" | null;
+  care_interval_days: number | null;
   care_last_done: string | null;
-  care_next_due: string;
-  care_created_at: string;
+  care_next_due: string | null;
+  care_created_at: string | null;
 };

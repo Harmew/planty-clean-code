@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import React from "react";
 
 // Presentation
 import { Row, Surface, Typography } from "@presentation/components/common";
@@ -6,14 +7,14 @@ import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
+import { CARE_MAP, CARE_TYPES, type CareType } from "@shared/constants/care";
 import { getThemeColors } from "@shared/utils/theme";
-import { CARE_MAP, CARE_TYPES, type CareType } from "../constants";
 
 // Domain
 import type { Care } from "@domain/entities/care.entity";
 import { PlantWithCares } from "../types";
 
-export function PlantCareCard({ plant }: Readonly<{ plant: PlantWithCares }>) {
+export const PlantCareCard = React.memo(function PlantCareCard({ plant }: Readonly<{ plant: PlantWithCares }>) {
   const { theme } = useTheme();
 
   return (
@@ -44,14 +45,14 @@ export function PlantCareCard({ plant }: Readonly<{ plant: PlantWithCares }>) {
       </Row>
     </Surface>
   );
-}
+});
 
 interface CareTileProps {
   type: CareType;
   care?: Care;
 }
 
-function CareTile({ type, care }: Readonly<CareTileProps>) {
+const CareTile = React.memo(function CareTile({ type, care }: Readonly<CareTileProps>) {
   const { theme, dark } = useTheme();
   const { background, surfaceDisabled } = getThemeColors(dark);
 
@@ -85,4 +86,4 @@ function CareTile({ type, care }: Readonly<CareTileProps>) {
       </Typography>
     </Surface>
   );
-}
+});

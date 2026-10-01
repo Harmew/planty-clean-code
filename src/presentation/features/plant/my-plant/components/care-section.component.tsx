@@ -7,12 +7,11 @@ import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
+import { CARE_MAP } from "@shared/constants/care";
 import { getIconTextColor, getSurfaceColor } from "@shared/utils/theme";
 
 // Domain
 import type { Care } from "@domain/entities/care.entity";
-
-import { CARE_MAP } from "../constants";
 
 interface CareSectionProps {
   cares: Care[];

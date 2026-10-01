@@ -32,10 +32,10 @@ export function useLiveQuery<T>(tables: string[], query: () => Promise<T>, initi
   React.useEffect(() => {
     const watched = new Set(tablesKey.split(","));
 
-    refetch();
+    void refetch();
 
     const subscription = addDatabaseChangeListener(({ tableName }) => {
-      if (watched.has(tableName)) refetch();
+      if (watched.has(tableName)) void refetch();
     });
 
     return () => {

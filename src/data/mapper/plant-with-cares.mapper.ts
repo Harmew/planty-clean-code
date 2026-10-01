@@ -26,6 +26,18 @@ export const plantWithCaresMapper = (rows: PlantWithCaresDto[]): PlantWithCares[
       plants.set(plant.id, plant);
     }
 
+    if (row.care_id === null) continue;
+
+    if (
+      row.care_plant_id === null ||
+      row.care_type === null ||
+      row.care_interval_days === null ||
+      row.care_next_due === null ||
+      row.care_created_at === null
+    ) {
+      throw new Error(`Cuidado ${row.care_id} possui dados incompletos`);
+    }
+
     plant.cares.push(
       careMapper({
         id: row.care_id,

@@ -8,7 +8,7 @@ import { Alert, type TextInput } from "react-native";
 import { container } from "@di/container";
 
 // Presentation
-import { usePlant } from "@presentation/hooks/use-plant";
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
@@ -21,7 +21,8 @@ export function useEditPlant() {
   const { dark } = useTheme();
   const router = useRouter();
 
-  const { plant } = usePlant(Number(id));
+  const query = React.useCallback(() => container.getPlantById(Number(id)), [id]);
+  const { data: plant } = useLiveQuery(["plants"], query, null);
 
   // Refs
   const nameRef = React.useRef<TextInput>(null);

@@ -8,7 +8,7 @@ import { container } from "@di/container";
 
 import { createPlant } from "@mocks/fixtures/plant.fixture";
 
-import { usePlant } from "@presentation/hooks/use-plant";
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 
 import { useEditPlant } from "./use-edit-plant";
 
@@ -19,12 +19,13 @@ jest.mock("expo-router", () => ({
 
 jest.mock("@di/container", () => ({
   container: {
+    getPlantById: jest.fn(),
     updatePlant: jest.fn(),
   },
 }));
 
-jest.mock("@presentation/hooks/use-plant", () => ({
-  usePlant: jest.fn(),
+jest.mock("@presentation/hooks/use-live-query", () => ({
+  useLiveQuery: jest.fn(),
 }));
 
 jest.mock("@presentation/hooks/use-theme", () => ({
@@ -54,12 +55,14 @@ describe("useEditPlant", () => {
       back,
     } as never);
 
-    jest.mocked(usePlant).mockReturnValue({
-      plant: createPlant({
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: createPlant({
         id: 42,
         image: "plant.jpg",
       }),
       isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
 
     alert = jest.spyOn(Alert, "alert").mockImplementation(() => {});
@@ -84,9 +87,11 @@ describe("useEditPlant", () => {
   });
 
   it("deve usar valores padrão quando a planta não existir", async () => {
-    jest.mocked(usePlant).mockReturnValue({
-      plant: null,
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: null,
       isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     } as never);
 
     const { result } = await renderHook(() => useEditPlant());

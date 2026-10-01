@@ -1,17 +1,22 @@
-import { Typography } from "@presentation/components/common";
-import { Menu } from "@presentation/components/common/menu";
-import { Header, ScreenWrapper } from "@presentation/components/layout";
-import { Icons } from "@presentation/components/svgs";
-import { useTheme } from "@presentation/hooks/use-theme";
-import { getPlatformBottomSpacing } from "@shared/utils/platform";
 import { getIconTextColor } from "@shared/utils/theme";
 import { ScrollView } from "react-native-gesture-handler";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+// Presentation
+import { Menu, Typography } from "@presentation/components/common";
+import { Header, ScreenWrapper } from "@presentation/components/layout";
+import { Icons } from "@presentation/components/svgs";
+import { useTheme } from "@presentation/hooks/use-theme";
+
+// Shared
+import { getPlatformBottomSpacing } from "@shared/utils/platform";
+
 import { CareSection } from "./components/care-section.component";
-import { HistorySection } from "./components/history-section.component";
+import { HistoryButton } from "./components/history-button.component";
 import { PlantCard } from "./components/plant-card.component";
 import { PlantInfo } from "./components/plant-info.component";
+
 import { useMyPlant } from "./hooks/use-my-plant";
 import { createStyles } from "./styles";
 
@@ -20,7 +25,7 @@ export function MyPlantScreen() {
   const styles = createStyles(theme);
   const { bottom: paddingBottom } = useSafeAreaInsets();
 
-  const { plant, cares, history, handleEditPlant, handleUpdateCares, handleDeletePlant } = useMyPlant();
+  const { plantWithCares, handleEditPlant, handleUpdateCares, handleDeletePlant, handleOpenHistory } = useMyPlant();
 
   return (
     <ScreenWrapper>
@@ -56,18 +61,18 @@ export function MyPlantScreen() {
           }
         />
 
-        {plant && (
+        {plantWithCares && (
           <>
             <Animated.View entering={FadeInDown.delay(40)}>
-              <PlantCard plant={plant} />
+              <PlantCard plant={plantWithCares} />
             </Animated.View>
 
             <Animated.View entering={FadeInDown.delay(80)}>
-              <PlantInfo plant={plant} />
+              <PlantInfo plant={plantWithCares} />
             </Animated.View>
 
-            <CareSection cares={cares} onUpdate={handleUpdateCares} />
-            <HistorySection plantId={plant.id} history={history} />
+            <CareSection cares={plantWithCares.cares} onUpdate={handleUpdateCares} />
+            <HistoryButton hasCare={plantWithCares.cares.length > 0} onPress={handleOpenHistory} />
           </>
         )}
       </ScrollView>

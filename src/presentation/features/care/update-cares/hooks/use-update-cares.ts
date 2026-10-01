@@ -11,12 +11,12 @@ import { container } from "@di/container";
 import { CareInput } from "@domain/usecases/care/create-or-update-cares.usecase";
 
 // Presentation
-import { usePlantCares } from "@presentation/hooks/use-plant-cares";
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
+import { CARE_TYPES } from "@shared/constants/care";
 import { getAlertOptions } from "@shared/utils/alert";
-import { CARE_TYPES } from "../constants";
 
 // Domain
 import type { Care } from "@domain/entities/care.entity";
@@ -47,7 +47,8 @@ export function useUpdateCares() {
   const router = useRouter();
   const { dark } = useTheme();
 
-  const { cares } = usePlantCares(Number(id));
+  const query = React.useCallback(() => container.getCaresByPlant(Number(id)), [id]);
+  const { data: cares } = useLiveQuery(["cares"], query, []);
 
   const values = React.useMemo(() => toFormValues(cares), [cares]);
 

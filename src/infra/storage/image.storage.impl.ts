@@ -29,13 +29,13 @@ export const imageStorage: ImageStorage = {
     // 7. Copia o arquivo manipulado para o destino
     // OBS: aqui usamos o URI retornado pelo manipulator (manipulatedResult.uri)
     const source = new File(manipulatedResult.uri);
-    source.copy(destination);
+    void source.copy(destination);
 
     // 8. Retorna o URI final (ex: file:///…/Documents/123456789.jpg)
     return destination.uri;
   },
 
-  async deleteImage(path) {
+  deleteImage(path) {
     try {
       // 1. Cria referência do arquivo
       const file = new File(path);
@@ -50,7 +50,7 @@ export const imageStorage: ImageStorage = {
     }
   },
 
-  async readImage(path) {
+  readImage(path) {
     try {
       const file = new File(path);
 
@@ -65,7 +65,7 @@ export const imageStorage: ImageStorage = {
     }
   },
 
-  async saveBase64(base64, fileName) {
+  saveBase64(base64, fileName) {
     const file = new File(Paths.document, fileName);
 
     file.write(base64, {

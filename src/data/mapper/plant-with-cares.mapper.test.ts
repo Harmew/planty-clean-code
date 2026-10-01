@@ -65,4 +65,29 @@ describe("plant-with-cares-mapper", () => {
       }),
     ]);
   });
+
+  it("não cria cuidado quando a planta não possui cuidados", () => {
+    const [plant] = plantWithCaresMapper([
+      {
+        plant_id: 1,
+        plant_name: "Jiboia",
+        plant_image: null,
+        plant_location: "Sala",
+        plant_sunlight: "medium",
+        plant_temperature_min: null,
+        plant_temperature_max: null,
+        plant_humidity: null,
+        plant_created_at: "2026-01-01T00:00:00.000Z",
+        care_id: null,
+        care_plant_id: null,
+        care_type: null,
+        care_interval_days: null,
+        care_last_done: null,
+        care_next_due: null,
+        care_created_at: null,
+      },
+    ]);
+
+    expect(plant.cares).toEqual([]);
+  });
 });

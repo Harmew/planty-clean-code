@@ -6,6 +6,7 @@
 // Plant Use Cases
 import { CreatePlant } from "@domain/usecases/plant/create-plant.usecase";
 import { DeletePlant } from "@domain/usecases/plant/delete-plant.usecase";
+import { GetPlantByIdWithCares } from "@domain/usecases/plant/get-plant-by-id-with-cares.usecase";
 import { GetPlantById } from "@domain/usecases/plant/get-plant-by-id.usecase";
 import { GetPlantsWithCares } from "@domain/usecases/plant/get-plants-with-cares.usecase";
 import { GetPlants } from "@domain/usecases/plant/get-plants.usecase";
@@ -65,20 +66,19 @@ import { imageStorage } from "@infra/storage/image.storage.impl";
 import { onboardingStorage } from "@infra/storage/onboarding.storage.impl";
 
 const getPlantById = GetPlantById(plantRepository);
+const getPlantByIdWithCares = GetPlantByIdWithCares(plantRepository);
 const scheduleNotification = ScheduleNotification(notificationRepository, notificationService);
 const cancelNotificationsByCare = CancelNotificationsByCare(notificationRepository, notificationService);
+const cancelNotificationsByPlant = CancelNotificationsByPlant(notificationRepository, notificationService);
 
 export const container = {
   getPlants: GetPlants(plantRepository),
   getPlantsWithCares: GetPlantsWithCares(plantRepository),
   getPlantById,
+  getPlantByIdWithCares,
   createPlant: CreatePlant(plantRepository, imageStorage),
   updatePlant: UpdatePlant(plantRepository, imageStorage),
-  deletePlant: DeletePlant(
-    plantRepository,
-    imageStorage,
-    CancelNotificationsByPlant(notificationRepository, notificationService),
-  ),
+  deletePlant: DeletePlant(plantRepository, imageStorage, cancelNotificationsByPlant),
 
   getCaresByPlant: GetCaresByPlant(careRepository),
   createOrUpdateCares: CreateOrUpdateCares(
@@ -87,10 +87,7 @@ export const container = {
     scheduleNotification,
     cancelNotificationsByCare,
   ),
-  deleteCaresByPlant: DeleteCaresByPlant(
-    careRepository,
-    CancelNotificationsByCare(notificationRepository, notificationService),
-  ),
+  deleteCaresByPlant: DeleteCaresByPlant(careRepository, cancelNotificationsByPlant),
   markCareAsDone: MarkCareAsDone(
     careRepository,
     careHistoryRepository,
@@ -105,6 +102,7 @@ export const container = {
   getNotifications: GetNotifications(notificationRepository),
   markNotificationAsRead: MarkNotificationAsRead(notificationRepository),
   scheduleNotification: ScheduleNotification(notificationRepository, notificationService),
+  cancelNotificationsByPlant: CancelNotificationsByPlant(notificationRepository, notificationService),
   cancelNotificationsByCare: CancelNotificationsByCare(notificationRepository, notificationService),
   clearNotifications: ClearNotifications(notificationRepository, notificationService),
   cleanOldNotifications: CleanOldNotifications(notificationRepository, notificationService),

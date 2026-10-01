@@ -5,13 +5,14 @@ import type { NotificationService } from "@domain/services/notification.service"
 export const notificationService: NotificationService = {
   initialize() {
     ExpoNotifications.setNotificationHandler({
-      handleNotification: async () => ({
-        shouldShowBanner: true,
-        shouldShowList: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-        priority: ExpoNotifications.AndroidNotificationPriority.HIGH,
-      }),
+      handleNotification: () =>
+        Promise.resolve({
+          shouldShowBanner: true,
+          shouldShowList: true,
+          shouldPlaySound: false,
+          shouldSetBadge: false,
+          priority: ExpoNotifications.AndroidNotificationPriority.HIGH,
+        }),
     });
   },
 

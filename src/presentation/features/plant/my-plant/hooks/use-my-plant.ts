@@ -6,9 +6,7 @@ import { Alert } from "react-native";
 import { container } from "@di/container";
 
 // Presentation
-import { usePlant } from "@presentation/hooks/use-plant";
-import { usePlantCares } from "@presentation/hooks/use-plant-cares";
-import { usePlantHistory } from "@presentation/hooks/use-plant-history";
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
@@ -20,9 +18,8 @@ export function useMyPlant() {
 
   const router = useRouter();
 
-  const { plant } = usePlant(Number(id));
-  const { cares } = usePlantCares(Number(id));
-  const { history } = usePlantHistory(Number(id));
+  const query = React.useCallback(() => container.getPlantByIdWithCares(Number(id)), [id]);
+  const { data: plantWithCares } = useLiveQuery(["plants", "cares"], query, null);
 
   const deletePlant = React.useCallback(async () => {
     try {
@@ -32,6 +29,20 @@ export function useMyPlant() {
       Alert.alert("Algo deu errado", (error as Error).message, [{ text: "Entendi" }], getAlertOptions(dark));
     }
   }, [id, router, dark]);
+
+  const handleDeletePlant = React.useCallback(() => {
+    if (!plantWithCares) return;
+
+    Alert.alert(
+      "Excluir planta",
+      `Tem certeza que deseja excluir a planta "${plantWithCares.name}"?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Excluir", style: "destructive", onPress: deletePlant },
+      ],
+      getAlertOptions(dark),
+    );
+  }, [plantWithCares, deletePlant, dark]);
 
   const handleEditPlant = React.useCallback(() => {
     router.push({
@@ -47,19 +58,18 @@ export function useMyPlant() {
     });
   }, [router, id]);
 
-  const handleDeletePlant = React.useCallback(() => {
-    if (!plant) return;
+  const handleOpenHistory = React.useCallback(() => {
+    router.push({
+      pathname: "/plant-history",
+      params: { id: id },
+    });
+  }, [router, id]);
 
-    Alert.alert(
-      "Excluir planta",
-      `Tem certeza que deseja excluir a planta "${plant.name}"?`,
-      [
-        { text: "Cancelar", style: "cancel" },
-        { text: "Excluir", style: "destructive", onPress: deletePlant },
-      ],
-      getAlertOptions(dark),
-    );
-  }, [plant, deletePlant, dark]);
-
-  return { plant, cares, history, handleEditPlant, handleUpdateCares, handleDeletePlant };
+  return {
+    plantWithCares,
+    handleEditPlant,
+    handleUpdateCares,
+    handleDeletePlant,
+    handleOpenHistory,
+  };
 }

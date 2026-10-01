@@ -1,12 +1,12 @@
 import { fireEvent, render } from "@testing-library/react-native";
 
-import { usePlants } from "@presentation/hooks/use-plants";
+import { useLiveQuery } from "@presentation/hooks/use-live-query";
 
 import { MyPlantsScreen } from "./my-plants.component";
 
 import { createPlant } from "@mocks/fixtures/plant.fixture";
 
-jest.mock("@presentation/hooks/use-plants", () => ({ usePlants: jest.fn() }));
+jest.mock("@presentation/hooks/use-live-query", () => ({ useLiveQuery: jest.fn() }));
 
 const mockPush = jest.fn();
 
@@ -16,8 +16,11 @@ describe("my-plants-screen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    jest.mocked(usePlants).mockReturnValue({
-      plants: [],
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: [],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
   });
 
@@ -56,8 +59,11 @@ describe("my-plants-screen", () => {
       createPlant({ id: 2, name: "Monstera", location: "Quarto" }),
     ];
 
-    jest.mocked(usePlants).mockReturnValue({
-      plants,
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: plants,
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
 
     const { getByText } = await render(<MyPlantsScreen />);
@@ -69,8 +75,11 @@ describe("my-plants-screen", () => {
   });
 
   it("deve renderizar o botão de adicionar quando existem plantas", async () => {
-    jest.mocked(usePlants).mockReturnValue({
-      plants: [createPlant()],
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: [createPlant()],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
 
     const { getByText } = await render(<MyPlantsScreen />);
@@ -79,8 +88,11 @@ describe("my-plants-screen", () => {
   });
 
   it("deve navegar para adicionar planta quando existem plantas", async () => {
-    jest.mocked(usePlants).mockReturnValue({
-      plants: [createPlant()],
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: [createPlant()],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
 
     const { getByText } = await render(<MyPlantsScreen />);
@@ -93,8 +105,11 @@ describe("my-plants-screen", () => {
   it("deve navegar para os detalhes da planta", async () => {
     const plant = createPlant({ id: 123 });
 
-    jest.mocked(usePlants).mockReturnValue({
-      plants: [plant],
+    jest.mocked(useLiveQuery).mockReturnValue({
+      data: [plant],
+      isLoading: false,
+      error: null,
+      refetch: jest.fn(),
     });
 
     const { getByText } = await render(<MyPlantsScreen />);

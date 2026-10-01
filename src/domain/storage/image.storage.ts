@@ -12,18 +12,18 @@ export interface ImageStorage {
    * Deleta imagem
    * @param path URI da imagem a ser deletada
    */
-  deleteImage(path: string): Promise<void>;
+  deleteImage(path: string): void;
   /**
    * Lê imagem
    * @param path URI da imagem a ser lida
    * @description Retorna a imagem em base64 ou null caso não exista
    */
-  readImage(path: string): Promise<string | null>;
+  readImage(path: string): string | null;
   /**
    * Salva imagem em base64
    * @param base64 Base64 da imagem a ser salva
    * @param fileName Nome do arquivo a ser salvo
    * @description Salva a imagem em base64 no dispositivo e retorna o caminho da imagem salva
    */
-  saveBase64(base64: string, fileName: string): Promise<string>;
+  saveBase64(base64: string, fileName: string): string;
 }

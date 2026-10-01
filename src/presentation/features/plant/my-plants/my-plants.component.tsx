@@ -8,7 +8,6 @@ import type { Plant } from "@domain/entities/plant.entity";
 // Presentation
 import { ScreenWrapper } from "@presentation/components/layout";
 import { TAB_BAR_HEIGHT } from "@presentation/components/layout/tab-bar";
-import { usePlants } from "@presentation/hooks/use-plants";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared
@@ -23,12 +22,11 @@ import { useMyPlants } from "./hooks/use-my-plants";
 import { createStyles } from "./styles";
 
 export function MyPlantsScreen() {
-  const { plants } = usePlants();
   const { bottom: paddingBottom } = useSafeAreaInsets();
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
-  const { openAddPlant, openNotifications, openDetails } = useMyPlants();
+  const { plants, openAddPlant, openNotifications, openDetails } = useMyPlants();
 
   const renderItem = React.useCallback(
     ({ item, index }: { item: Plant; index: number }) => <PlantItem item={item} index={index} onPress={openDetails} />,
