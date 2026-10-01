@@ -12,7 +12,7 @@ export function createCareHistory(overrides: Partial<CareHistory> = {}): CareHis
   return {
     id: 1,
     plantId: 1,
-    careScheduleId: 1,
+    careId: 1,
     type: "water",
     intervalDays: 7,
     doneAt: "2023-01-01T00:00:00Z",

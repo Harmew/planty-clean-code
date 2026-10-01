@@ -39,7 +39,7 @@ describe("backup-mapper", () => {
           {
             id: backup.data.history[0].id,
             plant_id: backup.data.history[0].plantId,
-            care_schedule_id: backup.data.history[0].careScheduleId,
+            care_id: backup.data.history[0].careId,
             type: backup.data.history[0].type,
             interval_days: backup.data.history[0].intervalDays,
             done_at: backup.data.history[0].doneAt,
@@ -49,7 +49,7 @@ describe("backup-mapper", () => {
           {
             id: backup.data.notifications[0].id,
             plant_id: backup.data.notifications[0].plantId,
-            care_schedule_id: backup.data.notifications[0].careScheduleId,
+            care_id: backup.data.notifications[0].careId,
             title: backup.data.notifications[0].title,
             body: backup.data.notifications[0].body,
             type: backup.data.notifications[0].type,

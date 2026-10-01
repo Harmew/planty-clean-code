@@ -4,7 +4,7 @@ import type { Notification } from "@domain/entities/notification.entity";
 export const notificationMapper = (dto: NotificationDto): Notification => ({
   id: dto.id,
   plantId: dto.plant_id,
-  careScheduleId: dto.care_schedule_id,
+  careId: dto.care_id,
   title: dto.title,
   body: dto.body,
   type: dto.type,

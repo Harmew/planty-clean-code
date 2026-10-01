@@ -12,7 +12,7 @@ export function createNotification(overrides: Partial<Notification> = {}): Notif
   return {
     id: 1,
     plantId: 1,
-    careScheduleId: 1,
+    careId: 1,
     title: "Hora de regar",
     body: "A planta Jiboia precisa de água!",
     type: "water",

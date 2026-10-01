@@ -6,7 +6,7 @@ import type { CareType } from "./care.entity";
 export interface Notification {
   id: number;
   plantId: number | null;
-  careScheduleId: number | null;
+  careId: number | null;
   title: string;
   body: string;
   type: CareType;

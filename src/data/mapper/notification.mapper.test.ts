@@ -5,7 +5,7 @@ describe("notification-mapper", () => {
     const notification = notificationMapper({
       id: 1,
       plant_id: 1,
-      care_schedule_id: 10,
+      care_id: 10,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water",
@@ -18,7 +18,7 @@ describe("notification-mapper", () => {
     expect(notification).toEqual({
       id: 1,
       plantId: 1,
-      careScheduleId: 10,
+      careId: 10,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water",
@@ -33,7 +33,7 @@ describe("notification-mapper", () => {
     const notification = notificationMapper({
       id: 2,
       plant_id: null,
-      care_schedule_id: null,
+      care_id: null,
       title: "Teste",
       body: "Notificação de teste",
       type: "fertilize",
@@ -46,7 +46,7 @@ describe("notification-mapper", () => {
     expect(notification).toEqual({
       id: 2,
       plantId: null,
-      careScheduleId: null,
+      careId: null,
       title: "Teste",
       body: "Notificação de teste",
       type: "fertilize",

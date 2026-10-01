@@ -15,7 +15,7 @@ export default function ModalsLayout() {
     <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: background } }}>
       <Stack.Screen name="add-plant" />
       <Stack.Screen name="edit-plant" />
-      <Stack.Screen name="add-care" />
+      <Stack.Screen name="update-cares" />
     </Stack>
   );
 }

@@ -16,7 +16,7 @@ export const careHistoryRepository: CareHistoryRepository = {
         SELECT
           id,
           plant_id,
-          care_schedule_id,
+          care_id,
           type,
           interval_days,
           done_at
@@ -35,14 +35,14 @@ export const careHistoryRepository: CareHistoryRepository = {
       `
         INSERT INTO care_history (
           plant_id,
-          care_schedule_id,
+          care_id,
           type,
           interval_days,
           done_at
         )
         VALUES (?, ?, ?, ?, ?)
       `,
-      [history.plantId, history.careScheduleId, history.type, history.intervalDays, history.doneAt],
+      [history.plantId, history.careId, history.type, history.intervalDays, history.doneAt],
     );
 
     return {

@@ -10,10 +10,10 @@ export interface Plant {
   id: number;
   name: string;
   image: string | null;
-  location: string;
-  sunlight: PlantSunlight;
   temperatureMin: string | null;
   temperatureMax: string | null;
   humidity: string | null;
+  sunlight: PlantSunlight;
+  location: string;
   createdAt: string;
 }

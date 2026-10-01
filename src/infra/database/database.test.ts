@@ -1,6 +1,6 @@
 import * as SQLite from "expo-sqlite";
 
-import { getAll, getFirst, initDatabase, run } from "@infra/database/database";
+import { getAll, getFirst, initDatabase, run, withTransaction } from "@infra/database/database";
 
 import { createDatabaseMock } from "@mocks/storage/database.mock";
 
@@ -52,7 +52,7 @@ describe("database", () => {
 
       expect(sql).toContain("CREATE TABLE IF NOT EXISTS plants");
 
-      expect(sql).toContain("CREATE TABLE IF NOT EXISTS care_schedule");
+      expect(sql).toContain("CREATE TABLE IF NOT EXISTS cares");
 
       expect(sql).toContain("CREATE TABLE IF NOT EXISTS care_history");
 
@@ -111,6 +111,38 @@ describe("database", () => {
       await getFirst("SELECT * FROM plants");
 
       expect(mockDatabase.getFirstAsync).toHaveBeenCalledWith("SELECT * FROM plants", []);
+    });
+  });
+
+  describe("withTransaction", () => {
+    it("executa a tarefa dentro de uma transação e retorna o resultado", async () => {
+      const task = jest.fn().mockResolvedValue("resultado");
+
+      mockDatabase.withTransactionAsync.mockImplementation(async (callback) => {
+        await callback();
+      });
+
+      await initDatabase();
+
+      const result = await withTransaction(task);
+
+      expect(mockDatabase.withTransactionAsync).toHaveBeenCalledTimes(1);
+      expect(task).toHaveBeenCalledTimes(1);
+      expect(result).toBe("resultado");
+    });
+
+    it("propaga o erro lançado pela tarefa", async () => {
+      const error = new Error("Erro na transação");
+      const task = jest.fn().mockRejectedValue(error);
+
+      mockDatabase.withTransactionAsync.mockImplementation(async (callback) => {
+        await callback();
+      });
+
+      await initDatabase();
+
+      await expect(withTransaction(task)).rejects.toThrow("Erro na transação");
+      expect(task).toHaveBeenCalledTimes(1);
     });
   });
 });

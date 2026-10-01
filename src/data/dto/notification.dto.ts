@@ -1,7 +1,7 @@
 export interface NotificationDto {
   id: number;
   plant_id: number | null;
-  care_schedule_id: number | null;
+  care_id: number | null;
   title: string;
   body: string;
   type: "water" | "fertilize" | "prune" | "repot";

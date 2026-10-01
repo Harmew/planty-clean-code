@@ -153,7 +153,7 @@ describe("create-or-update-cares-usecase", () => {
     expect(scheduleNotification).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 1,
-        careScheduleId: 10,
+        careId: 10,
         title: "Hora de regar",
         body: "A planta Jiboia precisa de água!",
         type: "water",
@@ -215,7 +215,7 @@ describe("create-or-update-cares-usecase", () => {
     expect(scheduleNotification).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 1,
-        careScheduleId: 20,
+        careId: 20,
         title: "Hora de regar",
         body: "A planta Jiboia precisa de água!",
         type: "water",
@@ -225,5 +225,145 @@ describe("create-or-update-cares-usecase", () => {
 
     expect(cancelNotificationsByCare).not.toHaveBeenCalled();
     expect(repository.update).not.toHaveBeenCalled();
+  });
+
+  describe("cuidados existentes habilitados", () => {
+    const NOW = new Date("2026-10-01T12:00:00.000Z");
+
+    const setup = () => {
+      const repository = createCareRepositoryMock();
+      const getPlantById = jest.fn().mockResolvedValue(createPlant({ id: 1, name: "Jiboia" }));
+      const scheduleNotification = jest.fn();
+      const cancelNotificationsByCare = jest.fn();
+
+      const createOrUpdateCares = CreateOrUpdateCares(
+        repository,
+        getPlantById,
+        scheduleNotification,
+        cancelNotificationsByCare,
+      );
+
+      return { repository, scheduleNotification, cancelNotificationsByCare, createOrUpdateCares };
+    };
+
+    beforeEach(() => {
+      jest.useFakeTimers().setSystemTime(NOW);
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it("não deve alterar nem reagendar o cuidado quando o intervalo não mudou", async () => {
+      const { repository, scheduleNotification, cancelNotificationsByCare, createOrUpdateCares } = setup();
+
+      repository.getByPlantAndType.mockResolvedValue(
+        createCare({ id: 10, plantId: 1, type: "water", intervalDays: 2 }),
+      );
+
+      await createOrUpdateCares(1, [{ type: "water", intervalDays: 2, enabled: true }]);
+
+      expect(cancelNotificationsByCare).not.toHaveBeenCalled();
+      expect(repository.update).not.toHaveBeenCalled();
+      expect(repository.create).not.toHaveBeenCalled();
+      expect(scheduleNotification).not.toHaveBeenCalled();
+    });
+
+    it("deve recalcular o vencimento a partir da última vez feito quando o intervalo mudar", async () => {
+      const { repository, scheduleNotification, createOrUpdateCares } = setup();
+
+      repository.getByPlantAndType.mockResolvedValue(
+        createCare({
+          id: 10,
+          plantId: 1,
+          type: "water",
+          intervalDays: 7,
+          lastDone: "2026-09-30T12:00:00.000Z",
+          createdAt: "2026-09-01T12:00:00.000Z",
+        }),
+      );
+
+      await createOrUpdateCares(1, [{ type: "water", intervalDays: 3, enabled: true }]);
+
+      // 30/09 + 3 dias = 03/10 (e não hoje + 3 = 04/10)
+      expect(repository.update).toHaveBeenCalledWith(
+        expect.objectContaining({ id: 10, intervalDays: 3, nextDue: "2026-10-03T12:00:00.000Z" }),
+      );
+      expect(scheduleNotification).toHaveBeenCalledWith(
+        expect.objectContaining({ careId: 10, scheduledFor: "2026-10-03T12:00:00.000Z" }),
+      );
+    });
+
+    it("deve usar a data de criação como base quando o cuidado nunca foi feito", async () => {
+      const { repository, createOrUpdateCares } = setup();
+
+      repository.getByPlantAndType.mockResolvedValue(
+        createCare({
+          id: 10,
+          plantId: 1,
+          type: "water",
+          intervalDays: 2,
+          lastDone: null,
+          createdAt: "2026-09-30T12:00:00.000Z",
+        }),
+      );
+
+      await createOrUpdateCares(1, [{ type: "water", intervalDays: 5, enabled: true }]);
+
+      // 30/09 + 5 dias = 05/10
+      expect(repository.update).toHaveBeenCalledWith(expect.objectContaining({ nextDue: "2026-10-05T12:00:00.000Z" }));
+    });
+
+    it("deve vencer a partir de agora quando o novo prazo já estiver no passado", async () => {
+      const { repository, scheduleNotification, createOrUpdateCares } = setup();
+
+      repository.getByPlantAndType.mockResolvedValue(
+        createCare({
+          id: 10,
+          plantId: 1,
+          type: "water",
+          intervalDays: 2,
+          lastDone: "2026-09-01T12:00:00.000Z",
+        }),
+      );
+
+      await createOrUpdateCares(1, [{ type: "water", intervalDays: 5, enabled: true }]);
+
+      // 01/09 + 5 dias já passou, então usa hoje + 5 = 06/10
+      expect(repository.update).toHaveBeenCalledWith(expect.objectContaining({ nextDue: "2026-10-06T12:00:00.000Z" }));
+      expect(scheduleNotification).toHaveBeenCalledWith(
+        expect.objectContaining({ scheduledFor: "2026-10-06T12:00:00.000Z" }),
+      );
+    });
+
+    it("deve criar o cuidado novo sem mexer nos existentes que não mudaram", async () => {
+      const { repository, scheduleNotification, cancelNotificationsByCare, createOrUpdateCares } = setup();
+
+      const existingWater = createCare({ id: 10, plantId: 1, type: "water", intervalDays: 2 });
+
+      repository.getByPlantAndType.mockImplementation(async (_plantId, type) =>
+        type === "water" ? existingWater : null,
+      );
+      repository.create.mockResolvedValue(
+        createCare({ id: 20, plantId: 1, type: "fertilize", intervalDays: 30, nextDue: "2026-10-31T12:00:00.000Z" }),
+      );
+
+      await createOrUpdateCares(1, [
+        { type: "water", intervalDays: 2, enabled: true },
+        { type: "fertilize", intervalDays: 30, enabled: true },
+      ]);
+
+      // O existente não é tocado
+      expect(cancelNotificationsByCare).not.toHaveBeenCalled();
+      expect(repository.update).not.toHaveBeenCalled();
+
+      // Só o novo é criado e agendado
+      expect(repository.create).toHaveBeenCalledTimes(1);
+      expect(repository.create).toHaveBeenCalledWith(
+        expect.objectContaining({ type: "fertilize", intervalDays: 30, nextDue: "2026-10-31T12:00:00.000Z" }),
+      );
+      expect(scheduleNotification).toHaveBeenCalledTimes(1);
+      expect(scheduleNotification).toHaveBeenCalledWith(expect.objectContaining({ careId: 20, type: "fertilize" }));
+    });
   });
 });

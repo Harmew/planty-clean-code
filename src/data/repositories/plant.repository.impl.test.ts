@@ -37,6 +37,48 @@ describe("plant-repository", () => {
     expect(result).toEqual([plant]);
   });
 
+  it("busca plantas com cuidados em uma consulta agregada", async () => {
+    const plant = createPlant();
+
+    (getAll as jest.Mock).mockResolvedValue([
+      {
+        plant_id: plant.id,
+        plant_name: plant.name,
+        plant_image: plant.image,
+        plant_location: plant.location,
+        plant_sunlight: plant.sunlight,
+        plant_temperature_min: plant.temperatureMin,
+        plant_temperature_max: plant.temperatureMax,
+        plant_humidity: plant.humidity,
+        plant_created_at: plant.createdAt,
+        care_id: 10,
+        care_plant_id: plant.id,
+        care_type: "water",
+        care_interval_days: 3,
+        care_last_done: null,
+        care_next_due: "2026-01-02T00:00:00.000Z",
+        care_created_at: "2026-01-01T00:00:00.000Z",
+      },
+    ]);
+
+    const result = await plantRepository.getAllWithCares();
+
+    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("LEFT JOIN cares"));
+    expect(result).toEqual([
+      {
+        ...plant,
+        cares: [
+          expect.objectContaining({
+            id: 10,
+            plantId: plant.id,
+            type: "water",
+            intervalDays: 3,
+          }),
+        ],
+      },
+    ]);
+  });
+
   it("busca uma planta pelo id", async () => {
     const plant = createPlant();
 
@@ -65,6 +107,57 @@ describe("plant-repository", () => {
     (getFirst as jest.Mock).mockResolvedValue(null);
 
     const result = await plantRepository.getById(999);
+
+    expect(result).toBeNull();
+  });
+
+  it("busca uma planta pelo id com seus cuidados", async () => {
+    const plant = createPlant();
+
+    (getAll as jest.Mock).mockResolvedValue([
+      {
+        plant_id: plant.id,
+        plant_name: plant.name,
+        plant_image: plant.image,
+        plant_location: plant.location,
+        plant_sunlight: plant.sunlight,
+        plant_temperature_min: plant.temperatureMin,
+        plant_temperature_max: plant.temperatureMax,
+        plant_humidity: plant.humidity,
+        plant_created_at: plant.createdAt,
+        care_id: 10,
+        care_plant_id: plant.id,
+        care_type: "water",
+        care_interval_days: 3,
+        care_last_done: null,
+        care_next_due: "2026-01-02T00:00:00.000Z",
+        care_created_at: "2026-01-01T00:00:00.000Z",
+      },
+    ]);
+
+    const result = await plantRepository.getByIdWithCares(plant.id);
+
+    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE p.id = ?"), [plant.id]);
+
+    expect(result).toEqual({
+      ...plant,
+      cares: [
+        expect.objectContaining({
+          id: 10,
+          plantId: plant.id,
+          type: "water",
+          intervalDays: 3,
+        }),
+      ],
+    });
+  });
+
+  it("retorna null quando a planta com cuidados não existe", async () => {
+    (getAll as jest.Mock).mockResolvedValue([]);
+
+    const result = await plantRepository.getByIdWithCares(999);
+
+    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE p.id = ?"), [999]);
 
     expect(result).toBeNull();
   });

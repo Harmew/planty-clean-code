@@ -103,7 +103,7 @@ describe("use-plant-cares", () => {
     expect(container.getCaresByPlant).toHaveBeenCalledTimes(1);
   });
 
-  it("deve refazer a busca quando a tabela care_schedule sofrer alteração", async () => {
+  it("deve refazer a busca quando a tabela cares sofrer alteração", async () => {
     const care1 = createCare({
       id: 1,
       plantId: 1,
@@ -120,7 +120,7 @@ describe("use-plant-cares", () => {
     const { result } = await renderHook(() => usePlantCares(1));
 
     await act(() => {
-      emitChange(listener, "care_schedule");
+      emitChange(listener, "cares");
     });
 
     await waitFor(() => {

@@ -15,7 +15,7 @@ export const careRepository: CareRepository = {
           last_done,
           next_due,
           created_at
-        FROM care_schedule
+        FROM cares
         ORDER BY next_due ASC
       `,
     );
@@ -34,7 +34,7 @@ export const careRepository: CareRepository = {
           last_done,
           next_due,
           created_at
-        FROM care_schedule
+        FROM cares
         WHERE plant_id = ?
         ORDER BY next_due ASC
       `,
@@ -55,7 +55,7 @@ export const careRepository: CareRepository = {
           last_done,
           next_due,
           created_at
-        FROM care_schedule
+        FROM cares
         WHERE plant_id = ?
           AND type = ?
       `,
@@ -68,7 +68,7 @@ export const careRepository: CareRepository = {
   async create(care) {
     const result = await run(
       `
-        INSERT INTO care_schedule (
+        INSERT INTO cares (
           plant_id,
           type,
           interval_days,
@@ -90,7 +90,7 @@ export const careRepository: CareRepository = {
   async update(care) {
     await run(
       `
-        UPDATE care_schedule
+        UPDATE cares
         SET
           type = ?,
           interval_days = ?,
@@ -105,7 +105,7 @@ export const careRepository: CareRepository = {
   async delete(id) {
     await run(
       `
-        DELETE FROM care_schedule
+        DELETE FROM cares
         WHERE id = ?
       `,
       [id],
@@ -115,7 +115,7 @@ export const careRepository: CareRepository = {
   async deleteByPlantId(plantId) {
     await run(
       `
-        DELETE FROM care_schedule
+        DELETE FROM cares
         WHERE plant_id = ?
       `,
       [plantId],

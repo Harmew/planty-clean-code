@@ -7,7 +7,7 @@ import type { NotificationService } from "@domain/services/notification.service"
 
 type ScheduleNotificationInput = {
   plantId: number;
-  careScheduleId: number;
+  careId: number;
   title: string;
   body: string;
   type: CareType;
@@ -34,7 +34,7 @@ export const ScheduleNotification =
     try {
       return await repository.create({
         plantId: input.plantId,
-        careScheduleId: input.careScheduleId,
+        careId: input.careId,
         title: input.title,
         body: input.body,
         type: input.type,

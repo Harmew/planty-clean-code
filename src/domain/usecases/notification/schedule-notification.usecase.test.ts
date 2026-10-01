@@ -12,7 +12,7 @@ describe("schedule-notification-usecase", () => {
     const notification = createNotification({
       id: 1,
       plantId: 10,
-      careScheduleId: 20,
+      careId: 20,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water",
@@ -26,7 +26,7 @@ describe("schedule-notification-usecase", () => {
 
     const input = {
       plantId: 10,
-      careScheduleId: 20,
+      careId: 20,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water" as const,
@@ -44,7 +44,7 @@ describe("schedule-notification-usecase", () => {
     expect(repository.create).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 10,
-        careScheduleId: 20,
+        careId: 20,
         title: input.title,
         body: input.body,
         type: "water",
@@ -71,7 +71,7 @@ describe("schedule-notification-usecase", () => {
 
     await scheduleNotification({
       plantId: 1,
-      careScheduleId: 2,
+      careId: 2,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water",
@@ -104,7 +104,7 @@ describe("schedule-notification-usecase", () => {
 
     const input = {
       plantId: 10,
-      careScheduleId: 20,
+      careId: 20,
       title: "Hora de regar",
       body: "A planta Jiboia precisa de água!",
       type: "water" as const,

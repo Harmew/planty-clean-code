@@ -25,7 +25,7 @@ export const initDatabase = async () => {
       created_at TEXT NOT NULL
     );
 
-    CREATE TABLE IF NOT EXISTS care_schedule (
+    CREATE TABLE IF NOT EXISTS cares (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       plant_id INTEGER NOT NULL,
       type TEXT NOT NULL,
@@ -37,22 +37,28 @@ export const initDatabase = async () => {
       FOREIGN KEY (plant_id) REFERENCES plants(id) ON DELETE CASCADE
     );
 
+    CREATE INDEX IF NOT EXISTS idx_cares_plant_due
+      ON cares (plant_id, next_due);
+
+    CREATE UNIQUE INDEX IF NOT EXISTS idx_cares_plant_type
+      ON cares (plant_id, type);
+
     CREATE TABLE IF NOT EXISTS care_history (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       plant_id INTEGER NOT NULL,
-      care_schedule_id INTEGER,
+      care_id INTEGER,
       type TEXT NOT NULL,
       interval_days INTEGER NOT NULL,
       done_at TEXT NOT NULL,
 
       FOREIGN KEY (plant_id) REFERENCES plants(id) ON DELETE CASCADE,
-      FOREIGN KEY (care_schedule_id) REFERENCES care_schedule(id) ON DELETE SET NULL
+      FOREIGN KEY (care_id) REFERENCES cares(id) ON DELETE SET NULL
     );
 
     CREATE TABLE IF NOT EXISTS notifications (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       plant_id INTEGER,
-      care_schedule_id INTEGER,
+      care_id INTEGER,
       title TEXT NOT NULL,
       body TEXT NOT NULL,
       type TEXT NOT NULL,
@@ -62,8 +68,17 @@ export const initDatabase = async () => {
       created_at TEXT NOT NULL,
 
       FOREIGN KEY (plant_id) REFERENCES plants(id) ON DELETE CASCADE,
-      FOREIGN KEY (care_schedule_id) REFERENCES care_schedule(id) ON DELETE SET NULL
+      FOREIGN KEY (care_id) REFERENCES cares(id) ON DELETE SET NULL
     );
+
+    CREATE INDEX IF NOT EXISTS idx_care_history_plant_done
+      ON care_history (plant_id, done_at);
+
+    CREATE INDEX IF NOT EXISTS idx_notifications_care
+      ON notifications (care_id);
+
+    CREATE INDEX IF NOT EXISTS idx_notifications_plant
+      ON notifications (plant_id);
   `);
 };
 
@@ -102,4 +117,20 @@ export const getAll = <T>(source: string, params: SQLite.SQLiteBindParams = []) 
  */
 export const getFirst = <T>(sql: string, params: SQLite.SQLiteBindParams = []) => {
   return getDatabase().getFirstAsync<T>(sql, params);
+};
+
+/**
+ * Executa uma função dentro de uma transação de banco de dados.
+ * Se a função lançar um erro, a transação será revertida.
+ * @param task Uma função assíncrona que contém as operações de banco de dados a serem executadas dentro da transação.
+ * @returns Uma promessa que resolve para o valor retornado pela função `task`.
+ */
+export const withTransaction = async <T>(task: () => Promise<T>): Promise<T> => {
+  let result!: T;
+
+  await getDatabase().withTransactionAsync(async () => {
+    result = await task();
+  });
+
+  return result;
 };

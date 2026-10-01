@@ -1,3 +1,4 @@
+import type { Care } from "@domain/entities/care.entity";
 import type { CareRepository } from "@domain/repositories/care.repository";
 
 /**
@@ -14,7 +15,7 @@ import type { CareRepository } from "@domain/repositories/care.repository";
 export function createCareRepositoryMock(): jest.Mocked<CareRepository> {
   return {
     getAll: jest.fn(),
-    create: jest.fn(),
+    create: jest.fn(async (care: Omit<Care, "id">) => ({ ...care, id: 1 })),
     getByPlantId: jest.fn(),
     getByPlantAndType: jest.fn(),
     update: jest.fn(),

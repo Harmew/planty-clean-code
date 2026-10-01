@@ -9,6 +9,8 @@ import type { GetPlantById } from "@domain/usecases/plant/get-plant-by-id.usecas
 
 import { getNotificationBody, getNotificationTitle } from "@shared/utils/notification";
 
+export type RunInTransaction = <T>(task: () => Promise<T>) => Promise<T>;
+
 export const MarkCareAsDone =
   (
     careRepository: CareRepository,
@@ -16,6 +18,7 @@ export const MarkCareAsDone =
     getPlantById: GetPlantById,
     cancelNotificationsByCare: CancelNotificationsByCare,
     scheduleNotification: ScheduleNotification,
+    runInTransaction: RunInTransaction = async (task) => task(),
   ) =>
   async (plantId: number, type: Care["type"]) => {
     const care = await careRepository.getByPlantAndType(plantId, type);
@@ -37,23 +40,25 @@ export const MarkCareAsDone =
 
     await cancelNotificationsByCare(care.id);
 
-    await careRepository.update({
-      ...care,
-      lastDone: doneAt.toISOString(),
-      nextDue: nextDue.toISOString(),
-    });
+    await runInTransaction(async () => {
+      await careRepository.update({
+        ...care,
+        lastDone: doneAt.toISOString(),
+        nextDue: nextDue.toISOString(),
+      });
 
-    await careHistoryRepository.create({
-      plantId: care.plantId,
-      careScheduleId: care.id,
-      type: care.type,
-      intervalDays: care.intervalDays,
-      doneAt: doneAt.toISOString(),
+      await careHistoryRepository.create({
+        plantId: care.plantId,
+        careId: care.id,
+        type: care.type,
+        intervalDays: care.intervalDays,
+        doneAt: doneAt.toISOString(),
+      });
     });
 
     await scheduleNotification({
       plantId: care.plantId,
-      careScheduleId: care.id,
+      careId: care.id,
       title: getNotificationTitle(care.type),
       body: getNotificationBody(plant.name, care.type),
       type: care.type,

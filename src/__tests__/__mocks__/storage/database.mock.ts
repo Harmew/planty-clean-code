@@ -9,5 +9,8 @@ export function createDatabaseMock() {
     runAsync: jest.fn(),
     getAllAsync: jest.fn(),
     getFirstAsync: jest.fn(),
+    withTransactionAsync: jest.fn(async (task: () => Promise<void>) => {
+      await task();
+    }),
   };
 }

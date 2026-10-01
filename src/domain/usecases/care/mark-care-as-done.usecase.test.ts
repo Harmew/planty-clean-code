@@ -122,7 +122,7 @@ describe("mark-care-as-done-usecase", () => {
     expect(careHistoryRepository.create).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 1,
-        careScheduleId: 10,
+        careId: 10,
         type: "water",
         intervalDays: 7,
         doneAt: expect.any(String),
@@ -132,7 +132,7 @@ describe("mark-care-as-done-usecase", () => {
     expect(scheduleNotification).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 1,
-        careScheduleId: 10,
+        careId: 10,
         title: "Hora de regar",
         body: "A planta Jiboia precisa de água!",
         type: "water",

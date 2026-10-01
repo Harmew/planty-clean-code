@@ -9,7 +9,7 @@ export const notificationRepository: NotificationRepository = {
       SELECT
         id,
         plant_id,
-        care_schedule_id,
+        care_id,
         title,
         body,
         type,
@@ -29,7 +29,7 @@ export const notificationRepository: NotificationRepository = {
       `
         INSERT INTO notifications (
           plant_id,
-          care_schedule_id,
+          care_id,
           title,
           body,
           type,
@@ -42,7 +42,7 @@ export const notificationRepository: NotificationRepository = {
       `,
       [
         notification.plantId,
-        notification.careScheduleId,
+        notification.careId,
         notification.title,
         notification.body,
         notification.type,
@@ -70,13 +70,13 @@ export const notificationRepository: NotificationRepository = {
     );
   },
 
-  async getByCareId(careScheduleId) {
+  async getByCareId(careId) {
     const rows = await getAll<NotificationDto>(
       `
         SELECT
           id,
           plant_id,
-          care_schedule_id,
+          care_id,
           title,
           body,
           type,
@@ -85,21 +85,21 @@ export const notificationRepository: NotificationRepository = {
           expo_notification_id,
           created_at
         FROM notifications
-        WHERE care_schedule_id = ?
+        WHERE care_id = ?
       `,
-      [careScheduleId],
+      [careId],
     );
 
     return rows.map(notificationMapper);
   },
 
-  async deleteByCareId(careScheduleId) {
+  async deleteByCareId(careId) {
     await run(
       `
         DELETE FROM notifications
-        WHERE care_schedule_id = ?
+        WHERE care_id = ?
       `,
-      [careScheduleId],
+      [careId],
     );
   },
 
@@ -109,7 +109,7 @@ export const notificationRepository: NotificationRepository = {
         SELECT
           id,
           plant_id,
-          care_schedule_id,
+          care_id,
           title,
           body,
           type,
@@ -146,7 +146,7 @@ export const notificationRepository: NotificationRepository = {
         SELECT
           id,
           plant_id,
-          care_schedule_id,
+          care_id,
           title,
           body,
           type,

@@ -82,11 +82,13 @@ describe("import-backup-usecase", () => {
 
     expect(imageStorage.saveBase64).toHaveBeenCalledWith("base64-image", "1.jpg");
 
-    expect(plantRepository.create).toHaveBeenCalledWith(backup.data.plants[0]);
+    const { id: plantId, ...plant } = backup.data.plants[0];
+    const { id: careId, ...care } = backup.data.cares[0];
+    const { id: historyId, ...history } = backup.data.history[0];
 
-    expect(careRepository.create).toHaveBeenCalledWith(backup.data.cares[0]);
-
-    expect(careHistoryRepository.create).toHaveBeenCalledWith(backup.data.history[0]);
+    expect(plantRepository.create).toHaveBeenCalledWith(plant);
+    expect(careRepository.create).toHaveBeenCalledWith(care);
+    expect(careHistoryRepository.create).toHaveBeenCalledWith(history);
   });
 
   it("não deve remover imagem quando a planta atual não possuir imagem", async () => {
@@ -178,7 +180,7 @@ describe("import-backup-usecase", () => {
     expect(notificationRepository.create).toHaveBeenCalledWith(
       expect.objectContaining({
         plantId: 1,
-        careScheduleId: backup.data.cares[0].id,
+        careId: backup.data.cares[0].id,
         type: "water",
         read: false,
         scheduledFor: "2099-01-10T06:00:00.000Z",

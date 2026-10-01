@@ -6,13 +6,11 @@ import type { Plant } from "@domain/entities/plant.entity";
 export interface Backup {
   schemaVersion: number;
   exportedAt: string;
-
   data: {
     plants: Plant[];
     cares: Care[];
     history: CareHistory[];
     notifications: Notification[];
   };
-
   images: Record<string, string>;
 }

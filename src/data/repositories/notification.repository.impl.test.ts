@@ -18,7 +18,7 @@ describe("notification-repository", () => {
     const row = {
       id: notification.id,
       plant_id: notification.plantId,
-      care_schedule_id: notification.careScheduleId,
+      care_id: notification.careId,
       title: notification.title,
       body: notification.body,
       type: notification.type,
@@ -50,7 +50,7 @@ describe("notification-repository", () => {
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO notifications"), [
       notification.plantId,
-      notification.careScheduleId,
+      notification.careId,
       notification.title,
       notification.body,
       notification.type,
@@ -79,7 +79,7 @@ describe("notification-repository", () => {
     const row = {
       id: notification.id,
       plant_id: notification.plantId,
-      care_schedule_id: notification.careScheduleId,
+      care_id: notification.careId,
       title: notification.title,
       body: notification.body,
       type: notification.type,
@@ -91,11 +91,9 @@ describe("notification-repository", () => {
 
     (getAll as jest.Mock).mockResolvedValue([row]);
 
-    const result = await notificationRepository.getByCareId(notification.careScheduleId!);
+    const result = await notificationRepository.getByCareId(notification.careId!);
 
-    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE care_schedule_id = ?"), [
-      notification.careScheduleId,
-    ]);
+    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE care_id = ?"), [notification.careId]);
 
     expect(result).toEqual([notification]);
   });
@@ -105,11 +103,9 @@ describe("notification-repository", () => {
 
     (run as jest.Mock).mockResolvedValue({});
 
-    await notificationRepository.deleteByCareId(notification.careScheduleId!);
+    await notificationRepository.deleteByCareId(notification.careId!);
 
-    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM notifications"), [
-      notification.careScheduleId,
-    ]);
+    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM notifications"), [notification.careId]);
   });
 
   it("busca notificações pela planta", async () => {
@@ -118,7 +114,7 @@ describe("notification-repository", () => {
     const row = {
       id: notification.id,
       plant_id: notification.plantId,
-      care_schedule_id: notification.careScheduleId,
+      care_id: notification.careId,
       title: notification.title,
       body: notification.body,
       type: notification.type,
@@ -161,7 +157,7 @@ describe("notification-repository", () => {
     const row = {
       id: notification.id,
       plant_id: notification.plantId,
-      care_schedule_id: notification.careScheduleId,
+      care_id: notification.careId,
       title: notification.title,
       body: notification.body,
       type: notification.type,
@@ -207,7 +203,7 @@ describe("notification-repository", () => {
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO notifications"), [
       notification.plantId,
-      notification.careScheduleId,
+      notification.careId,
       notification.title,
       notification.body,
       notification.type,

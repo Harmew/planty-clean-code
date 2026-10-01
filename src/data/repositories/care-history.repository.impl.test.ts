@@ -18,7 +18,7 @@ describe("care-history-repository", () => {
     const row = {
       id: history.id,
       plant_id: history.plantId,
-      care_schedule_id: history.careScheduleId,
+      care_id: history.careId,
       type: history.type,
       interval_days: history.intervalDays,
       done_at: history.doneAt,
@@ -39,7 +39,7 @@ describe("care-history-repository", () => {
     const row = {
       id: history.id,
       plant_id: history.plantId,
-      care_schedule_id: history.careScheduleId,
+      care_id: history.careId,
       type: history.type,
       interval_days: history.intervalDays,
       done_at: history.doneAt,
@@ -67,7 +67,7 @@ describe("care-history-repository", () => {
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO care_history"), [
       history.plantId,
-      history.careScheduleId,
+      history.careId,
       history.type,
       history.intervalDays,
       history.doneAt,

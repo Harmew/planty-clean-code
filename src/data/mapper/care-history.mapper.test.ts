@@ -5,7 +5,7 @@ describe("care-history-mapper", () => {
     const careHistory = careHistoryMapper({
       id: 1,
       plant_id: 1,
-      care_schedule_id: 1,
+      care_id: 1,
       type: "prune",
       interval_days: 7,
       done_at: "2023-01-01T00:00:00Z",
@@ -14,7 +14,7 @@ describe("care-history-mapper", () => {
     expect(careHistory).toEqual({
       id: 1,
       plantId: 1,
-      careScheduleId: 1,
+      careId: 1,
       type: "prune",
       intervalDays: 7,
       doneAt: "2023-01-01T00:00:00Z",
@@ -25,7 +25,7 @@ describe("care-history-mapper", () => {
     const careHistory = careHistoryMapper({
       id: 2,
       plant_id: 2,
-      care_schedule_id: null,
+      care_id: null,
       type: "fertilize",
       interval_days: 7,
       done_at: "2023-01-01T00:00:00Z",
@@ -34,7 +34,7 @@ describe("care-history-mapper", () => {
     expect(careHistory).toEqual({
       id: 2,
       plantId: 2,
-      careScheduleId: null,
+      careId: null,
       type: "fertilize",
       intervalDays: 7,
       doneAt: "2023-01-01T00:00:00Z",

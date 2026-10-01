@@ -48,18 +48,50 @@ export const ImportBackup =
     }
 
     // 5. Restaura as plantas
+    const plantIds = new Map<number, number>();
+
     for (const plant of backup.data.plants) {
-      await plantRepository.create(plant);
+      const { id, ...plantData } = plant;
+      const createdPlant = await plantRepository.create(plantData);
+
+      plantIds.set(id, createdPlant.id);
     }
 
     // 6. Restaura os cuidados
+    const careIds = new Map<number, number>();
+
     for (const care of backup.data.cares) {
-      await careRepository.create(care);
+      const plantId = plantIds.get(care.plantId);
+
+      if (plantId === undefined) {
+        continue;
+      }
+
+      const { id, ...careData } = care;
+      const createdCare = await careRepository.create({
+        ...careData,
+        plantId,
+      });
+
+      careIds.set(id, createdCare.id);
     }
 
     // 7. Restaura o histórico
     for (const history of backup.data.history) {
-      await careHistoryRepository.create(history);
+      const plantId = plantIds.get(history.plantId);
+
+      if (plantId === undefined) {
+        continue;
+      }
+
+      const careId = history.careId === null ? null : (careIds.get(history.careId) ?? null);
+      const { id, ...historyData } = history;
+
+      await careHistoryRepository.create({
+        ...historyData,
+        plantId,
+        careId,
+      });
     }
 
     // 8. Recria as notificações futuras
@@ -76,9 +108,11 @@ export const ImportBackup =
         continue;
       }
 
-      const plant = plantsById.get(care.plantId);
+      const plantId = plantIds.get(care.plantId);
+      const careId = careIds.get(care.id);
+      const plant = plantId === undefined ? undefined : plantsById.get(plantId);
 
-      if (!plant) {
+      if (plantId === undefined || !plant || careId === undefined) {
         continue;
       }
 
@@ -89,8 +123,8 @@ export const ImportBackup =
       });
 
       await notificationRepository.create({
-        plantId: care.plantId,
-        careScheduleId: care.id,
+        plantId,
+        careId,
         title: getNotificationTitle(care.type),
         body: getNotificationBody(plant.name, care.type),
         type: care.type,

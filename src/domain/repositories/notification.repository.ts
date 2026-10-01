@@ -23,16 +23,16 @@ export interface NotificationRepository {
   markAsRead(id: number): Promise<void>;
   /**
    * Busca todas as notificações associadas a um determinado agendamento de cuidado no banco de dados.
-   * @param careScheduleId - O ID do agendamento de cuidado para o qual as notificações devem ser buscadas.
+   * @param careId - O ID do agendamento de cuidado para o qual as notificações devem ser buscadas.
    * @returns Uma promessa que resolve para um array de notificações associadas ao agendamento de cuidado especificado.
    */
-  getByCareId(careScheduleId: number): Promise<Notification[]>;
+  getByCareId(careId: number): Promise<Notification[]>;
   /**
    * Exclui todas as notificações associadas a um determinado agendamento de cuidado no banco de dados.
-   * @param careScheduleId - O ID do agendamento de cuidado para o qual as notificações devem ser excluídas.
+   * @param careId - O ID do agendamento de cuidado para o qual as notificações devem ser excluídas.
    * @returns Uma promessa que resolve quando a operação for concluída.
    */
-  deleteByCareId(careScheduleId: number): Promise<void>;
+  deleteByCareId(careId: number): Promise<void>;
   /**
    * Busca todas as notificações associadas a uma determinada planta no banco de dados.
    * @param plantId - O ID da planta para a qual as notificações devem ser buscadas.

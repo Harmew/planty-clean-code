@@ -8,10 +8,16 @@ import type { GetPlantById } from "@domain/usecases/plant/get-plant-by-id.usecas
 
 import { getNotificationBody, getNotificationTitle } from "@shared/utils/notification";
 
-type CareInput = {
+export type CareInput = {
   type: Care["type"];
   intervalDays: number;
   enabled: boolean;
+};
+
+const addDays = (date: Date, days: number) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
 };
 
 export const CreateOrUpdateCares =
@@ -28,25 +34,42 @@ export const CreateOrUpdateCares =
       throw new Error("Planta não encontrada");
     }
 
-    for (const input of cares) {
+    const scheduleCareNotification = (careId: number, type: Care["type"], scheduledFor: string) =>
+      scheduleNotification({
+        plantId,
+        careId,
+        title: getNotificationTitle(type),
+        body: getNotificationBody(plant.name, type),
+        type,
+        scheduledFor,
+      });
+
+    const syncCare = async (input: CareInput) => {
       const existingCare = await repository.getByPlantAndType(plantId, input.type);
 
-      // Se o cuidado não estiver habilitado, removemos o cuidado existente (se houver) e cancelamos as notificações.
+      // Desabilitado: remove o cuidado existente (se houver) e cancela as notificações
       if (!input.enabled) {
-        if (existingCare) {
-          await cancelNotificationsByCare(existingCare.id);
-          await repository.delete(existingCare.id);
-        }
+        if (!existingCare) return;
 
-        continue;
+        await cancelNotificationsByCare(existingCare.id);
+        await repository.delete(existingCare.id);
+        return;
       }
 
       const now = new Date();
-      const nextDue = new Date(now);
-      nextDue.setDate(nextDue.getDate() + input.intervalDays);
 
       if (existingCare) {
+        // Nada mudou: preserva o vencimento e a notificação já agendada
+        if (existingCare.intervalDays === input.intervalDays) return;
+
         await cancelNotificationsByCare(existingCare.id);
+
+        // Recalcula a partir da última vez feito (ou da criação), sem empurrar o prazo para "hoje + intervalo"
+        const base = new Date(existingCare.lastDone ?? existingCare.createdAt);
+        const candidate = addDays(base, input.intervalDays);
+
+        // Se o novo prazo já passou, vence a partir de agora
+        const nextDue = candidate > now ? candidate : addDays(now, input.intervalDays);
 
         const updatedCare = {
           ...existingCare,
@@ -55,17 +78,8 @@ export const CreateOrUpdateCares =
         };
 
         await repository.update(updatedCare);
-
-        await scheduleNotification({
-          plantId,
-          careScheduleId: updatedCare.id,
-          title: getNotificationTitle(input.type),
-          body: getNotificationBody(plant.name, input.type),
-          type: input.type,
-          scheduledFor: updatedCare.nextDue,
-        });
-
-        continue;
+        await scheduleCareNotification(updatedCare.id, input.type, updatedCare.nextDue);
+        return;
       }
 
       const care = await repository.create({
@@ -73,17 +87,12 @@ export const CreateOrUpdateCares =
         type: input.type,
         intervalDays: input.intervalDays,
         lastDone: null,
-        nextDue: nextDue.toISOString(),
+        nextDue: addDays(now, input.intervalDays).toISOString(),
         createdAt: now.toISOString(),
       });
 
-      await scheduleNotification({
-        plantId,
-        careScheduleId: care.id,
-        title: getNotificationTitle(input.type),
-        body: getNotificationBody(plant.name, input.type),
-        type: input.type,
-        scheduledFor: care.nextDue,
-      });
-    }
+      await scheduleCareNotification(care.id, input.type, care.nextDue);
+    };
+
+    await Promise.all(cares.map(syncCare));
   };

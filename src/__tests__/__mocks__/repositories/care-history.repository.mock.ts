@@ -1,3 +1,4 @@
+import type { CareHistory } from "@domain/entities/care-history.entity";
 import type { CareHistoryRepository } from "@domain/repositories/care-history.repository";
 
 /**
@@ -14,7 +15,7 @@ import type { CareHistoryRepository } from "@domain/repositories/care-history.re
 export function createCareHistoryRepositoryMock(): jest.Mocked<CareHistoryRepository> {
   return {
     getAll: jest.fn(),
-    create: jest.fn(),
+    create: jest.fn(async (history: Omit<CareHistory, "id">) => ({ ...history, id: 1 })),
     getByPlantId: jest.fn(),
   };
 }

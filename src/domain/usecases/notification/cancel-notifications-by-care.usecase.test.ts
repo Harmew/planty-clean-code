@@ -12,12 +12,12 @@ describe("cancel-notifications-by-care-usecase", () => {
     const notifications = [
       createNotification({
         id: 1,
-        careScheduleId: 10,
+        careId: 10,
         expoNotificationId: "expo-1",
       }),
       createNotification({
         id: 2,
-        careScheduleId: 10,
+        careId: 10,
         expoNotificationId: "expo-2",
       }),
     ];
@@ -44,7 +44,7 @@ describe("cancel-notifications-by-care-usecase", () => {
     const notifications = [
       createNotification({
         id: 1,
-        careScheduleId: 10,
+        careId: 10,
         expoNotificationId: null,
       }),
     ];

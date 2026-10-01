@@ -7,11 +7,11 @@ export const CancelNotificationsByPlant =
   (repository: NotificationRepository, service: NotificationService) => async (plantId: number) => {
     const notifications = await repository.getByPlantId(plantId);
 
-    for (const notification of notifications) {
-      if (notification.expoNotificationId) {
-        await service.cancel(notification.expoNotificationId);
-      }
-    }
+    const expoIds = notifications
+      .map((notification) => notification.expoNotificationId)
+      .filter((expoId): expoId is string => !!expoId);
+
+    await Promise.all(expoIds.map((expoId) => service.cancel(expoId)));
 
     await repository.deleteByPlantId(plantId);
   };

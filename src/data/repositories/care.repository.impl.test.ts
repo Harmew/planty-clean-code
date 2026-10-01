@@ -30,7 +30,7 @@ describe("care-repository", () => {
 
     const result = await careRepository.getAll();
 
-    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("FROM care_schedule"));
+    expect(getAll).toHaveBeenCalledWith(expect.stringContaining("FROM cares"));
 
     expect(result).toEqual([care]);
   });
@@ -98,7 +98,7 @@ describe("care-repository", () => {
 
     const result = await careRepository.create(careToCreate);
 
-    expect(run).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO care_schedule"), [
+    expect(run).toHaveBeenCalledWith(expect.stringContaining("INSERT INTO cares"), [
       care.plantId,
       care.type,
       care.intervalDays,
@@ -120,7 +120,7 @@ describe("care-repository", () => {
 
     await careRepository.update(care);
 
-    expect(run).toHaveBeenCalledWith(expect.stringContaining("UPDATE care_schedule"), [
+    expect(run).toHaveBeenCalledWith(expect.stringContaining("UPDATE cares"), [
       care.type,
       care.intervalDays,
       care.lastDone,
@@ -136,7 +136,7 @@ describe("care-repository", () => {
 
     await careRepository.delete(care.id);
 
-    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM care_schedule"), [care.id]);
+    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM cares"), [care.id]);
   });
 
   it("exclui todos os cuidados de uma planta", async () => {
@@ -146,6 +146,6 @@ describe("care-repository", () => {
 
     await careRepository.deleteByPlantId(care.plantId);
 
-    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM care_schedule"), [care.plantId]);
+    expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM cares"), [care.plantId]);
   });
 });

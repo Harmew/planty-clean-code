@@ -6,7 +6,7 @@ import type { CareType } from "./care.entity";
 export interface CareHistory {
   id: number;
   plantId: number;
-  careScheduleId: number | null;
+  careId: number | null;
   type: CareType;
   intervalDays: number;
   doneAt: string;

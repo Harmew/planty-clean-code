@@ -16,9 +16,7 @@ export const CreatePlant =
     let imagePath: string | null = null;
 
     try {
-      if (input.imageUri) {
-        imagePath = await imageStorage.saveImage(input.imageUri);
-      }
+      if (input.imageUri) imagePath = await imageStorage.saveImage(input.imageUri);
 
       const plant = await repository.create({
         name: input.name,
@@ -33,10 +31,7 @@ export const CreatePlant =
 
       return plant;
     } catch (error) {
-      if (imagePath) {
-        await imageStorage.deleteImage(imagePath);
-      }
-
+      if (imagePath) await imageStorage.deleteImage(imagePath);
       throw error;
     }
   };
