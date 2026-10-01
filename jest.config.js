@@ -16,6 +16,7 @@ module.exports = {
     "<rootDir>/src/__tests__/setup/react-native-executorch.setup.ts",
     "<rootDir>/src/__tests__/setup/async-storage.setup.ts",
     "<rootDir>/src/__tests__/setup/expo-notifications.setup.ts",
+    "<rootDir>/src/__tests__/setup/react-native-keyboard-controller.setup.ts",
   ],
   // lcov gera tanto o lcov.info quanto o relatório HTML em coverage/lcov-report, que o CI publica no GitHub Pages; json-summary gera o coverage-summary.json, de onde saem os números do resumo do run e do comentário no PR. 'text' continua aí só pela tabela no terminal, no uso local.
   coverageReporters: ["lcov", "text", "json-summary"],

@@ -9,7 +9,7 @@ import { useTheme } from "@presentation/hooks/use-theme";
 // Shared
 import { getPlatformBottomSpacing } from "@shared/utils/platform";
 
-import { AutoCompleteButton } from "./components/form/auto-complete-button.components";
+import { AutoCompleteButton } from "./components/form/auto-complete-button.component";
 import { HumidityField } from "./components/form/humidity-field.component";
 import { ImageUriField } from "./components/form/image-uri-field.component";
 import { LocationField } from "./components/form/location-field.component";
