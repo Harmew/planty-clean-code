@@ -36,8 +36,12 @@ export function useNotifications() {
       try {
         await container.markNotificationAsRead(notification.id);
       } catch (error) {
-        const message = error instanceof Error ? error.message : "Ocorreu um erro inesperado";
-        Alert.alert("Algo deu errado", message, [{ text: "Entendi" }], getAlertOptions(dark));
+        Alert.alert(
+          "Algo deu errado",
+          (error as Error).message ?? "Ocorreu um erro inesperado",
+          [{ text: "Entendi" }],
+          getAlertOptions(dark),
+        );
       }
     },
     [dark],

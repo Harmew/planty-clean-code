@@ -20,8 +20,8 @@ import { SettingsItem } from "./components/settings-item.component";
 import { useSettings } from "./hooks/use-settings";
 import { createStyles } from "./styles";
 
-const APP_VERSION = Application.nativeApplicationVersion || "??";
-const BUILD_NUMBER = Application.nativeBuildVersion || "??";
+const APP_VERSION = Application.nativeApplicationVersion;
+const BUILD_NUMBER = Application.nativeBuildVersion;
 
 export function SettingsScreen() {
   const { bottom: paddingBottom } = useSafeAreaInsets();

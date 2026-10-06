@@ -90,4 +90,29 @@ describe("plant-with-cares-mapper", () => {
 
     expect(plant.cares).toEqual([]);
   });
+
+  it("lança erro quando o cuidado possui dados incompletos", () => {
+    const rows = [
+      {
+        plant_id: 1,
+        plant_name: "Jiboia",
+        plant_image: null,
+        plant_location: "Sala",
+        plant_sunlight: "medium" as const,
+        plant_temperature_min: null,
+        plant_temperature_max: null,
+        plant_humidity: null,
+        plant_created_at: "2026-01-01T00:00:00.000Z",
+        care_id: 1,
+        care_plant_id: 1,
+        care_type: null,
+        care_interval_days: 3,
+        care_last_done: null,
+        care_next_due: "2026-01-04T00:00:00.000Z",
+        care_created_at: "2026-01-01T00:00:00.000Z",
+      },
+    ];
+
+    expect(() => plantWithCaresMapper(rows)).toThrow("Cuidado 1 possui dados incompletos");
+  });
 });

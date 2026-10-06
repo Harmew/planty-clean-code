@@ -16,7 +16,7 @@ import { getPlatformBottomSpacing } from "@shared/utils/platform";
 
 import { NotificationItem } from "./components/notification-item.component";
 import { NotificationsEmpty } from "./components/notifications-empty.component";
-import { NotificationsHeader } from "./components/notifications-header.components";
+import { NotificationsHeader } from "./components/notifications-header.component";
 
 import { useNotifications } from "./hooks/use-notifications";
 import { createStyles } from "./styles";
@@ -26,20 +26,28 @@ const ITEM_DELAY_MS = 40;
 
 const keyExtractor = (notification: Notification) => String(notification.id);
 
+export function renderNotificationItem(
+  item: Notification,
+  index: number,
+  onPress: (notification: Notification) => void,
+) {
+  const content = <NotificationItem notification={item} onPress={onPress} />;
+
+  if (index >= MAX_ANIMATED_ITEMS) {
+    return content;
+  }
+
+  return <Animated.View entering={FadeInDown.delay(index * ITEM_DELAY_MS)}>{content}</Animated.View>;
+}
+
 export function NotificationsScreen() {
   const { bottom: paddingBottom } = useSafeAreaInsets();
   const { theme } = useTheme();
   const styles = createStyles(theme);
-
   const { notifications, isLoading, handleMarkAsRead } = useNotifications();
 
   const renderItem = React.useCallback(
-    ({ item, index }: { item: Notification; index: number }) => {
-      const content = <NotificationItem notification={item} onPress={handleMarkAsRead} />;
-      if (index >= MAX_ANIMATED_ITEMS) return content;
-      return <Animated.View entering={FadeInDown.delay(index * ITEM_DELAY_MS)}>{content}</Animated.View>;
-    },
-
+    ({ item, index }: { item: Notification; index: number }) => renderNotificationItem(item, index, handleMarkAsRead),
     [handleMarkAsRead],
   );
 
