@@ -2,7 +2,8 @@ import { Pressable, StyleSheet } from "react-native";
 import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 // Presentation
-import { FullWindowOverlay, Surface } from "@presentation/components/common";
+import { FullWindowOverlay } from "@presentation/components/common/full-window-overlay";
+import { Surface } from "@presentation/components/common/surface";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared

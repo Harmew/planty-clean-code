@@ -86,16 +86,16 @@ export function useAddPlant() {
   const handleAutoComplete = React.useCallback(async () => {
     const name = form.getValues("name")?.trim();
 
-    try {
-      if (!name) {
-        return Alert.alert(
-          "Planty informa",
-          "Para gerar os dados da planta, informe o nome dela",
-          [{ text: "Entendi", onPress: () => nameRef.current?.focus() }],
-          getAlertOptions(dark),
-        );
-      }
+    if (!name) {
+      return Alert.alert(
+        "Planty informa",
+        "Para gerar os dados da planta, informe o nome dela",
+        [{ text: "Entendi", onPress: () => nameRef.current?.focus() }],
+        getAlertOptions(dark),
+      );
+    }
 
+    try {
       setIsGenerating(true);
       const result = await container.generatePlantData(name);
 

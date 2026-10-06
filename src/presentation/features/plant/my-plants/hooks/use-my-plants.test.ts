@@ -34,7 +34,7 @@ describe("use-my-plants-hook", () => {
   it("deve navegar para adicionar planta", async () => {
     const { result } = await renderHook(() => useMyPlants());
 
-    result.current.openAddPlant();
+    result.current.handleAddPlant();
 
     expect(push).toHaveBeenCalledWith("/(modals)/add-plant");
   });
@@ -42,7 +42,7 @@ describe("use-my-plants-hook", () => {
   it("deve navegar para notificações", async () => {
     const { result } = await renderHook(() => useMyPlants());
 
-    result.current.openNotifications();
+    result.current.handleOpenNotifications();
 
     expect(push).toHaveBeenCalledWith("/notifications");
   });
@@ -50,7 +50,7 @@ describe("use-my-plants-hook", () => {
   it("deve navegar para os detalhes da planta", async () => {
     const { result } = await renderHook(() => useMyPlants());
 
-    result.current.openDetails(123);
+    result.current.handleOpenDetails(123);
 
     expect(push).toHaveBeenCalledWith({
       pathname: "/my-plant",

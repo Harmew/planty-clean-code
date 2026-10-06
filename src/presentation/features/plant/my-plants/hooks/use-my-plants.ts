@@ -11,22 +11,25 @@ export function useMyPlants() {
   const router = useRouter();
 
   const query = React.useCallback(() => container.getPlants(), []);
-
   const { data: plants } = useLiveQuery(["plants"], query, []);
 
-  const openAddPlant = React.useCallback(() => router.push("/(modals)/add-plant"), [router]);
+  const handleAddPlant = React.useCallback(() => router.push("/(modals)/add-plant"), [router]);
 
-  const openNotifications = React.useCallback(() => router.push("/notifications"), [router]);
+  const handleOpenNotifications = React.useCallback(() => router.push("/notifications"), [router]);
 
-  const openDetails = React.useCallback(
-    (id: number) => router.push({ pathname: "/my-plant", params: { id } }),
+  const handleOpenDetails = React.useCallback(
+    (id: number) =>
+      router.push({
+        pathname: "/my-plant",
+        params: { id },
+      }),
     [router],
   );
 
   return {
     plants,
-    openNotifications,
-    openDetails,
-    openAddPlant,
+    handleAddPlant,
+    handleOpenNotifications,
+    handleOpenDetails,
   };
 }

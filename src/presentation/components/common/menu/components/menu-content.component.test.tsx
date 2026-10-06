@@ -15,8 +15,11 @@ jest.mock("@shared/utils/theme", () => ({
   getThemeColors: jest.fn(),
 }));
 
-jest.mock("@presentation/components/common", () => ({
+jest.mock("@presentation/components/common/full-window-overlay", () => ({
   FullWindowOverlay: ({ children }: React.PropsWithChildren) => <>{children}</>,
+}));
+
+jest.mock("@presentation/components/common/surface", () => ({
   Surface: ({ children }: React.PropsWithChildren) => <>{children}</>,
 }));
 

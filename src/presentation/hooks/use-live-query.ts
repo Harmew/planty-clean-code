@@ -22,8 +22,6 @@ export function useLiveQuery<T>(tables: string[], query: () => Promise<T>, initi
       setIsLoading(false);
     } catch (e) {
       if (requestId !== requestIdRef.current) return;
-
-      console.error("[useLiveQuery]", e);
       setError(e instanceof Error ? e : new Error(String(e)));
       setIsLoading(false);
     }

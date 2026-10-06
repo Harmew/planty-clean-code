@@ -34,10 +34,7 @@ export function Button({
         styles.base,
         styles[size],
         isIconOnly && styles.iconOnly,
-        {
-          backgroundColor,
-          opacity: disabled ? 0.8 : 1,
-        },
+        { backgroundColor, opacity: disabled ? 0.8 : 1 },
         style,
       ]}
     >

@@ -1,4 +1,4 @@
-import { Button } from "@presentation/components/common";
+import { Button } from "@presentation/components/common/button";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 // Shared

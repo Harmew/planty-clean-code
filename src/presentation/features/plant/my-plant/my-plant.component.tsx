@@ -72,7 +72,7 @@ export function MyPlantScreen() {
             </Animated.View>
 
             <CareSection cares={plantWithCares.cares} onUpdate={handleUpdateCares} />
-            <HistoryButton hasCare={plantWithCares.cares.length > 0} onPress={handleOpenHistory} />
+            {plantWithCares.cares.length > 0 ? <HistoryButton onPress={handleOpenHistory} /> : null}
           </>
         )}
       </ScrollView>

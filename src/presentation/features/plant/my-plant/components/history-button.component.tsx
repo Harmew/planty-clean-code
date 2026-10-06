@@ -9,14 +9,12 @@ import { useTheme } from "@presentation/hooks/use-theme";
 import { getIconTextColor, getSurfaceColor } from "@shared/utils/theme";
 
 interface HistoryButtonProps {
-  hasCare: boolean;
   onPress: () => void;
 }
 
-export function HistoryButton({ hasCare, onPress }: Readonly<HistoryButtonProps>) {
+export function HistoryButton({ onPress }: Readonly<HistoryButtonProps>) {
   const { dark } = useTheme();
 
-  if (!hasCare) return null;
   return (
     <Animated.View entering={FadeInDown.delay(220)}>
       <Button size="sm" color={getSurfaceColor(dark)} onPress={onPress}>

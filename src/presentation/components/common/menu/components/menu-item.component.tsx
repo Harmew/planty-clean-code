@@ -1,5 +1,6 @@
 // Presentation
-import { PressableFeedback, Row } from "@presentation/components/common";
+import { PressableFeedback } from "@presentation/components/common/pressable-feedback";
+import { Row } from "@presentation/components/common/row";
 import { useTheme } from "@presentation/hooks/use-theme";
 
 import { useMenu } from "../menu.context";

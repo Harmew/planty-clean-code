@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 // Domain
@@ -21,16 +22,28 @@ import { PlantsHeader } from "./components/plants-header.component";
 import { useMyPlants } from "./hooks/use-my-plants";
 import { createStyles } from "./styles";
 
+const MAX_ANIMATED_ITEMS = 10;
+const INITIAL_DELAY_MS = 160;
+const ITEM_DELAY_MS = 40;
+
+const keyExtractor = (plant: Plant) => String(plant.id);
+
 export function MyPlantsScreen() {
   const { bottom: paddingBottom } = useSafeAreaInsets();
   const { theme } = useTheme();
   const styles = createStyles(theme);
 
-  const { plants, openAddPlant, openNotifications, openDetails } = useMyPlants();
+  const { plants, handleAddPlant, handleOpenNotifications, handleOpenDetails } = useMyPlants();
 
   const renderItem = React.useCallback(
-    ({ item, index }: { item: Plant; index: number }) => <PlantItem item={item} index={index} onPress={openDetails} />,
-    [openDetails],
+    ({ item, index }: { item: Plant; index: number }) => {
+      const content = <PlantItem item={item} index={index} onPress={handleOpenDetails} />;
+      if (index >= MAX_ANIMATED_ITEMS) return content;
+      return (
+        <Animated.View entering={FadeInDown.delay(INITIAL_DELAY_MS + index * ITEM_DELAY_MS)}>{content}</Animated.View>
+      );
+    },
+    [handleOpenDetails],
   );
 
   return (
@@ -42,12 +55,12 @@ export function MyPlantsScreen() {
         ]}
         showsVerticalScrollIndicator={false}
         data={plants}
-        keyExtractor={(item) => String(item.id)}
+        keyExtractor={keyExtractor}
         renderItem={renderItem}
         removeClippedSubviews={false}
-        ListHeaderComponent={<PlantsHeader onNotificationsPress={openNotifications} />}
-        ListEmptyComponent={<PlantsEmpty onAddPlantPress={openAddPlant} />}
-        ListFooterComponent={plants.length > 0 ? <PlantsFooter onAddPlantPress={openAddPlant} /> : null}
+        ListHeaderComponent={<PlantsHeader onNotificationsPress={handleOpenNotifications} />}
+        ListEmptyComponent={<PlantsEmpty onAddPlantPress={handleAddPlant} />}
+        ListFooterComponent={plants.length > 0 ? <PlantsFooter onAddPlantPress={handleAddPlant} /> : null}
       />
     </ScreenWrapper>
   );

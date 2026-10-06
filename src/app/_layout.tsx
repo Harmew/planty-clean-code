@@ -9,6 +9,9 @@ import "react-native-reanimated";
 // React Native Screens
 import { enableScreens } from "react-native-screens";
 
+// Expo System UI
+import * as SystemUI from "expo-system-ui";
+
 // Expo Router
 import { Stack } from "expo-router";
 
@@ -50,6 +53,8 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
  */
 enableScreens(true);
 
+const MODAL_PRESENTATION = Platform.OS === "ios" ? "modal" : undefined;
+
 function Layout() {
   const { dark } = useTheme();
   const { background } = getThemeColors(dark);
@@ -57,6 +62,10 @@ function Layout() {
 
   const [isReady, setIsReady] = React.useState(false);
   const [error, setError] = React.useState<Error | null>(null);
+
+  React.useEffect(() => {
+    void SystemUI.setBackgroundColorAsync(background);
+  }, [background]);
 
   React.useEffect(() => {
     const initialize = async () => {
@@ -71,7 +80,9 @@ function Layout() {
       }
     };
 
-    initialize();
+    initialize().catch((error) => {
+      setError(error as Error);
+    });
   }, []);
 
   if (error) {
@@ -94,11 +105,13 @@ function Layout() {
         }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="notifications" />
         <Stack.Screen name="my-plant" />
         <Stack.Screen name="plant-history" />
-        <Stack.Screen name="(modals)" options={{ presentation: Platform.OS === "ios" ? "modal" : undefined }} />
+
+        <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="(onboarding)" />
+        <Stack.Screen name="(modals)" options={{ presentation: MODAL_PRESENTATION }} />
       </Stack>
     </>
   );

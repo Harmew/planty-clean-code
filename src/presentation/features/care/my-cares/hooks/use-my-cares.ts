@@ -18,7 +18,8 @@ export function useMyCares() {
   const router = useRouter();
   const { dark } = useTheme();
 
-  const { data: plants } = useLiveQuery(["plants", "cares"], container.getPlantsWithCares, []);
+  const query = React.useCallback(() => container.getPlantsWithCares(), []);
+  const { data: plants } = useLiveQuery(["plants", "cares"], query, []);
 
   const pendingCares = React.useMemo(() => getPendingCares(plants), [plants]);
 

@@ -57,7 +57,7 @@ export function useEditPlant() {
 
     try {
       await container.updatePlant(Number(id), plant);
-      return router.back();
+      router.back();
     } catch (error) {
       Alert.alert(
         "Algo deu errado",
