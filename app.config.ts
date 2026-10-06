@@ -123,6 +123,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-sharing",
     "expo-image",
     "react-native-blob-util",
+    "expo-document-picker",
     [
       "expo-splash-screen",
       {

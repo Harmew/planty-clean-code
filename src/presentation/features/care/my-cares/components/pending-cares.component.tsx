@@ -5,11 +5,12 @@ import { View } from "react-native";
 import { Button, Row, Surface, Typography } from "@presentation/components/common";
 import { Icons } from "@presentation/components/svgs";
 import { useTheme } from "@presentation/hooks/use-theme";
-import type { PendingCare } from "../utils/pending-cares";
 
 // Shared
 import { CARE_MAP } from "@shared/constants/care";
 import { getThemeColors } from "@shared/utils/theme";
+
+import type { PendingCare } from "../utils/pending-cares";
 
 type Status = "overdue" | "today" | "tomorrow";
 
@@ -24,7 +25,10 @@ interface PendingCaresProps {
   onMarkAsDone: (item: PendingCare) => void;
 }
 
-export const PendingCares = React.memo(function PendingCares({ pendingCares, onMarkAsDone }: Readonly<PendingCaresProps>) {
+export const PendingCares = React.memo(function PendingCares({
+  pendingCares,
+  onMarkAsDone,
+}: Readonly<PendingCaresProps>) {
   if (pendingCares.length === 0) {
     return (
       <Surface>

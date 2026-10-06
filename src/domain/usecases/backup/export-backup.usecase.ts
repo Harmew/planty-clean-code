@@ -17,48 +17,35 @@ export const ExportBackup =
   ) =>
   async (password: string): Promise<void> => {
     // 1. Busca dados
-    const plants = await plantRepository.getAll();
-    const cares = await careRepository.getAll();
-    const history = await careHistoryRepository.getAll();
-    const notifications = await notificationRepository.getAll();
+    const [plants, cares, history, notifications] = await Promise.all([
+      plantRepository.getAll(),
+      careRepository.getAll(),
+      careHistoryRepository.getAll(),
+      notificationRepository.getAll(),
+    ]);
 
-    // 2. Coleta imagens únicas
+    // 2. Lê as imagens e troca o caminho local pelo nome do arquivo
     const images: Record<string, string> = {};
 
-    const backupPlants = [];
+    const backupPlants = plants.map((plant) => {
+      const fileName = plant.image?.split("/").pop();
 
-    for (const plant of plants) {
-      if (!plant.image) {
-        backupPlants.push(plant);
-        continue;
-      }
-
-      const fileName = plant.image.split("/").pop();
-
-      if (!fileName) {
-        backupPlants.push(plant);
-        continue;
-      }
+      if (!plant.image || !fileName) return plant;
 
       try {
-        const base64 = await imageStorage.readImage(plant.image);
+        const base64 = imageStorage.readImage(plant.image);
 
-        if (!base64) {
-          backupPlants.push(plant);
-          continue;
-        }
+        if (!base64) return plant;
 
         images[fileName] = base64;
 
-        backupPlants.push({
-          ...plant,
-          image: fileName,
-        });
+        return { ...plant, image: fileName };
       } catch {
-        backupPlants.push(plant);
+        return plant;
       }
-    }
+    });
 
+    // 3. Monta e grava o backup
     const backup: Backup = {
       schemaVersion: 1,
       exportedAt: new Date().toISOString(),

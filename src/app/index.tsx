@@ -20,7 +20,7 @@ export default function Index() {
       setIsLoading(false);
     };
 
-    checkOnboarding();
+    void checkOnboarding();
   }, []);
 
   // Segura animação até dar tempo

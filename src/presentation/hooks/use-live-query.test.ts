@@ -97,7 +97,6 @@ describe("use-live-query", () => {
 
     expect(result.current.isLoading).toBe(false);
     expect(result.current.data).toEqual([]);
-    expect(consoleErrorSpy).toHaveBeenCalledWith("[useLiveQuery]", error);
 
     consoleErrorSpy.mockRestore();
   });

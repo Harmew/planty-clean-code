@@ -4,128 +4,6 @@ const DATABASE_NAME = "plants.db" as const;
 
 let database: SQLite.SQLiteDatabase | null = null;
 
-type SeedRow = { id: number };
-
-const addDays = (date: Date, days: number) => {
-  const result = new Date(date);
-  result.setDate(result.getDate() + days);
-  return result;
-};
-
-const atHour = (date: Date, hour: number) => {
-  const result = new Date(date);
-  result.setHours(hour, 0, 0, 0);
-  return result;
-};
-
-const seedDevelopmentData = async (db: SQLite.SQLiteDatabase) => {
-  const existingSeed = await db.getFirstAsync<SeedRow>("SELECT id FROM plants WHERE name = ? LIMIT 1", [
-    "Jiboia de teste",
-  ]);
-
-  if (existingSeed) return;
-
-  const now = new Date();
-  const yesterday = addDays(now, -1);
-  const today = atHour(now, 10);
-  const tomorrow = atHour(addDays(now, 1), 9);
-
-  await db.withTransactionAsync(async () => {
-    const jiboia = await db.runAsync(
-      `
-        INSERT INTO plants (name, image, location, sunlight, created_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      ["Jiboia de teste", null, "Sala", "medium", addDays(now, -30).toISOString()],
-    );
-
-    const monstera = await db.runAsync(
-      `
-        INSERT INTO plants (name, image, location, sunlight, created_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      ["Monstera de teste", null, "Quarto", "high", addDays(now, -20).toISOString()],
-    );
-
-    const zamioculca = await db.runAsync(
-      `
-        INSERT INTO plants (name, image, location, sunlight, created_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      ["Zamioculca de teste", null, "Escritorio", "low", addDays(now, -10).toISOString()],
-    );
-
-    const waterCare = await db.runAsync(
-      `
-        INSERT INTO cares (plant_id, type, interval_days, last_done, next_due, created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `,
-      [
-        jiboia.lastInsertRowId,
-        "water",
-        3,
-        addDays(yesterday, -3).toISOString(),
-        today.toISOString(),
-        yesterday.toISOString(),
-      ],
-    );
-
-    const fertilizeCare = await db.runAsync(
-      `
-        INSERT INTO cares (plant_id, type, interval_days, last_done, next_due, created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `,
-      [
-        monstera.lastInsertRowId,
-        "fertilize",
-        14,
-        addDays(yesterday, -14).toISOString(),
-        atHour(yesterday, 8).toISOString(),
-        addDays(now, -20).toISOString(),
-      ],
-    );
-
-    const pruneCare = await db.runAsync(
-      `
-        INSERT INTO cares (plant_id, type, interval_days, last_done, next_due, created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `,
-      [
-        zamioculca.lastInsertRowId,
-        "prune",
-        7,
-        now.toISOString(),
-        tomorrow.toISOString(),
-        addDays(now, -7).toISOString(),
-      ],
-    );
-
-    await db.runAsync(
-      `
-        INSERT INTO care_history (plant_id, care_id, type, interval_days, done_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      [jiboia.lastInsertRowId, waterCare.lastInsertRowId, "water", 3, addDays(yesterday, -3).toISOString()],
-    );
-
-    await db.runAsync(
-      `
-        INSERT INTO care_history (plant_id, care_id, type, interval_days, done_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      [monstera.lastInsertRowId, fertilizeCare.lastInsertRowId, "fertilize", 14, addDays(yesterday, -14).toISOString()],
-    );
-
-    await db.runAsync(
-      `
-        INSERT INTO care_history (plant_id, care_id, type, interval_days, done_at)
-        VALUES (?, ?, ?, ?, ?)
-      `,
-      [zamioculca.lastInsertRowId, pruneCare.lastInsertRowId, "prune", 7, now.toISOString()],
-    );
-  });
-};
-
 export const initDatabase = async () => {
   database = await SQLite.openDatabaseAsync(DATABASE_NAME, {
     enableChangeListener: true,
@@ -202,8 +80,6 @@ export const initDatabase = async () => {
     CREATE INDEX IF NOT EXISTS idx_notifications_plant
       ON notifications (plant_id);
   `);
-
-  // await seedDevelopmentData(database);
 };
 
 const getDatabase = () => {

@@ -8,7 +8,6 @@ import type { BackupStorage } from "@domain/storage/backup.storage";
 import type { ImageStorage } from "@domain/storage/image.storage";
 
 import { getNotificationBody, getNotificationTitle } from "@shared/utils/notification";
-
 export const ImportBackup =
   (
     backupStorage: BackupStorage,
@@ -32,106 +31,128 @@ export const ImportBackup =
     // 2. Remove imagens atuais
     const currentPlants = await plantRepository.getAll();
 
-    for (const plant of currentPlants) {
-      if (plant.image) {
-        await imageStorage.deleteImage(plant.image);
-      }
-    }
+    currentPlants.filter((plant) => plant.image).forEach((plant) => imageStorage.deleteImage(plant.image!));
 
     // 3. Limpa os dados atuais
-    await notificationService.cancelAll();
     await plantRepository.deleteAll();
 
     // 4. Restaura as imagens
-    for (const [fileName, base64] of Object.entries(backup.images)) {
-      await imageStorage.saveBase64(base64, fileName);
-    }
+    Object.entries(backup.images).forEach(([fileName, base64]) => imageStorage.saveBase64(base64, fileName));
 
     // 5. Restaura as plantas
     const plantIds = new Map<number, number>();
 
-    for (const plant of backup.data.plants) {
-      const { id, ...plantData } = plant;
-      const createdPlant = await plantRepository.create(plantData);
+    const createdPlants = await Promise.all(
+      backup.data.plants.map(async (plant) => {
+        const { id, ...plantData } = plant;
+        const createdPlant = await plantRepository.create(plantData);
 
-      plantIds.set(id, createdPlant.id);
+        return {
+          oldId: id,
+          newId: createdPlant.id,
+        };
+      }),
+    );
+
+    for (const { oldId, newId } of createdPlants) {
+      plantIds.set(oldId, newId);
     }
 
     // 6. Restaura os cuidados
     const careIds = new Map<number, number>();
 
-    for (const care of backup.data.cares) {
-      const plantId = plantIds.get(care.plantId);
+    const createdCares = await Promise.all(
+      backup.data.cares
+        .map((care) => {
+          const plantId = plantIds.get(care.plantId);
 
-      if (plantId === undefined) {
-        continue;
-      }
+          if (plantId === undefined) {
+            return null;
+          }
 
-      const { id, ...careData } = care;
-      const createdCare = await careRepository.create({
-        ...careData,
-        plantId,
-      });
+          return (async () => {
+            const { id, ...careData } = care;
 
-      careIds.set(id, createdCare.id);
+            const createdCare = await careRepository.create({
+              ...careData,
+              plantId,
+            });
+
+            return {
+              oldId: id,
+              newId: createdCare.id,
+            };
+          })();
+        })
+        .filter((promise): promise is Promise<{ oldId: number; newId: number }> => promise !== null),
+    );
+
+    for (const { oldId, newId } of createdCares) {
+      careIds.set(oldId, newId);
     }
 
     // 7. Restaura o histórico
-    for (const history of backup.data.history) {
-      const plantId = plantIds.get(history.plantId);
+    await Promise.all(
+      backup.data.history.map(async (history) => {
+        const plantId = plantIds.get(history.plantId);
 
-      if (plantId === undefined) {
-        continue;
-      }
+        if (plantId === undefined) {
+          return;
+        }
 
-      const careId = history.careId === null ? null : (careIds.get(history.careId) ?? null);
-      const { id, ...historyData } = history;
+        const careId = history.careId === null ? null : (careIds.get(history.careId) ?? null);
 
-      await careHistoryRepository.create({
-        ...historyData,
-        plantId,
-        careId,
-      });
-    }
+        const { id, ...historyData } = history;
+
+        await careHistoryRepository.create({
+          ...historyData,
+          plantId,
+          careId,
+        });
+      }),
+    );
 
     // 8. Recria as notificações futuras
     const plants = await plantRepository.getAll();
-
     const plantsById = new Map(plants.map((plant) => [plant.id, plant]));
-
     const now = new Date();
 
-    for (const care of backup.data.cares) {
-      const nextDue = new Date(care.nextDue);
+    await Promise.all(
+      backup.data.cares.map(async (care) => {
+        const nextDue = new Date(care.nextDue);
 
-      if (nextDue <= now) {
-        continue;
-      }
+        if (nextDue <= now) {
+          return;
+        }
 
-      const plantId = plantIds.get(care.plantId);
-      const careId = careIds.get(care.id);
-      const plant = plantId === undefined ? undefined : plantsById.get(plantId);
+        const plantId = plantIds.get(care.plantId);
+        const careId = careIds.get(care.id);
+        const plant = plantId === undefined ? undefined : plantsById.get(plantId);
 
-      if (plantId === undefined || !plant || careId === undefined) {
-        continue;
-      }
+        if (plantId === undefined || !plant || careId === undefined) {
+          return;
+        }
 
-      const notificationId = await notificationService.schedule({
-        title: getNotificationTitle(care.type),
-        body: getNotificationBody(plant.name, care.type),
-        date: nextDue,
-      });
+        const title = getNotificationTitle(care.type);
+        const body = getNotificationBody(plant.name, care.type);
 
-      await notificationRepository.create({
-        plantId,
-        careId,
-        title: getNotificationTitle(care.type),
-        body: getNotificationBody(plant.name, care.type),
-        type: care.type,
-        read: false,
-        scheduledFor: care.nextDue,
-        expoNotificationId: notificationId,
-        createdAt: new Date().toISOString(),
-      });
-    }
+        const notificationId = await notificationService.schedule({
+          title,
+          body,
+          date: nextDue,
+        });
+
+        await notificationRepository.create({
+          plantId,
+          careId,
+          title,
+          body,
+          type: care.type,
+          read: false,
+          scheduledFor: care.nextDue,
+          expoNotificationId: notificationId,
+          createdAt: new Date().toISOString(),
+        });
+      }),
+    );
   };

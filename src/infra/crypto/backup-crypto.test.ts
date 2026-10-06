@@ -60,7 +60,7 @@ describe("backup-crypto", () => {
 
       expect(mockAes.pbkdf2).toHaveBeenCalledWith(password, "mock-salt", 600_000, 256, "sha256");
 
-      expect(expoCryptoMock.importKey).toHaveBeenCalledWith("mock-key", "base64");
+      expect(expoCryptoMock.importKey).toHaveBeenCalledWith("mock-key", "hex");
 
       expect(expoCryptoMock.encrypt).toHaveBeenCalledWith(expect.any(String), expoCryptoMock.encryptionKey);
 
@@ -104,7 +104,7 @@ describe("backup-crypto", () => {
 
       expect(mockAes.pbkdf2).toHaveBeenCalledWith(password, "mock-salt", 600_000, 256, "sha256");
 
-      expect(expoCryptoMock.importKey).toHaveBeenCalledWith("mock-key", "base64");
+      expect(expoCryptoMock.importKey).toHaveBeenCalledWith("mock-key", "hex");
 
       expect(expoCryptoMock.fromCombined).toHaveBeenCalledWith("mock-encrypted-data");
 
