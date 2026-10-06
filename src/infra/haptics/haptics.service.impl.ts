@@ -6,13 +6,13 @@ import type { HapticsService } from "@domain/services/haptics.service";
 export const hapticsService: HapticsService = {
   buttonPress() {
     if (Platform.OS === "ios") {
-      Haptics.selectionAsync();
+      void Haptics.selectionAsync();
     }
   },
 
   tabPress() {
     if (Platform.OS === "ios") {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
   },
 };

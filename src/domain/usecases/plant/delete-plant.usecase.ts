@@ -16,5 +16,5 @@ export const DeletePlant =
     await repository.delete(id);
 
     // 3. Deleta a imagem da planta (caso exista)
-    if (existing.image) await imageStorage.deleteImage(existing.image);
+    if (existing.image) imageStorage.deleteImage(existing.image);
   };

@@ -14,7 +14,7 @@ export interface CareHistoryRepository {
    * @param plantId ID da planta
    * @returns Lista de históricos de cuidados
    */
-  getByPlantId(plantId: number): Promise<CareHistory[]>;
+  getAllByPlantId(plantId: number): Promise<CareHistory[]>;
   /**
    * Cria um novo histórico de cuidado
    * @param history Dados do histórico de cuidado

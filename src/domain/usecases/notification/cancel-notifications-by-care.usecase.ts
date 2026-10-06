@@ -5,7 +5,7 @@ export type CancelNotificationsByCare = (careId: number) => Promise<void>;
 
 export const CancelNotificationsByCare =
   (repository: NotificationRepository, service: NotificationService) => async (careId: number) => {
-    const notifications = await repository.getByCareId(careId);
+    const notifications = await repository.getAllByCareId(careId);
 
     await Promise.all(
       notifications
@@ -13,5 +13,5 @@ export const CancelNotificationsByCare =
         .map((notification) => service.cancel(notification.expoNotificationId as string)),
     );
 
-    await repository.deleteByCareId(careId);
+    await repository.deleteAllByCareId(careId);
   };

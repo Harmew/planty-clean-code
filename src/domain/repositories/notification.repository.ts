@@ -26,25 +26,25 @@ export interface NotificationRepository {
    * @param careId - O ID do agendamento de cuidado para o qual as notificações devem ser buscadas.
    * @returns Uma promessa que resolve para um array de notificações associadas ao agendamento de cuidado especificado.
    */
-  getByCareId(careId: number): Promise<Notification[]>;
+  getAllByCareId(careId: number): Promise<Notification[]>;
   /**
    * Exclui todas as notificações associadas a um determinado agendamento de cuidado no banco de dados.
    * @param careId - O ID do agendamento de cuidado para o qual as notificações devem ser excluídas.
    * @returns Uma promessa que resolve quando a operação for concluída.
    */
-  deleteByCareId(careId: number): Promise<void>;
+  deleteAllByCareId(careId: number): Promise<void>;
   /**
    * Busca todas as notificações associadas a uma determinada planta no banco de dados.
    * @param plantId - O ID da planta para a qual as notificações devem ser buscadas.
    * @returns Uma promessa que resolve para um array de notificações associadas à planta especificada.
    */
-  getByPlantId(plantId: number): Promise<Notification[]>;
+  getAllByPlantId(plantId: number): Promise<Notification[]>;
   /**
    * Exclui todas as notificações associadas a uma determinada planta no banco de dados.
    * @param plantId - O ID da planta para a qual as notificações devem ser excluídas.
    * @returns Uma promessa que resolve quando a operação for concluída.
    */
-  deleteByPlantId(plantId: number): Promise<void>;
+  deleteAllByPlantId(plantId: number): Promise<void>;
   /**
    * Exclui todas as notificações no banco de dados.
    * @returns Uma promessa que resolve quando a operação for concluída.

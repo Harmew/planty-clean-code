@@ -50,7 +50,7 @@ describe("care-repository", () => {
 
     (getAll as jest.Mock).mockResolvedValue([row]);
 
-    const result = await careRepository.getByPlantId(care.plantId);
+    const result = await careRepository.getAllByPlantId(care.plantId);
 
     expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE plant_id = ?"), [care.plantId]);
 
@@ -72,7 +72,7 @@ describe("care-repository", () => {
 
     (getFirst as jest.Mock).mockResolvedValue(row);
 
-    const result = await careRepository.getByPlantAndType(care.plantId, care.type);
+    const result = await careRepository.getAllByPlantIdAndType(care.plantId, care.type);
 
     expect(getFirst).toHaveBeenCalledWith(expect.stringContaining("AND type = ?"), [care.plantId, care.type]);
 
@@ -82,7 +82,7 @@ describe("care-repository", () => {
   it("retorna null quando o cuidado não existe", async () => {
     (getFirst as jest.Mock).mockResolvedValue(null);
 
-    const result = await careRepository.getByPlantAndType(999, "water");
+    const result = await careRepository.getAllByPlantIdAndType(999, "water");
 
     expect(result).toBeNull();
   });
@@ -144,7 +144,7 @@ describe("care-repository", () => {
 
     (run as jest.Mock).mockResolvedValue({});
 
-    await careRepository.deleteByPlantId(care.plantId);
+    await careRepository.deleteAllByPlantId(care.plantId);
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM cares"), [care.plantId]);
   });

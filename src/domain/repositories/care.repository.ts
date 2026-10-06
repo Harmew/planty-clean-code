@@ -14,14 +14,14 @@ export interface CareRepository {
    * @param plantId - O ID da planta para a qual os cuidados devem ser buscados.
    * @returns Uma promessa que resolve para um array de cuidados associados à planta especificada.
    */
-  getByPlantId(plantId: number): Promise<Care[]>;
+  getAllByPlantId(plantId: number): Promise<Care[]>;
   /**
    * Busca um cuidado específico associado a uma determinada planta e tipo de cuidado no banco de dados.
    * @param plantId - O ID da planta para a qual o cuidado deve ser buscado.
    * @param type - O tipo de cuidado a ser buscado.
    * @returns Uma promessa que resolve para o cuidado encontrado, ou null se nenhum cuidado for encontrado.
    */
-  getByPlantAndType(plantId: number, type: Care["type"]): Promise<Care | null>;
+  getAllByPlantIdAndType(plantId: number, type: Care["type"]): Promise<Care | null>;
   /**
    * Cria um novo cuidado no banco de dados.
    * @param care - O cuidado a ser criado, sem o campo "id".
@@ -42,5 +42,5 @@ export interface CareRepository {
    * Exclui todos os cuidados associados a uma determinada planta no banco de dados.
    * @param plantId - O ID da planta para a qual os cuidados devem ser excluídos.
    */
-  deleteByPlantId(plantId: number): Promise<void>;
+  deleteAllByPlantId(plantId: number): Promise<void>;
 }

@@ -18,14 +18,14 @@ describe("get-cares-by-plant-usecase", () => {
       }),
     ];
 
-    repository.getByPlantId.mockResolvedValue(cares);
+    repository.getAllByPlantId.mockResolvedValue(cares);
 
     const getCaresByPlant = GetCaresByPlant(repository);
 
     const result = await getCaresByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledTimes(1);
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledTimes(1);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
     expect(result).toEqual(cares);
   });
 });

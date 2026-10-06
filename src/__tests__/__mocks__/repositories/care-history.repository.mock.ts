@@ -16,6 +16,6 @@ export function createCareHistoryRepositoryMock(): jest.Mocked<CareHistoryReposi
   return {
     getAll: jest.fn(),
     create: jest.fn(async (history: Omit<CareHistory, "id">) => ({ ...history, id: 1 })),
-    getByPlantId: jest.fn(),
+    getAllByPlantId: jest.fn(),
   };
 }

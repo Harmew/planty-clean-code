@@ -22,19 +22,19 @@ describe("cancel-notifications-by-plant-usecase", () => {
       }),
     ];
 
-    repository.getByPlantId.mockResolvedValue(notifications);
+    repository.getAllByPlantId.mockResolvedValue(notifications);
 
     const cancelNotificationsByPlant = CancelNotificationsByPlant(repository, service);
 
     await cancelNotificationsByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
 
     expect(service.cancel).toHaveBeenCalledTimes(2);
     expect(service.cancel).toHaveBeenNthCalledWith(1, "expo-1");
     expect(service.cancel).toHaveBeenNthCalledWith(2, "expo-2");
 
-    expect(repository.deleteByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByPlantId).toHaveBeenCalledWith(10);
   });
 
   it("não deve cancelar uma notificação sem expoNotificationId", async () => {
@@ -47,29 +47,29 @@ describe("cancel-notifications-by-plant-usecase", () => {
       expoNotificationId: null,
     });
 
-    repository.getByPlantId.mockResolvedValue([notification]);
+    repository.getAllByPlantId.mockResolvedValue([notification]);
 
     const cancelNotificationsByPlant = CancelNotificationsByPlant(repository, service);
 
     await cancelNotificationsByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
     expect(service.cancel).not.toHaveBeenCalled();
-    expect(repository.deleteByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByPlantId).toHaveBeenCalledWith(10);
   });
 
   it("não deve cancelar nenhuma notificação quando não houver notificações", async () => {
     const repository = createNotificationRepositoryMock();
     const service = createNotificationServiceMock();
 
-    repository.getByPlantId.mockResolvedValue([]);
+    repository.getAllByPlantId.mockResolvedValue([]);
 
     const cancelNotificationsByPlant = CancelNotificationsByPlant(repository, service);
 
     await cancelNotificationsByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
     expect(service.cancel).not.toHaveBeenCalled();
-    expect(repository.deleteByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByPlantId).toHaveBeenCalledWith(10);
   });
 });

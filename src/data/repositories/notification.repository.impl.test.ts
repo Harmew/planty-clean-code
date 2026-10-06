@@ -91,7 +91,7 @@ describe("notification-repository", () => {
 
     (getAll as jest.Mock).mockResolvedValue([row]);
 
-    const result = await notificationRepository.getByCareId(notification.careId!);
+    const result = await notificationRepository.getAllByCareId(notification.careId!);
 
     expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE care_id = ?"), [notification.careId]);
 
@@ -103,7 +103,7 @@ describe("notification-repository", () => {
 
     (run as jest.Mock).mockResolvedValue({});
 
-    await notificationRepository.deleteByCareId(notification.careId!);
+    await notificationRepository.deleteAllByCareId(notification.careId!);
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM notifications"), [notification.careId]);
   });
@@ -126,7 +126,7 @@ describe("notification-repository", () => {
 
     (getAll as jest.Mock).mockResolvedValue([row]);
 
-    const result = await notificationRepository.getByPlantId(notification.plantId!);
+    const result = await notificationRepository.getAllByPlantId(notification.plantId!);
 
     expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE plant_id = ?"), [notification.plantId]);
 
@@ -138,7 +138,7 @@ describe("notification-repository", () => {
 
     (run as jest.Mock).mockResolvedValue({});
 
-    await notificationRepository.deleteByPlantId(notification.plantId!);
+    await notificationRepository.deleteAllByPlantId(notification.plantId!);
 
     expect(run).toHaveBeenCalledWith(expect.stringContaining("DELETE FROM notifications"), [notification.plantId]);
   });

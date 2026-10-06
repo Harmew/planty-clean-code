@@ -31,7 +31,7 @@ export const CreatePlant =
 
       return plant;
     } catch (error) {
-      if (imagePath) await imageStorage.deleteImage(imagePath);
+      if (imagePath) imageStorage.deleteImage(imagePath);
       throw error;
     }
   };

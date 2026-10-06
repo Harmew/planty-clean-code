@@ -22,19 +22,19 @@ describe("cancel-notifications-by-care-usecase", () => {
       }),
     ];
 
-    repository.getByCareId.mockResolvedValue(notifications);
+    repository.getAllByCareId.mockResolvedValue(notifications);
 
     const cancelNotificationsByCare = CancelNotificationsByCare(repository, service);
 
     await cancelNotificationsByCare(10);
 
-    expect(repository.getByCareId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByCareId).toHaveBeenCalledWith(10);
 
     expect(service.cancel).toHaveBeenCalledTimes(2);
     expect(service.cancel).toHaveBeenNthCalledWith(1, "expo-1");
     expect(service.cancel).toHaveBeenNthCalledWith(2, "expo-2");
 
-    expect(repository.deleteByCareId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByCareId).toHaveBeenCalledWith(10);
   });
 
   it("não deve cancelar uma notificação sem expoNotificationId", async () => {
@@ -49,29 +49,29 @@ describe("cancel-notifications-by-care-usecase", () => {
       }),
     ];
 
-    repository.getByCareId.mockResolvedValue(notifications);
+    repository.getAllByCareId.mockResolvedValue(notifications);
 
     const cancelNotificationsByCare = CancelNotificationsByCare(repository, service);
 
     await cancelNotificationsByCare(10);
 
-    expect(repository.getByCareId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByCareId).toHaveBeenCalledWith(10);
     expect(service.cancel).not.toHaveBeenCalled();
-    expect(repository.deleteByCareId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByCareId).toHaveBeenCalledWith(10);
   });
 
   it("não deve cancelar nenhuma notificação quando não houver notificações", async () => {
     const repository = createNotificationRepositoryMock();
     const service = createNotificationServiceMock();
 
-    repository.getByCareId.mockResolvedValue([]);
+    repository.getAllByCareId.mockResolvedValue([]);
 
     const cancelNotificationsByCare = CancelNotificationsByCare(repository, service);
 
     await cancelNotificationsByCare(10);
 
-    expect(repository.getByCareId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByCareId).toHaveBeenCalledWith(10);
     expect(service.cancel).not.toHaveBeenCalled();
-    expect(repository.deleteByCareId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByCareId).toHaveBeenCalledWith(10);
   });
 });

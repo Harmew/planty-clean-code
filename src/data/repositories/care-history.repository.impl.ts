@@ -10,7 +10,7 @@ export const careHistoryRepository: CareHistoryRepository = {
     return rows.map(careHistoryMapper);
   },
 
-  async getByPlantId(plantId) {
+  async getAllByPlantId(plantId) {
     const rows = await getAll<CareHistoryDto>(
       `
         SELECT

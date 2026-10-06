@@ -16,10 +16,10 @@ export function createCareRepositoryMock(): jest.Mocked<CareRepository> {
   return {
     getAll: jest.fn(),
     create: jest.fn(async (care: Omit<Care, "id">) => ({ ...care, id: 1 })),
-    getByPlantId: jest.fn(),
-    getByPlantAndType: jest.fn(),
+    getAllByPlantId: jest.fn(),
+    getAllByPlantIdAndType: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    deleteByPlantId: jest.fn(),
+    deleteAllByPlantId: jest.fn(),
   };
 }

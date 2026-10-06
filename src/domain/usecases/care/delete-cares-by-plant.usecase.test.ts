@@ -19,33 +19,33 @@ describe("delete-cares-by-plant-usecase", () => {
       }),
     ];
 
-    repository.getByPlantId.mockResolvedValue(cares);
+    repository.getAllByPlantId.mockResolvedValue(cares);
 
     const deleteCaresByPlant = DeleteCaresByPlant(repository, cancelNotificationsByCare);
 
     await deleteCaresByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
 
     expect(cancelNotificationsByCare).toHaveBeenCalledTimes(2);
     expect(cancelNotificationsByCare).toHaveBeenNthCalledWith(1, 1);
     expect(cancelNotificationsByCare).toHaveBeenNthCalledWith(2, 2);
 
-    expect(repository.deleteByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByPlantId).toHaveBeenCalledWith(10);
   });
 
   it("não deve cancelar notificações quando a planta não possuir cuidados", async () => {
     const repository = createCareRepositoryMock();
     const cancelNotificationsByCare = jest.fn();
 
-    repository.getByPlantId.mockResolvedValue([]);
+    repository.getAllByPlantId.mockResolvedValue([]);
 
     const deleteCaresByPlant = DeleteCaresByPlant(repository, cancelNotificationsByCare);
 
     await deleteCaresByPlant(10);
 
-    expect(repository.getByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.getAllByPlantId).toHaveBeenCalledWith(10);
     expect(cancelNotificationsByCare).not.toHaveBeenCalled();
-    expect(repository.deleteByPlantId).toHaveBeenCalledWith(10);
+    expect(repository.deleteAllByPlantId).toHaveBeenCalledWith(10);
   });
 });

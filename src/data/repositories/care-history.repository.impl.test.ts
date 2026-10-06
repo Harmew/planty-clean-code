@@ -47,7 +47,7 @@ describe("care-history-repository", () => {
 
     (getAll as jest.Mock).mockResolvedValue([row]);
 
-    const result = await careHistoryRepository.getByPlantId(history.plantId);
+    const result = await careHistoryRepository.getAllByPlantId(history.plantId);
 
     expect(getAll).toHaveBeenCalledWith(expect.stringContaining("WHERE plant_id = ?"), [history.plantId]);
 

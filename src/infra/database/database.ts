@@ -203,7 +203,7 @@ export const initDatabase = async () => {
       ON notifications (plant_id);
   `);
 
-  await seedDevelopmentData(database);
+  // await seedDevelopmentData(database);
 };
 
 const getDatabase = () => {

@@ -37,6 +37,6 @@ export const permissionsService: PermissionsService = {
   },
 
   openSettings() {
-    Linking.openSettings();
+    void Linking.openSettings();
   },
 };

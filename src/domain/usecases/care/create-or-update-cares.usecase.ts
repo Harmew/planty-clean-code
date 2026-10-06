@@ -45,7 +45,7 @@ export const CreateOrUpdateCares =
       });
 
     const syncCare = async (input: CareInput) => {
-      const existingCare = await repository.getByPlantAndType(plantId, input.type);
+      const existingCare = await repository.getAllByPlantIdAndType(plantId, input.type);
 
       // Desabilitado: remove o cuidado existente (se houver) e cancela as notificações
       if (!input.enabled) {

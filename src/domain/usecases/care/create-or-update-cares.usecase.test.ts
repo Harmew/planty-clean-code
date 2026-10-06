@@ -23,7 +23,7 @@ describe("create-or-update-cares-usecase", () => {
     await expect(createOrUpdateCares(1, [])).rejects.toThrow("Planta não encontrada");
 
     expect(getPlantById).toHaveBeenCalledWith(1);
-    expect(repository.getByPlantAndType).not.toHaveBeenCalled();
+    expect(repository.getAllByPlantIdAndType).not.toHaveBeenCalled();
     expect(repository.create).not.toHaveBeenCalled();
     expect(repository.update).not.toHaveBeenCalled();
   });
@@ -42,7 +42,7 @@ describe("create-or-update-cares-usecase", () => {
     });
 
     getPlantById.mockResolvedValue(plant);
-    repository.getByPlantAndType.mockResolvedValue(care);
+    repository.getAllByPlantIdAndType.mockResolvedValue(care);
 
     const createOrUpdateCares = CreateOrUpdateCares(
       repository,
@@ -59,7 +59,7 @@ describe("create-or-update-cares-usecase", () => {
       },
     ]);
 
-    expect(repository.getByPlantAndType).toHaveBeenCalledWith(1, "water");
+    expect(repository.getAllByPlantIdAndType).toHaveBeenCalledWith(1, "water");
 
     expect(cancelNotificationsByCare).toHaveBeenCalledWith(10);
     expect(repository.delete).toHaveBeenCalledWith(10);
@@ -76,7 +76,7 @@ describe("create-or-update-cares-usecase", () => {
     const cancelNotificationsByCare = jest.fn();
 
     getPlantById.mockResolvedValue(createPlant({ id: 1 }));
-    repository.getByPlantAndType.mockResolvedValue(null);
+    repository.getAllByPlantIdAndType.mockResolvedValue(null);
 
     const createOrUpdateCares = CreateOrUpdateCares(
       repository,
@@ -93,7 +93,7 @@ describe("create-or-update-cares-usecase", () => {
       },
     ]);
 
-    expect(repository.getByPlantAndType).toHaveBeenCalledWith(1, "water");
+    expect(repository.getAllByPlantIdAndType).toHaveBeenCalledWith(1, "water");
 
     expect(cancelNotificationsByCare).not.toHaveBeenCalled();
     expect(repository.delete).not.toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe("create-or-update-cares-usecase", () => {
     });
 
     getPlantById.mockResolvedValue(plant);
-    repository.getByPlantAndType.mockResolvedValue(care);
+    repository.getAllByPlantIdAndType.mockResolvedValue(care);
 
     const createOrUpdateCares = CreateOrUpdateCares(
       repository,
@@ -183,7 +183,7 @@ describe("create-or-update-cares-usecase", () => {
     });
 
     getPlantById.mockResolvedValue(plant);
-    repository.getByPlantAndType.mockResolvedValue(null);
+    repository.getAllByPlantIdAndType.mockResolvedValue(null);
     repository.create.mockResolvedValue(care);
 
     const createOrUpdateCares = CreateOrUpdateCares(
@@ -257,7 +257,7 @@ describe("create-or-update-cares-usecase", () => {
     it("não deve alterar nem reagendar o cuidado quando o intervalo não mudou", async () => {
       const { repository, scheduleNotification, cancelNotificationsByCare, createOrUpdateCares } = setup();
 
-      repository.getByPlantAndType.mockResolvedValue(
+      repository.getAllByPlantIdAndType.mockResolvedValue(
         createCare({ id: 10, plantId: 1, type: "water", intervalDays: 2 }),
       );
 
@@ -272,7 +272,7 @@ describe("create-or-update-cares-usecase", () => {
     it("deve recalcular o vencimento a partir da última vez feito quando o intervalo mudar", async () => {
       const { repository, scheduleNotification, createOrUpdateCares } = setup();
 
-      repository.getByPlantAndType.mockResolvedValue(
+      repository.getAllByPlantIdAndType.mockResolvedValue(
         createCare({
           id: 10,
           plantId: 1,
@@ -297,7 +297,7 @@ describe("create-or-update-cares-usecase", () => {
     it("deve usar a data de criação como base quando o cuidado nunca foi feito", async () => {
       const { repository, createOrUpdateCares } = setup();
 
-      repository.getByPlantAndType.mockResolvedValue(
+      repository.getAllByPlantIdAndType.mockResolvedValue(
         createCare({
           id: 10,
           plantId: 1,
@@ -317,7 +317,7 @@ describe("create-or-update-cares-usecase", () => {
     it("deve vencer a partir de agora quando o novo prazo já estiver no passado", async () => {
       const { repository, scheduleNotification, createOrUpdateCares } = setup();
 
-      repository.getByPlantAndType.mockResolvedValue(
+      repository.getAllByPlantIdAndType.mockResolvedValue(
         createCare({
           id: 10,
           plantId: 1,
@@ -341,7 +341,7 @@ describe("create-or-update-cares-usecase", () => {
 
       const existingWater = createCare({ id: 10, plantId: 1, type: "water", intervalDays: 2 });
 
-      repository.getByPlantAndType.mockImplementation(async (_plantId, type) =>
+      repository.getAllByPlantIdAndType.mockImplementation(async (_plantId, type) =>
         type === "water" ? existingWater : null,
       );
       repository.create.mockResolvedValue(

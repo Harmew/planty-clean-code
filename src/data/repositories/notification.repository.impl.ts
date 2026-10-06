@@ -70,7 +70,7 @@ export const notificationRepository: NotificationRepository = {
     );
   },
 
-  async getByCareId(careId) {
+  async getAllByCareId(careId) {
     const rows = await getAll<NotificationDto>(
       `
         SELECT
@@ -93,7 +93,7 @@ export const notificationRepository: NotificationRepository = {
     return rows.map(notificationMapper);
   },
 
-  async deleteByCareId(careId) {
+  async deleteAllByCareId(careId) {
     await run(
       `
         DELETE FROM notifications
@@ -103,7 +103,7 @@ export const notificationRepository: NotificationRepository = {
     );
   },
 
-  async getByPlantId(plantId) {
+  async getAllByPlantId(plantId) {
     const rows = await getAll<NotificationDto>(
       `
         SELECT
@@ -126,7 +126,7 @@ export const notificationRepository: NotificationRepository = {
     return rows.map(notificationMapper);
   },
 
-  async deleteByPlantId(plantId) {
+  async deleteAllByPlantId(plantId) {
     await run(
       `
         DELETE FROM notifications

@@ -23,7 +23,7 @@ export const careRepository: CareRepository = {
     return rows.map(careMapper);
   },
 
-  async getByPlantId(plantId) {
+  async getAllByPlantId(plantId) {
     const rows = await getAll<CareDto>(
       `
         SELECT
@@ -44,7 +44,7 @@ export const careRepository: CareRepository = {
     return rows.map(careMapper);
   },
 
-  async getByPlantAndType(plantId, type) {
+  async getAllByPlantIdAndType(plantId, type) {
     const row = await getFirst<CareDto>(
       `
         SELECT
@@ -112,7 +112,7 @@ export const careRepository: CareRepository = {
     );
   },
 
-  async deleteByPlantId(plantId) {
+  async deleteAllByPlantId(plantId) {
     await run(
       `
         DELETE FROM cares

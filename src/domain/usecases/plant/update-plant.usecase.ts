@@ -53,7 +53,7 @@ export const UpdatePlant =
 
       // 7. Deleta a imagem antiga (caso tenha mudado)
       if (oldImageToDelete) {
-        await imageStorage.deleteImage(oldImageToDelete);
+        imageStorage.deleteImage(oldImageToDelete);
       }
 
       // 8. Retorna a planta atualizada
@@ -61,7 +61,7 @@ export const UpdatePlant =
     } catch (error) {
       // Deleta imagem caso contenha algum erro no fluxo de atualização
       if (newImagePath && newImagePath !== existing.image) {
-        await imageStorage.deleteImage(newImagePath);
+        imageStorage.deleteImage(newImagePath);
       }
 
       throw error;

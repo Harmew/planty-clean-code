@@ -21,7 +21,7 @@ export const MarkCareAsDone =
     runInTransaction: RunInTransaction = async (task) => task(),
   ) =>
   async (plantId: number, type: Care["type"]) => {
-    const care = await careRepository.getByPlantAndType(plantId, type);
+    const care = await careRepository.getAllByPlantIdAndType(plantId, type);
 
     if (!care) {
       throw new Error("Cuidado não encontrado");

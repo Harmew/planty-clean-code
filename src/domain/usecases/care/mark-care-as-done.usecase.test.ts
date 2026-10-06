@@ -13,7 +13,7 @@ describe("mark-care-as-done-usecase", () => {
     const cancelNotificationsByCare = jest.fn();
     const scheduleNotification = jest.fn();
 
-    careRepository.getByPlantAndType.mockResolvedValue(null);
+    careRepository.getAllByPlantIdAndType.mockResolvedValue(null);
 
     const markCareAsDone = MarkCareAsDone(
       careRepository,
@@ -25,7 +25,7 @@ describe("mark-care-as-done-usecase", () => {
 
     await expect(markCareAsDone(1, "water")).rejects.toThrow("Cuidado não encontrado");
 
-    expect(careRepository.getByPlantAndType).toHaveBeenCalledWith(1, "water");
+    expect(careRepository.getAllByPlantIdAndType).toHaveBeenCalledWith(1, "water");
 
     expect(getPlantById).not.toHaveBeenCalled();
     expect(cancelNotificationsByCare).not.toHaveBeenCalled();
@@ -47,7 +47,7 @@ describe("mark-care-as-done-usecase", () => {
       type: "water",
     });
 
-    careRepository.getByPlantAndType.mockResolvedValue(care);
+    careRepository.getAllByPlantIdAndType.mockResolvedValue(care);
     getPlantById.mockResolvedValue(null);
 
     const markCareAsDone = MarkCareAsDone(
@@ -60,7 +60,7 @@ describe("mark-care-as-done-usecase", () => {
 
     await expect(markCareAsDone(1, "water")).rejects.toThrow("Planta não encontrada");
 
-    expect(careRepository.getByPlantAndType).toHaveBeenCalledWith(1, "water");
+    expect(careRepository.getAllByPlantIdAndType).toHaveBeenCalledWith(1, "water");
 
     expect(getPlantById).toHaveBeenCalledWith(1);
 
@@ -89,7 +89,7 @@ describe("mark-care-as-done-usecase", () => {
       name: "Jiboia",
     });
 
-    careRepository.getByPlantAndType.mockResolvedValue(care);
+    careRepository.getAllByPlantIdAndType.mockResolvedValue(care);
     getPlantById.mockResolvedValue(plant);
 
     const markCareAsDone = MarkCareAsDone(
@@ -102,7 +102,7 @@ describe("mark-care-as-done-usecase", () => {
 
     await markCareAsDone(1, "water");
 
-    expect(careRepository.getByPlantAndType).toHaveBeenCalledWith(1, "water");
+    expect(careRepository.getAllByPlantIdAndType).toHaveBeenCalledWith(1, "water");
 
     expect(getPlantById).toHaveBeenCalledWith(1);
 

@@ -4,9 +4,9 @@ import type { CancelNotificationsByCare } from "@domain/usecases/notification/ca
 
 export const DeleteCaresByPlant =
   (repository: CareRepository, cancelNotificationsByCare: CancelNotificationsByCare) => async (plantId: number) => {
-    const cares = await repository.getByPlantId(plantId);
+    const cares = await repository.getAllByPlantId(plantId);
 
     await Promise.all(cares.map((care) => cancelNotificationsByCare(care.id)));
 
-    await repository.deleteByPlantId(plantId);
+    await repository.deleteAllByPlantId(plantId);
   };
